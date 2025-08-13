@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>在官方通道关闭的25年从鸿蒙4降级到emui11 | Markdown Any Notes - Woisol's Blog</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="官方助手关闭了鸿蒙回退到 emui 的通道，没有别的办法了吗？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在官方通道关闭的25年从鸿蒙4降级到emui11">
+<meta property="og:url" content="http://iser/Knowledge/2025-08/4d89ba69087f/index.html">
+<meta property="og:site_name" content="Markdown Any Notes - Woisol&#39;s Blog">
+<meta property="og:description" content="官方助手关闭了鸿蒙回退到 emui 的通道，没有别的办法了吗？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg">
+<meta property="article:published_time" content="2025-08-13T16:33:53.000Z">
+<meta property="article:modified_time" content="2025-08-13T17:28:19.186Z">
+<meta property="article:author" content="Woisol">
+<meta property="article:tag" content="华为">
+<meta property="article:tag" content="HarmonyOS">
+<meta property="article:tag" content="EMUI">
+<meta property="article:tag" content="降级">
+<meta property="article:tag" content="HiSuite Proxy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "在官方通道关闭的25年从鸿蒙4降级到emui11",
+  "url": "http://iser/Knowledge/2025-08/4d89ba69087f/",
+  "image": "https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg",
+  "datePublished": "2025-08-13T16:33:53.000Z",
+  "dateModified": "2025-08-13T17:28:19.186Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Woisol",
+      "url": "http://iser/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar24-10-16.jpg"><link rel="canonical" href="http://iser/Knowledge/2025-08/4d89ba69087f/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#FCCB1B","bgDark":"#222222","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '在官方通道关闭的25年从鸿蒙4降级到emui11',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="loaded" id="loading-box"><center><!--  <img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="" />--><div class="img-temp"></div><p class="loading-text">加载中...<!--  <div class="text-wave"></div>--></p></center><footer><b class="tips">Tips:</b><span>这是一个Tips</span><i class="change fas fa-rotate"></i></footer></div><script>//- !明确了！hexo s并不会更新主题更改！还是要用./gen
+(()=>{
+const TIPS = [
+  "这里有一个Tips哦",
+  "网站处于极其早期的阶段，内容样式随时可能更改",
+  "顶栏处的「知识库」有惊喜哦"
+]
+  const $body = document.body
+const tips_div = document.querySelector('footer>span')
+tips_index = 0;
+function switch_tips(event) {
+  event.stopPropagation()
+  tips_index = (tips_index + 1) % TIPS.length
+  tips_div.innerHTML = TIPS[tips_index]
+}
+      const auto_switch_interval = setInterval(switch_tips, 2000)
+      const $loading_box = document.querySelector('#loading-box')
+      const $footer = document.querySelector('footer')
+
+      //- const $loadingBox = document.getElementById('loading-box')
+      const preloader = {
+        endLoading: () => {
+          //- $body.style.overflow = ''
+          //- $loadingBox.classList.add('loaded')
+          $loading_box.classList.add('loaded')
+          setTimeout(() => {
+            $loading_box.style.display = 'none'
+          }, 300)
+          clearInterval(auto_switch_interval)
+        },
+        initLoading: (animate = false) => {
+          $loading_box.style.display = 'block'
+          //- $body.style.overflow = 'hidden'
+          $body.style.height = '100vh'
+          if(animate){
+            setTimeout(() => {
+              $loading_box.classList.remove('loaded')
+            }, 100)
+          }else
+            $loading_box.classList.remove('loaded')
+        }
+      }
+
+      preloader.initLoading()
+
+  window.addEventListener('load', preloader.endLoading)
+  //- !强制跳过
+      //- $body.onclick = switch_tips
+  $body.addEventListener('click', preloader.endLoading)
+  $footer.addEventListener('click', switch_tips)
+  //- @todo 尝试添加跳转开始动画……
+  //- btf.addGlobalFn('initLoading', ()=>{preloader.initLoading(true)}, 'preloader_init_animate')
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" alt="Logo"><span class="site-name">Markdown Any Notes - Woisol's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">在官方通道关闭的25年从鸿蒙4降级到emui11</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">在官方通道关闭的25年从鸿蒙4降级到emui11<a class="post-edit-link" href="http://iser:8000/Qexo_posts/在官方通道关闭的25年从鸿蒙4降级到emui11.md" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-13T16:33:53.000Z" title="发表于 2025-08-14 00:33:53">2025-08-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-13T17:28:19.186Z" title="更新于 2025-08-14 01:28:19">2025-08-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Knowledge/">Knowledge</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;该文章已经有&quot;,&quot;messageNext&quot;:&quot;天没有更新了，文章内容可能过时，请注意核实。&quot;,&quot;postUpdate&quot;:&quot;2025-08-14 01:28:19&quot;}" hidden></div><div class="note info modern"><p>家中有一台 mate20 pro，升级 HarmonyOS 后出现间断性重启的问题，据售后说是 CPU 虚焊。<br>某人尝试退回到 EMUI 后发现解决了问题，但误以为“虚焊”问题解决便再次更新到鸿蒙，问题再次出现……<br>今日再次尝试回退，却发现官方回退 EMUI 的通道已经被堵死……</p>
+</div>
+
+<h1 id="折腾经历"><a href="#折腾经历" class="headerlink" title="折腾经历"></a>折腾经历</h1><h2 id="官方助手回退到-HarmonyOS-2-0"><a href="#官方助手回退到-HarmonyOS-2-0" class="headerlink" title="官方助手回退到 HarmonyOS 2.0"></a>官方助手回退到 HarmonyOS 2.0</h2><p>首先是回退到 EMUI 升级鸿蒙的第一个版本 2.0 版本，此部分官方 HiSuite 就能够在 系统更新 中逐版本回退到 2.0，属于折腾基础不再赘述。</p>
+<h2 id="HiSuite-Proxy"><a href="#HiSuite-Proxy" class="headerlink" title="HiSuite Proxy"></a>HiSuite Proxy</h2><p>高强度查找找到了这个开源软件 <a target="_blank" rel="noopener" href="https://github.com/ProfessorJTJ/HISuite-Proxy">HiSuite Proxy</a>，大致原理是利用旧版本 HiSuite 的代理功能劫持系统更新来刷入特定版本的系统。</p>
+<p>具体使用方法不难找到不赘述。</p>
+<p>注意新版 HiSuite（14&#x2F;15）设置中不再提供 代理 选项而无法使用 HiSuite Proxy<br>开始是在网上手动查找 HiSuite10 下载使用，但是其实 HiSuite Proxy 自身就带有 OVE 版本(&#x2F;en&#x2F; 国际版本)的 HiSuite 11.0.0.720 下载链接，直接下载使用即可。<span class="hide-inline"><button type="button" class="hide-button" style="">:)</button><span class="hide-content">据[某CSDN文章](https://blog.csdn.net/qq_33963083/article/details/144519843)认为不使用国际版是降级失败原因之一，存疑但反正成本不大</span></span></p>
+<p>在 <a target="_blank" rel="noopener" href="https://github.com/ProfessorJTJ/HISuite-Proxy/issues/190">Issue#190</a> 中提到过 11.0 版本官方 block 了降级通道，因此也尝试了里面的 10.1 HiSuite。</p>
+<p>点击 Setup 后便可以启动 HiSuite，<br>在 <a target="_blank" rel="noopener" href="https://professorjtj.github.io/v2/">ROM 网站</a>中选好版本号<br>OS Type 选择 Roll-back OS（似乎必需）<br>Old Firmware 似乎开启关闭均可<br>点击 HiSuite 系统更新便可以看到回退的入口，点击更新即可</p>
+<p>选择的版本说是<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/587582306"><strong>需要注意 RxPx 版本号和手机相同</strong></a>否则导致降级后<strong>无法 OTA</strong></p>
+<div class="note flat"><p>这里的网站有 &#x2F; 和 &#x2F;v2 两个版本，区别应该是在于后者给新版 11.0 HiSuite 常用，前者在 10.1<br>不过 10.1 HiSuite 始终无法检测到选定的旧系统版本，尝试多个版本后放弃</p>
+</div>
+
+
+<hr>
+<p>但是并无法成功更新，下载到 100% 后直接弹出升级失败的提示，再次尝试连 100% 都没了<br>孤注一掷地把网站上所有 emui11 以及部分 2.0 10 的包都尝试了一遍，除了重新下载到 100% 外没有区别无法降级……</p>
+<p>穷举法再次尝试 HiSuite10.1 的各种 ROM 以及各种选项无果，尝试本地包但是 Proxy 软件内本地包是 disabled 的，查 Issue 无果使用 advance 选项选择无果。</p>
+<p>再次高强度查找，最终破局居然是<a target="_blank" rel="noopener" href="https://www.coolapk.com/feed/62418695">修改系统时间</a>，本次修改到 22 年成功允许。<span class="hide-inline"><button type="button" class="hide-button" style="">:(</button><span class="hide-content">修改系统时间的方法好像开头在其他地方也见到过，但是当时不相信直到这里再次看到尝试……也是挺草台的了😂</span></span></p>
+<h2 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h2><ol>
+<li>相当罕见的开机 Logo……1</li>
+<li>原始的应用图标 + 通知&#x2F;状态栏</li>
+</ol>
+<h2 id="荣耀……"><a href="#荣耀……" class="headerlink" title="荣耀……"></a>荣耀……</h2><h2 id="部分参考网站"><a href="#部分参考网站" class="headerlink" title="部分参考网站"></a>部分参考网站</h2><ol>
+<li></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://iser">Woisol</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://iser/Knowledge/2025-08/4d89ba69087f/">http://iser/Knowledge/2025-08/4d89ba69087f/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://iser" target="_blank">Markdown Any Notes - Woisol's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%8E%E4%B8%BA/">华为</a><a class="post-meta__tags" href="/tags/HarmonyOS/">HarmonyOS</a><a class="post-meta__tags" href="/tags/EMUI/">EMUI</a><a class="post-meta__tags" href="/tags/%E9%99%8D%E7%BA%A7/">降级</a><a class="post-meta__tags" href="/tags/HiSuite-Proxy/">HiSuite Proxy</a></div><div class="post-share"><div class="social-share" data-image="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/Life/2025-07/ef241e5a0e15/" title="AOSCC游记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">AOSCC游记</div></div><div class="info-2"><div class="info-item-1">第一次来上海 + 第一次参加此等集会 + 和 M 厂学长见面，浅记录一下</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Woisol</div><div class="author-info-description">Woisol's very early blog-mixed site</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #12b7f5;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">网站分为内外网版本，外网版本更新可能延迟 | 早期阶段，网站仍在魔改中</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%98%E8%85%BE%E7%BB%8F%E5%8E%86"><span class="toc-number">1.</span> <span class="toc-text">折腾经历</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%8A%A9%E6%89%8B%E5%9B%9E%E9%80%80%E5%88%B0-HarmonyOS-2-0"><span class="toc-number">1.1.</span> <span class="toc-text">官方助手回退到 HarmonyOS 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HiSuite-Proxy"><span class="toc-number">1.2.</span> <span class="toc-text">HiSuite Proxy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E6%9E%9C"><span class="toc-number">1.3.</span> <span class="toc-text">成果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8D%A3%E8%80%80%E2%80%A6%E2%80%A6"><span class="toc-number">1.4.</span> <span class="toc-text">荣耀……</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99"><span class="toc-number">1.5.</span> <span class="toc-text">部分参考网站</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在官方通道关闭的25年从鸿蒙4降级到emui11"/></a><div class="content"><a class="title" href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11">在官方通道关闭的25年从鸿蒙4降级到emui11</a><time datetime="2025-08-13T16:33:53.000Z" title="发表于 2025-08-14 00:33:53">2025-08-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Life/2025-07/ef241e5a0e15/" title="AOSCC游记">AOSCC游记</a><time datetime="2025-07-24T10:59:58.000Z" title="发表于 2025-07-24 18:59:58">2025-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-07/523aaa704d73/" title="一个前端通用的vsc_task">一个前端通用的vsc_task</a><time datetime="2025-07-21T09:38:10.000Z" title="发表于 2025-07-21 17:38:10">2025-07-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/unclassified/2025-07/66b73db15cb3/" title="状态栏歌词失效了？">状态栏歌词失效了？</a><time datetime="2025-07-20T17:08:56.000Z" title="发表于 2025-07-21 01:08:56">2025-07-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-07/6af2d06e9fe6/" title="pwsh 优化！">pwsh 优化！</a><time datetime="2025-07-20T09:23:16.000Z" title="发表于 2025-07-20 17:23:16">2025-07-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Woisol</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-moon"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-book-open"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title"></span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
