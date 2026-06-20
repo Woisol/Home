@@ -292,6 +292,25 @@ window.addEventListener('load', () => {
   let loadFlag = false
   const $searchMask = document.getElementById('search-mask')
   const $searchDialog = document.querySelector('#local-search .search-dialog')
+  const $searchTrigger = document.getElementById('woisol-search-trigger') || document.querySelector('#search-button > .search')
+
+  const setSearchVisible = visible => {
+    $searchMask.style.display = visible ? 'block' : ''
+    $searchDialog.style.display = visible ? 'block' : ''
+  }
+
+  const runSearchTransition = visible => {
+    if (window.woisolTheme && typeof window.woisolTheme.runSharedPanelViewTransition === 'function') {
+      return window.woisolTheme.runSharedPanelViewTransition($searchTrigger, $searchDialog, $searchMask, visible, {
+        duration: visible ? 460 : 320,
+        easing: visible ? 'cubic-bezier(.16,1,.3,1)' : 'cubic-bezier(.32,0,.2,1)',
+        getBaseTransform: () => (window.innerWidth < 768 ? 'translate3d(0, 0, 0)' : 'translate(-50%, -50%)'),
+        openClass: 'woisol-search-open'
+      })
+    }
+    setSearchVisible(visible)
+    return Promise.resolve()
+  }
 
   // fix safari
   const fixSafariHeight = () => {
@@ -302,9 +321,10 @@ window.addEventListener('load', () => {
 
   const openSearch = () => {
     btf.overflowPaddingR.add()
-    btf.animateIn($searchMask, 'to_show 0.5s')
-    btf.animateIn($searchDialog, 'titleScale 0.5s')
-    setTimeout(() => { input.focus() }, 300)
+    fixSafariHeight()
+    runSearchTransition(true).then(() => {
+      setTimeout(() => { input.focus() }, 60)
+    })
     if (!loadFlag) {
       !localSearch.isfetched && localSearch.fetchData()
       input.addEventListener('input', inputEventFunction)
@@ -318,14 +338,12 @@ window.addEventListener('load', () => {
       }
     })
 
-    fixSafariHeight()
     window.addEventListener('resize', fixSafariHeight)
   }
 
   const closeSearch = () => {
     btf.overflowPaddingR.remove()
-    btf.animateOut($searchDialog, 'search_close .5s')
-    btf.animateOut($searchMask, 'to_hide 0.5s')
+    runSearchTransition(false)
     window.removeEventListener('resize', fixSafariHeight)
   }
 

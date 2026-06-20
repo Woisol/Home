@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-dark-scheme="gray"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tx三面经验 | Markdown Any Notes</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="az，怎么又找上我了？搞了一个月 ugc 前端还答得上多少？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tx三面经验">
+<meta property="og:url" content="https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/index.html">
+<meta property="og:site_name" content="Markdown Any Notes">
+<meta property="og:description" content="az，怎么又找上我了？搞了一个月 ugc 前端还答得上多少？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg">
+<meta property="article:published_time" content="2025-11-26T12:43:08.000Z">
+<meta property="article:modified_time" content="2025-11-26T12:43:08.000Z">
+<meta property="article:author" content="Woisol">
+<meta property="article:tag" content="Life">
+<meta property="article:tag" content="Work">
+<meta property="article:tag" content="Social">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tx三面经验",
+  "url": "https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/",
+  "image": "https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg",
+  "datePublished": "2025-11-26T12:43:08.000Z",
+  "dateModified": "2025-11-26T12:43:08.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Woisol",
+      "url": "https://blog.woisol.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar26-05-24by-bs.jpg"><link rel="canonical" href="https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"><link rel="preload" as="script" href="/js/woisol-loading-lottie.js"><link rel="preload" as="fetch" href="/lottie/loading-terminal.json" type="application/json" crossorigin="anonymous"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.css"><script defer src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script><script defer src="/js/woisol-loading-lottie.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const applyDarkScheme = scheme => {
+        document.documentElement.setAttribute('data-dark-scheme', scheme === 'black' ? 'black' : 'gray')
+      }
+
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      btf.applyDarkScheme = applyDarkScheme
+
+      const theme = saveToLocal.get('theme')
+      const darkScheme = saveToLocal.get('dark-scheme')
+      applyDarkScheme(darkScheme || 'gray')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#FCCB1B","bgDark":"#222222","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tx三面经验',
+  siteTitle: 'Markdown Any Notes',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post',
+  externalLinkWhitelist: ["localhost","127.0.0.1"]
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box" data-state="booting" data-phase="booting" data-transition-mode="boot" data-loading-lottie-light="/lottie/loading-terminal.json" data-loading-lottie-dark="/lottie/loading-terminal.json"><div class="loading-box__app-open" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--accent" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--base" aria-hidden="true"></div><div class="loading-box__center"><div class="loading-box__hero" data-loading-lottie="1" aria-hidden="true"><span class="loading-box__hero-fallback"></span></div><div class="loading-box__copy"><p class="loading-text">全力加载中</p><p class="loading-subtext">Markdown Any Notes</p></div><div class="loading-box__tips"><span class="loading-box__tips-badge">Tips</span><p class="loading-box__tips-text">这里有一个 Tips 哦</p><button class="loading-box__tips-switch" type="button" aria-label="next tip"><i class="fas fa-rotate"></i></button></div></div></div><script>(() => {
+  const TIMINGS = {
+    bootCover: 960,
+    bootCoveredDwell: 420,
+    bootReveal: 1120,
+    pjaxCover: 640,
+    pjaxCoveredDwell: 0,
+    pjaxReveal: 680,
+    appCover: 560,
+    appReveal: 620,
+    slowThreshold: 620,
+    quickReveal: 220,
+    hidden: 140
+  }
+
+  const TIPS = [
+    '站点仍在持续重构中，界面和交互会继续慢慢打磨（咕咕咕）。',
+  ]
+
+  const box = document.getElementById('loading-box')
+  if (!box) return
+
+  const center = box.querySelector('.loading-box__center')
+  const tipsText = box.querySelector('.loading-box__tips-text')
+  const switchBtn = box.querySelector('.loading-box__tips-switch')
+  const isPjaxEnabled = true
+  let tipsIndex = 0
+  let timer = 0
+  let revealQueued = false
+  let currentTiming = {
+    cover: TIMINGS.bootCover,
+    coveredDwell: TIMINGS.bootCoveredDwell,
+    reveal: TIMINGS.bootReveal
+  }
+  const jobs = new Set()
+
+  const queueJob = (callback, delay) => {
+    const id = window.setTimeout(() => {
+      jobs.delete(id)
+      callback()
+    }, delay)
+    jobs.add(id)
+    return id
+  }
+
+  const clearJobs = () => {
+    jobs.forEach(id => window.clearTimeout(id))
+    jobs.clear()
+  }
+
+  const setPhase = phase => {
+    box.dataset.phase = phase
+  }
+
+  const getPendingTransition = () => window.woisolPendingPjaxTransition || null
+
+  const clearPendingTransition = () => {
+    window.woisolPendingPjaxTransition = null
+  }
+
+  const setBodyTransition = active => {
+    const bodyWrap = document.getElementById('body-wrap')
+    if (!bodyWrap) return
+    bodyWrap.classList.toggle('is-pjax-leaving', active)
+  }
+
+  const playBodyEnter = () => {
+    document.documentElement.classList.remove('is-pjax-entering')
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('is-pjax-entering')
+      queueJob(() => {
+        document.documentElement.classList.remove('is-pjax-entering')
+      }, currentTiming.reveal)
+    })
+  }
+
+  const setTiming = mode => {
+    currentTiming = mode === 'boot'
+      ? {
+          cover: TIMINGS.bootCover,
+          coveredDwell: TIMINGS.bootCoveredDwell,
+          reveal: TIMINGS.bootReveal
+        }
+      : {
+          cover: mode === 'app-open' ? TIMINGS.appCover : TIMINGS.pjaxCover,
+          coveredDwell: TIMINGS.pjaxCoveredDwell,
+          reveal: mode === 'app-open' ? TIMINGS.appReveal : TIMINGS.pjaxReveal
+        }
+  }
+
+  const syncTip = () => {
+    tipsText.textContent = TIPS[tipsIndex] || ''
+  }
+
+  const rotateTip = () => {
+    tipsIndex = (tipsIndex + 1) % TIPS.length
+    syncTip()
+  }
+
+  const hideLoading = () => {
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    queueJob(() => {
+      box.style.display = 'none'
+      box.dataset.transitionMode = 'boot'
+      box.classList.remove('is-slow')
+      setBodyTransition(false)
+      clearPendingTransition()
+      window.dispatchEvent(new Event('woisol:loading-finished'))
+    }, TIMINGS.hidden)
+  }
+
+  const skipLoading = () => {
+    if (box.dataset.state === 'done') return
+    clearJobs()
+    revealQueued = false
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    box.style.display = 'none'
+    box.dataset.transitionMode = 'boot'
+    box.classList.remove('is-slow')
+    setBodyTransition(false)
+    clearPendingTransition()
+    window.dispatchEvent(new Event('woisol:loading-finished'))
+  }
+
+  const isLoadingBackground = target => target === box || target === center || Boolean(target && target.classList && target.classList.contains('loading-box__mask'))
+
+  const revealLoading = () => {
+    if (box.dataset.state === 'revealing' || box.dataset.state === 'done') return
+    revealQueued = false
+    clearJobs()
+    box.dataset.state = 'revealing'
+    const quickPjaxReveal = box.dataset.transitionMode === 'pjax' && !box.classList.contains('is-slow')
+    setPhase(quickPjaxReveal ? 'quick-reveal' : 'revealing')
+    setBodyTransition(false)
+    playBodyEnter()
+    queueJob(hideLoading, quickPjaxReveal ? TIMINGS.quickReveal : currentTiming.reveal)
+  }
+
+  const endLoading = () => {
+    if (box.dataset.state === 'done' || box.dataset.phase === 'idle') return
+    if (box.dataset.phase === 'covering') {
+      revealQueued = true
+      return
+    }
+
+    revealLoading()
+  }
+
+  const initLoading = animate => {
+    const pendingTransition = animate ? getPendingTransition() : null
+    const mode = pendingTransition && pendingTransition.type === 'app-open' ? 'app-open' : animate ? 'pjax' : 'boot'
+    clearJobs()
+    revealQueued = false
+    setTiming(mode)
+    box.style.display = 'block'
+    box.dataset.state = 'loading'
+    box.dataset.transitionMode = mode
+    box.classList.remove('is-slow')
+    box.classList.remove('loaded')
+    setPhase(animate ? mode === 'app-open' && box.dataset.phase === 'covering' ? 'covering' : 'cover-start' : 'covered')
+
+    if (animate) setBodyTransition(true)
+
+    if (animate) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!(mode === 'app-open' && box.dataset.phase === 'covering')) setPhase('covering')
+        })
+      })
+
+      queueJob(() => {
+        setPhase('covered')
+        if (revealQueued) {
+          queueJob(revealLoading, currentTiming.coveredDwell)
+        }
+
+        queueJob(() => {
+          if (box.dataset.state === 'loading' && box.dataset.phase === 'covered') {
+            box.classList.add('is-slow')
+          }
+        }, TIMINGS.slowThreshold)
+      }, currentTiming.cover)
+    }
+
+    window.dispatchEvent(new Event('woisol:loading-started'))
+  }
+
+  syncTip()
+  timer = window.setInterval(rotateTip, 2600)
+
+  switchBtn && switchBtn.addEventListener('click', event => {
+    event.preventDefault()
+    event.stopPropagation()
+    rotateTip()
+  })
+
+  box.addEventListener('click', event => {
+    if (!isLoadingBackground(event.target)) return
+    event.preventDefault()
+    skipLoading()
+  })
+
+  initLoading(false)
+  window.addEventListener('load', endLoading, { once: true })
+
+  if (isPjaxEnabled && window.btf && typeof btf.addGlobalFn === 'function') {
+    btf.addGlobalFn('pjaxSend', () => initLoading(true), 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', endLoading, 'preloader_end')
+  }
+})()</script><div id="woisol-bg-pattern" aria-hidden="true"><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tr"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--bl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--br"></span></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav class="woisol-nav-compact" id="nav" data-page-type="post"><span class="is-post-switch" id="blog-info"><div class="woisol-nav-title-switch"><a class="nav-site-title nav-site-title--default" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" alt="Logo"><div class="woisol-nav-brand"><span class="site-name">折腾，是为了<span class="site-name__accent">不折腾</span></span></div></a><span class="nav-page-title nav-page-title--reading" id="woisol-nav-page-title"><span class="site-name">tx三面经验</span></span></div></span><div id="menus"><div class="woisol-nav-actions"><div id="search-button"><button class="site-page social-icon search nav-action-btn" id="woisol-search-trigger" type="button" title="搜索" aria-label="搜索" data-woisol-trigger="search" data-lottie-icon="search" data-lottie-trigger="hover"><i class="fas fa-search fa-fw"></i></button></div></div></div><div class="woisol-nav-progress"><span class="woisol-nav-progress__bar" id="woisol-nav-progress-bar"></span></div></nav></header><main class="layout" id="content-inner"><div id="post"><div class="post-hero woisol-reveal" id="post-info" data-reveal-delay="0"><div class="post-hero__surface is-plain"><div class="post-hero__body"><div class="post-hero__quality-row"><span class="post-hero__quality post-hero__quality--jss"><span>普通</span></span></div><h1 class="post-title">tx三面经验</h1><div class="post-hero__taxonomies"><a class="post-hero__category" href="/categories/Knowledge/"><i class="fas fa-folder-open fa-fw"></i><span>Knowledge</span></a><a class="post-hero__tag" href="/tags/Life/"><i class="fas fa-tag fa-fw"></i><span>Life</span></a><a class="post-hero__tag" href="/tags/Work/"><i class="fas fa-tag fa-fw"></i><span>Work</span></a><a class="post-hero__tag" href="/tags/Social/"><i class="fas fa-tag fa-fw"></i><span>Social</span></a><a class="post-hero__tag" href="/tags/JavaScript/"><i class="fas fa-tag fa-fw"></i><span>JavaScript</span></a><a class="post-hero__tag" href="/tags/TypeScript/"><i class="fas fa-tag fa-fw"></i><span>TypeScript</span></a><a class="post-hero__tag" href="/tags/React/"><i class="fas fa-tag fa-fw"></i><span>React</span></a></div><div class="post-hero__meta" id="post-meta"><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-26T12:43:08.000Z" title="发表于 2025-11-26 20:43:08">2025-11-26</time></span><span class="post-hero__meta-chip post-meta-date"><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-26T12:43:08.000Z" title="更新于 2025-11-26 20:43:08">2025-11-26</time></span></div><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></div></div><article class="container post-content woisol-reveal" id="article-container" data-reveal-delay="100"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="？不是这个密码吧？再试试？" data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="e47f8eba406c2db490f66597527c69252e2e4e406bba75d99f165047ccb3b9aa">0ec253c71bb9c1bc5a667698324954c3eb821ee5d4ff0ab3969505ecbae72c713918f04e45b74eba273c454dc9a6ccf2df1845781e3f724a1f09bd791d530ce33ce8cd2e0d439ef67d0a546d7a051d7f14fb60066d2ca8af15134e63d84e8bb241f6b4e418acf5d70c6f64f7830111b4f23ba63e2019eb1f29e63b7cc46314de80f7482b52b38e2bf40caf7369aa06fdca9329fbe56636d8697c270ce373a73d6b1215d81ce69d21feb04755e97bef42e3f3953826f4bf3e2d835b13c180880d2dade48ab1163349e9901b7737a858318485140b26e365a2d6778fd0899d5bbd370f3aed9c1e4c4ac0c7a4b3324a2476d4026adda2bc3fc3dfab51369e0b8f59c21bdcb0534978ebea34ddd1bb9c41e5da7d31eba5bc5b10640cc960a24713933d15c33434f12110e4f2a9a1287dfa4139706f13072ba9d1d5c065fb91a899eeffd4195e040fa0b881e9407dc84048af0f4e24614bd6628ee2ccfb8a5fc860e992ae3052d853c4a136e74015098b0ece59af0e46bcf7280686e10af6de0671743330740ea4e0cfcc5b54a4d5d4af23e19142b1df48a9669017406ab8ab12a1914a8420f8e1e9bb580b613231febc759b502ea8e7ed3c8e4d15b41daf0edc4378a5edb88b07d0ad58ad37acdd99157442dbeb05393e727892a93ce67d590237022d6db5a07c9f4d3c97d6279b4e3a650bbd6b15ae60cf7bede3c1dabc482506589b126a85e4973d8a35ed2f3ffba0f1549c5bbb621148f732b31e073b5d55b4b4d70d0f7e3418b258d0b5cd340e8eb923a3bad1b74a5d810338cb2e021d7152ae6657699879ef83f709710a612b0a15e7e4639e99e6034603dad45843d6bca16672f65364411ea93e9671cb125d0e77a977cd368f181bd83c5f573ef57bfe6b8e1663da7707d9a5601c4e39218a6a99f4f212b43e1db670e46c1a9d4bf98948ae7de8349dfeeb3e349aa5b20c11d8162ed1513292f5b5641ae84d45fca40b9ed8a1516c8d88271376e093bd3fb6f7eb48ff301c3406f2a8ee66d86d004bc34f7f279c1ae2872491fcfcee091c1c5e861dbafb7dd7709899d928ac0bb3b2e0916721ffa76bf187aa481c2ad1c130cab2294164c1f9695c61d4969bd0f7600e04708e7ef093255f5926443239aedd40624fa9efcf1395a73da9369f994f995616a174d3f229fbd067cbf3ea78f11755ef6fbacec3a92fd8cedb6ef56e1c9798415faa35623870dd1ce285f159114623929f8a2f71695d72e86b8d4e88d7a9ff9782f8ff7f11ede2b4bdc39020c68019507e9e24dbb9ff52ff9965c08910863fb9e2c29bf708b5a6471d4d8ea8e6f2626644a57468451710002f8100d9db23793b8909862649d606d3da867e6d32fdd7360e1b77e8876654311b9c5c1bbb16b0eddd67d31c21ca8f2c6fe7b014d79139214b1db059e4d8907884aedd8df726dcc4ddb66f2734650326889bd7b307673d9546d973206a218f7e303f5cacf31485bf53d35b276cb3f7a72b847ed8dac1a205b0e1783405f2fdbf5008e4febc1a0dbc9fe2e86411059c86b4217607175cb268a62e12a8191ff0015ad49925decc3eff6f8dc59dab0315f350102711aa814bae23f7389217559b3367275dcc71d3c95eaf1436964bcfc852ee652a352cfd382837e67ed4a341d066eaac0fedc63f89a66076d2e9b49935930dc84752b4356ddfad2706c384a76fd53b5675625b92dd0d899eac8aa28cc1242c093d7cac0c467a7ff06a9753c1bd3c1c845ef89de4ddfdf8adcfc787a3024836393328ff9ecc65825e525f9a71e3db0933f0c9ed3aab02e754d1a0478e96f6c7a79b404916ac42eb781dbdf615ddc4635f74215a4c593f8a19e993d5ffcb414b4616b9bea1576b6a73282fbb9d9e782607bd2af5148b55ae6babb263cbd5a098401055bcb5450f18921b7d97681b49fdee7d43d1dbaba94f0f5f848268cb2dadaecf8c45e4c81afa664ad916c6bab9af8ff4a2ed3d0da40407ac880015177be9453ff8d6e68b67303d0a7bc5f4d343340a6dc4c8ad114a1baa7f7b17671ad4217924d2714afbf5dab37e0287f4432d25e1cd3878c77219daa5e27e2b9ca7723ebbf57c1affbc273b15de7f6755e233aeb3cf75fa5924a18af3690a2a027320832ad36de30d6333be9362112f15cbe63b0bf3d0dd68a42ffcc273c021be539c5733b56c52c42c0134f1521c286e33f376f98a32c099a2e778b72d5e67bc6c87c121c4bbbd29225e8e7a5e53c6eb3c3eae7d12b88db9e61bc4d7cda9b5d979c23d8c597b9842df422aaf6e95f5cd75efb85d46a56b308a51ffdbd145b2b8feb370d9bd08678631dfc1cdc5845602b518fdfc58fb5f25a820a25db0d1b989d7dab2dd31d408a6f8213d05c4d3e0ff910dea8699a7b0b430cd8793048acd683677101b198ab09ef179954e483368065863458af08062d9ac5bcb56224ecc38a39d74de976f6027edad718ec74da0bb03ac11e46ae138e0be43a3f37e878a690627d356013616f75aae7614fe856b93acd3f7294243f94aaf73d21cd65f6c1e011440c069e1e189456287abbbbc709270fdddc232acc9f39f847a600d5587220ab50c574e58c531a083d99ebec6e558f82a5e139327aa39f9ccda9aa686c42df900f4cacf646d0f4658c5cbab8ef2dece46eb78b421c153065e079770ca4d830c3446931b117dcc6c75ed4637ccecd2b13833cdadd6cb5bc30c2640a8c320ed8c50bf7ba4711fd98c9e291e9a13e86d37d2c3bbc9199fd8232067752da9bf257b54d01158468ddd553aae678737ca6d47b41ac1d9633bac9f9f1524c9cb8f2325f90be6834f63957f34ea0aa7bd8a72e64bbcc215eeaee4a12ee25de0dbbf79369b2702330d08b299850ea16e5b5ec47c70a2722c535c0badf77c95c7b095cab583544ca6b28dca507ebf1b41ee2e5a0df87e1309b0145e73bb3b10b33f1447f6bd29a2e97e4fda56f5ccca12a5a1b29642b51371d6ce0491baa06f93d78721bd6a482a17a6e7254b2567bd1b1316d928c14334575fdd928eff8a6474f5524337c3ad3299f99077aa1deaf17a6eda7885b552f9e14a6e32caa991b00393768c2727fa32325d85a33a2051558ec0b76d19110a03a436dbfd13b0c782a38f96ce68170649562578316030e0daac0699e6b2a96f2f3bf5bd8656d7549554086b0c3244dd3acc225eae5ed7f8bf14f59b726d877ac49fdb7f0e34edff50714605592490678f3353d2bd0cfb91d23cf63afd374129aa87f9a01fd2436bd8c1ad759428c2a5c0c10a23bd55e19e357ab8b2fe5a32e74cb5f1ba1898aadb041af2f6ac2fdd0429f067298ef728516a8319719c6ca92998fada54552d4fc237c17cc98417c49321ddbc1a272c48453b414962e47de42fadc09e9368d734f12ea7b9238bd4027d7e2484ba4170852e6a7327768344773f45a645b9da80a54d653e58553a0f2c985ee82b40fe6120e08c9c2bc81eb919c84c076142ebe1ae1d9c71c8016e7ccd3f31824b6493a99c4bde653f29855a98557ff97ba0ec01e0766c20d96ec19f50e73be7841d24a04649d0b2a99f30fdb1422bc030f492bf520699e2cc4dc7ba2555d22d613dc2abbee5078cda08f3ea966c1ac1d8bfd7c25915eb44c8853eacd3c499c8d1e052c332af87222bd1413b562b59ba8d94a4f2509a3fafff4e8fd01613b0253f524eead56a0fb4726c02424228a9ebc3e51720b34b55a98dad28cac4a332ea8f17e136d865125aea56de6f7967945590cd4063371c8f4f9ecced7506a584522ff043eb616493d9260045524d63597ce26af7aa8477c72a758c52d9356dd48df895827c01a70b0c155359187372abd3fdb83079076ef25f2d0f96ca4cba81aa8e26c3fb30c7220a7145efa50637df6594ef4e801a9902c055b68af76da4447c78dfa7d724ec64dae7de1d00e1d62d3ebe4d4ee7e745e9255bf3f52d9c3316361904b1fbe5542f546b718834629414e4620084fb1ac537d481de22b57ed2f226181c1632685292fe0c8c916c54a7f77cd2e8a599a61869caaa73ccb9977c5f4d0b502e140f3846fd68a6c57bbe01caaefa28bc8bff67aa9ee26ba53cd54afc865eca70c378a2ec658075b57db5b5d894d566e4a8da5b3e595ee5a598397fd4fd6789c43f10be</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-shrink">
+      <input class="hbe hbe-input-field hbe-input-field-shrink" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-shrink" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-shrink">把密码交出来才能看这里的内容哦(～￣▽￣)～</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css"></article><div class="post-tail"><div class="post-tail__section post-tail__section--meta"><div class="post-tail__headline" data-lottie-icon="bookmark" data-lottie-trigger="hover" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-bookmark fa-fw"></i><span>文章信息</span></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw" data-lottie-icon="face-scanner" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__author"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz">Woisol</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw" data-lottie-icon="link" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__type"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/">https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw" data-lottie-icon="info" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__notice"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.woisol.xyz" target="_blank">Markdown Any Notes</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Life/">Life</a><a class="post-meta__tags" href="/tags/Work/">Work</a><a class="post-meta__tags" href="/tags/Social/">Social</a><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a><a class="post-meta__tags" href="/tags/TypeScript/">TypeScript</a><a class="post-meta__tags" href="/tags/React/">React</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar26-05-24by-bs.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="post-tail__section post-tail__section--related"><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-06/664db3c0aaf2/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">ali 初面试经验汇总</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|Work</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 06 · 11</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">ali 初面试经验汇总</h3><div class="article-card__hover-desc">本以为简历关都没过的阿里最终还是来了面试，有过 tx 面试的经历后这次面试体验如何？</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-jss relatedPosts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-08/e0fa6fcd1e75/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">tx二面经验</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|Work</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 08 · 21</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">tx二面经验</h3><div class="article-card__hover-desc">临近暑假结束广州某厂捞人捞到头上了，这次情况如何？</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="280" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-06/36d92c9f9646/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">初次面试经验汇总</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|Work</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 06 · 04</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">初次面试经验汇总</h3><div class="article-card__hover-desc">前端er 在 tx 的第一次面试，体验如何？</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-jss relatedPosts__card woisol-reveal" data-reveal-delay="360" data-pjax-transition="app-open"><a class="article-card__link" href="/Life/2025-05/6dc59c3e7d12/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://github.com/GZTimeWalker/GZCTF/raw/develop/assets/banner.light.svg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="W4terCTF 2025 Recall"></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">W4terCTF 2025 Recall</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Life</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|W4terCTF</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 05 · 04</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">W4terCTF 2025 Recall</h3><div class="article-card__hover-desc">第一次参加CTF后，我的心态发生了这些变化……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-trash relatedPosts__card woisol-reveal" data-reveal-delay="440" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-03/e68bff9b8bc5/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>草稿</span></span><h3 class="article-card__title">我的手机数据全部丢失了：论备份的重要性</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|小米</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 03 · 15</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">我的手机数据全部丢失了：论备份的重要性</h3><div class="article-card__hover-desc">2025年不重视备份的结果是……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--random"><div class="woisol-random-posts"><div class="woisol-random-posts__headline" data-lottie-icon="more" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-ellipsis fa-fw"></i><span>随机看看</span></div><div class="woisol-random-posts__list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-top woisol-random-posts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-01/e6a16ece7d15/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">只是一个可能通用的 .gitattributes</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Git|Version Control</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 01 · 15</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">只是一个可能通用的 .gitattributes</h3><div class="article-card__hover-desc">那还说啥了，直接上文件，内容不断更新中： undefined最初版本来自于 AFFiNE 项目</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-top woisol-random-posts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-05/93b372280e68/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://github.com/GZTimeWalker/GZCTF/raw/develop/assets/banner.light.svg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="W4terCTF 2025 Writeup"/></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">W4terCTF 2025 Writeup</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>W4terCTF|CTF</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 05 · 04</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">W4terCTF 2025 Writeup</h3><div class="article-card__hover-desc">第一次参加校级CTF被带飞了？</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--pagination"><div class="post-tail__headline" data-lottie-icon="book" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-book-open fa-fw"></i><span>继续阅读</span></div><nav class="pagination-post" id="pagination"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-top pagination-post__card prev-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-10/ffa066c787f3/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">关于更优雅的原铁每日自动化实现</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Game|Genshin</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 10 · 12</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">关于更优雅的原铁每日自动化实现</h3><div class="article-card__hover-desc">人老了就容易喜欢全自动游戏，这里记录一下更优雅的原铁每日自动化实现</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-top pagination-post__card next-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-01/e6a16ece7d15/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">只是一个可能通用的 .gitattributes</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Git|Version Control</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 01 · 15</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">只是一个可能通用的 .gitattributes</h3><div class="article-card__hover-desc">那还说啥了，直接上文件，内容不断更新中： undefined最初版本来自于 AFFiNE 项目</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></nav></div><div class="post-tail__section post-tail__section--comments"><div class="post-tail__headline" data-lottie-icon="chat" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-comments fa-fw"></i><span>交流与评论</span></div><div id="post-comment"><div class="comment-head"></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="avatar"/></div><div class="author-info-name">Woisol</div><div class="author-info-description">Woisol's very early blog-mixed site</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">116</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Woisol"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: light-dark(#24292e,#fdfdfd);"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #04BE02;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">网站分为内外网版本，外网版本更新可能延迟 | 早期阶段，网站仍在魔改中</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content toc-div-class" style="display:none"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">一面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93"><span class="toc-number">1.2.</span> <span class="toc-text">整体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">详细流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D%E4%B8%8E%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.3.1.</span> <span class="toc-text">自我介绍与项目介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF"><span class="toc-number">1.3.3.</span> <span class="toc-text">技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#React-%E7%9A%84-diff-%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">React 的 diff 算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A5%E8%81%8C%E9%80%89%E6%8B%A9"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">入职选择</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE%E9%97%AE%E7%AD%94"><span class="toc-number">1.3.4.</span> <span class="toc-text">结尾问答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%A0%E4%BB%AC%E9%82%A3%E8%BE%B9%E6%B7%B7%E5%85%83%E5%B9%B3%E5%8F%B0%E6%98%AF%E5%81%9A%E4%BB%80%E4%B9%88%E7%9A%84%EF%BC%9F"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">你们那边混元平台是做什么的？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E9%97%AE%E7%AD%94%E4%BD%93%E7%8E%B0%E4%BA%86%E6%88%91%E7%9A%84%E7%BC%BA%E9%99%B7%EF%BC%9F"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">这次问答体现了我的缺陷？</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item no-cover is-current"><div class="content"><a class="title" href="/Knowledge/2025-11/ed6e69417afe/" title="tx三面经验">tx三面经验</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-11-26T12:43:08.000Z" title="发表于 2025-11-26 20:43:08">2025-11-26</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-08/e0fa6fcd1e75/" title="tx二面经验">tx二面经验</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-08-21T11:37:35.000Z" title="发表于 2025-08-21 19:37:35">2025-08-21</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-06/664db3c0aaf2/" title="ali 初面试经验汇总">ali 初面试经验汇总</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-06-11T06:56:38.000Z" title="发表于 2025-06-11 14:56:38">2025-06-11</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-06/36d92c9f9646/" title="初次面试经验汇总">初次面试经验汇总</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-06-04T08:20:23.000Z" title="发表于 2025-06-04 16:20:23">2025-06-04</time></div></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2026-05/45e9ce52d4fb/" title="关于Windows安全启动验证失败的一些探索记录">关于Windows安全启动验证失败的一些探索记录</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-05-31T08:09:40.000Z" title="发表于 2026-05-31 16:09:40">2026-05-31</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-21T16:20:59.000Z" title="发表于 2026-04-22 00:20:59">2026-04-22</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现">Vector：安卓 16 上的 Zygisk lsp 实现</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-20T06:39:16.000Z" title="发表于 2026-04-20 14:39:16">2026-04-20</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/" title="newtest">newtest</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-21T13:12:37.000Z" title="发表于 2026-03-21 21:12:37">2026-03-21</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://www.xqu5.com/data/attachment/forum/202210/02/220405qe0t7twog0l7wqur.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="在安卓16上位置穿越"/></a><div class="content"><a class="title" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越">在安卓16上位置穿越</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-20T05:18:36.000Z" title="发表于 2026-03-20 13:18:36">2026-03-20</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-brand"><strong class="footer-brand__title">Markdown Any Notes</strong><p class="footer-brand__desc">Woisol's very early blog-mixed site</p></div><div class="footer-meta"><div class="copyright">&copy;2024 - 2026 By Woisol</div><div class="framework-info"><span class="footer-meta__item"><i class="fas fa-cubes fa-fw"></i><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo 7.3.0</a></span><span class="footer-separator">|</span><span class="footer-meta__item"><i class="fas fa-feather-pointed fa-fw"></i><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly-Patched base on 5.3.3</a></span></div></div></div></footer></div><div id="woisol-overlays"><div class="woisol-link-tooltip" id="woisol-link-tooltip" role="tooltip" aria-hidden="true" data-placement="top"><div class="woisol-link-tooltip__host" data-tooltip-host></div><div class="woisol-link-tooltip__url" data-tooltip-url></div></div><div class="woisol-modal woisol-external-modal" id="woisol-external-modal" data-woisol-modal="external-link" hidden aria-hidden="true"><div class="woisol-modal__backdrop woisol-external-modal__backdrop" data-modal-action="cancel"></div><div class="woisol-modal__dialog woisol-external-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="woisol-external-modal-title" tabindex="-1"><div class="woisol-external-modal__header"><div class="woisol-external-modal__icon"><i class="fas fa-up-right-from-square"></i></div><span><div class="woisol-external-modal__eyebrow">External Link</div><h3 class="woisol-external-modal__title" id="woisol-external-modal-title">即将离开本站</h3></span></div><p class="woisol-external-modal__desc">你将跳转到一个外部网站，请确认目标链接是否可信。</p><div class="woisol-external-modal__host" data-modal-host></div><div class="woisol-external-modal__url" data-modal-url></div><div class="woisol-external-modal__actions"><button class="woisol-external-modal__btn woisol-external-modal__btn--ghost woisol-hover-btn" type="button" data-modal-action="cancel">取消</button><button class="woisol-external-modal__btn woisol-hover-btn" type="button" data-modal-action="confirm">继续前往</button></div></div></div></div><div class="rightside-show" id="rightside"><div id="rightside-config-hide"><div class="rightside-theme-palette"><span class="rightside-theme-palette__label">暗色风格</span><div class="rightside-theme-palette__options"><button class="rightside-theme-palette__option" id="dark-scheme-gray" type="button" data-label="暗灰风格" data-scheme="gray"><span>暗灰</span></button><button class="rightside-theme-palette__option" id="dark-scheme-black" type="button" data-label="纯黑风格" data-scheme="black"><span>纯黑</span></button></div></div></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置" data-label="设置" data-lottie-icon="settings" data-lottie-trigger="hover"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换" data-label="日间和夜间模式切换"><span class="darkmode-icon" aria-hidden="true"><svg class="darkmode-icon__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"><animate attributeName="r" values="4;8" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="-4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="opacity:0;transform-origin:50% 50%;"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="0.5 0.5" to="1 1" dur="0.5s" begin="indefinite"></animateTransform></path></svg><svg class="darkmode-icon__moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" style="opacity:0;"><animate attributeName="r" values="8;4" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 -4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="transform-origin:50% 50%;"><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1 1" to="0.5 0.5" dur="0.5s" begin="indefinite"></animateTransform></path></svg></span></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换" data-label="单栏和双栏切换" data-lottie-icon="more" data-lottie-trigger="hover"><i class="fas fa-ellipsis"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录" data-label="目录" data-lottie-icon="list" data-lottie-trigger="hover"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论" data-label="前往评论" data-lottie-icon="chat" data-lottie-trigger="hover"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部" data-label="回到顶部" data-lottie-icon="arrow-up" data-lottie-trigger="hover"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.js"></script><script src="/js/woisol-theme.js"></script><script src="/js/main.js"></script><script src="/js/woisol-lottie.js"></script><script src="/js/woisol-ui.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"data-category":"General","data-mapping":"pathname","data-strict":0,"data-reactions-enabled":1,"data-emit-metadata":0,"data-input-position":"bottom","data-lang":"zh-CN"}
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Woisol/blog-comments',
+      'data-repo-id': 'R_kgDOS-YlGQ',
+      'data-category-id': 'DIC_kwDOS-YlGc4C_aVp',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title" data-lottie-icon="search" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-magnifying-glass"></i><span>搜索</span></span><span id="loading-status"></span><button class="search-close-button" type="button" aria-label="close search"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

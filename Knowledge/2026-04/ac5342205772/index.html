@@ -1,0 +1,625 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-dark-scheme="gray"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>关于使用 Droidspace 在安卓运行 Linux 容器的一些补充 | Markdown Any Notes</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充">
+<meta property="og:url" content="https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/index.html">
+<meta property="og:site_name" content="Markdown Any Notes">
+<meta property="og:description" content="依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mio.woisol.xyz/blog/covers/DroidSpace.png">
+<meta property="article:published_time" content="2026-04-21T16:20:59.000Z">
+<meta property="article:modified_time" content="2026-04-21T16:20:59.000Z">
+<meta property="article:author" content="Woisol">
+<meta property="article:tag" content="Termux">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Droidspace">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mio.woisol.xyz/blog/covers/DroidSpace.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "关于使用 Droidspace 在安卓运行 Linux 容器的一些补充",
+  "url": "https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/",
+  "image": "https://mio.woisol.xyz/blog/covers/DroidSpace.png",
+  "datePublished": "2026-04-21T16:20:59.000Z",
+  "dateModified": "2026-04-21T16:20:59.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Woisol",
+      "url": "https://blog.woisol.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar26-05-24by-bs.jpg"><link rel="canonical" href="https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"><link rel="preload" as="script" href="/js/woisol-loading-lottie.js"><link rel="preload" as="fetch" href="/lottie/loading-terminal.json" type="application/json" crossorigin="anonymous"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.css"><script defer src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script><script defer src="/js/woisol-loading-lottie.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const applyDarkScheme = scheme => {
+        document.documentElement.setAttribute('data-dark-scheme', scheme === 'black' ? 'black' : 'gray')
+      }
+
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      btf.applyDarkScheme = applyDarkScheme
+
+      const theme = saveToLocal.get('theme')
+      const darkScheme = saveToLocal.get('dark-scheme')
+      applyDarkScheme(darkScheme || 'gray')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#FCCB1B","bgDark":"#222222","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '关于使用 Droidspace 在安卓运行 Linux 容器的一些补充',
+  siteTitle: 'Markdown Any Notes',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post',
+  externalLinkWhitelist: ["localhost","127.0.0.1"]
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box" data-state="booting" data-phase="booting" data-transition-mode="boot" data-loading-lottie-light="/lottie/loading-terminal.json" data-loading-lottie-dark="/lottie/loading-terminal.json"><div class="loading-box__app-open" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--accent" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--base" aria-hidden="true"></div><div class="loading-box__center"><div class="loading-box__hero" data-loading-lottie="1" aria-hidden="true"><span class="loading-box__hero-fallback"></span></div><div class="loading-box__copy"><p class="loading-text">全力加载中</p><p class="loading-subtext">Markdown Any Notes</p></div><div class="loading-box__tips"><span class="loading-box__tips-badge">Tips</span><p class="loading-box__tips-text">这里有一个 Tips 哦</p><button class="loading-box__tips-switch" type="button" aria-label="next tip"><i class="fas fa-rotate"></i></button></div></div></div><script>(() => {
+  const TIMINGS = {
+    bootCover: 960,
+    bootCoveredDwell: 420,
+    bootReveal: 1120,
+    pjaxCover: 640,
+    pjaxCoveredDwell: 0,
+    pjaxReveal: 680,
+    appCover: 560,
+    appReveal: 620,
+    slowThreshold: 620,
+    quickReveal: 220,
+    hidden: 140
+  }
+
+  const TIPS = [
+    '站点仍在持续重构中，界面和交互会继续慢慢打磨（咕咕咕）。',
+  ]
+
+  const box = document.getElementById('loading-box')
+  if (!box) return
+
+  const center = box.querySelector('.loading-box__center')
+  const tipsText = box.querySelector('.loading-box__tips-text')
+  const switchBtn = box.querySelector('.loading-box__tips-switch')
+  const isPjaxEnabled = true
+  let tipsIndex = 0
+  let timer = 0
+  let revealQueued = false
+  let currentTiming = {
+    cover: TIMINGS.bootCover,
+    coveredDwell: TIMINGS.bootCoveredDwell,
+    reveal: TIMINGS.bootReveal
+  }
+  const jobs = new Set()
+
+  const queueJob = (callback, delay) => {
+    const id = window.setTimeout(() => {
+      jobs.delete(id)
+      callback()
+    }, delay)
+    jobs.add(id)
+    return id
+  }
+
+  const clearJobs = () => {
+    jobs.forEach(id => window.clearTimeout(id))
+    jobs.clear()
+  }
+
+  const setPhase = phase => {
+    box.dataset.phase = phase
+  }
+
+  const getPendingTransition = () => window.woisolPendingPjaxTransition || null
+
+  const clearPendingTransition = () => {
+    window.woisolPendingPjaxTransition = null
+  }
+
+  const setBodyTransition = active => {
+    const bodyWrap = document.getElementById('body-wrap')
+    if (!bodyWrap) return
+    bodyWrap.classList.toggle('is-pjax-leaving', active)
+  }
+
+  const playBodyEnter = () => {
+    document.documentElement.classList.remove('is-pjax-entering')
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('is-pjax-entering')
+      queueJob(() => {
+        document.documentElement.classList.remove('is-pjax-entering')
+      }, currentTiming.reveal)
+    })
+  }
+
+  const setTiming = mode => {
+    currentTiming = mode === 'boot'
+      ? {
+          cover: TIMINGS.bootCover,
+          coveredDwell: TIMINGS.bootCoveredDwell,
+          reveal: TIMINGS.bootReveal
+        }
+      : {
+          cover: mode === 'app-open' ? TIMINGS.appCover : TIMINGS.pjaxCover,
+          coveredDwell: TIMINGS.pjaxCoveredDwell,
+          reveal: mode === 'app-open' ? TIMINGS.appReveal : TIMINGS.pjaxReveal
+        }
+  }
+
+  const syncTip = () => {
+    tipsText.textContent = TIPS[tipsIndex] || ''
+  }
+
+  const rotateTip = () => {
+    tipsIndex = (tipsIndex + 1) % TIPS.length
+    syncTip()
+  }
+
+  const hideLoading = () => {
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    queueJob(() => {
+      box.style.display = 'none'
+      box.dataset.transitionMode = 'boot'
+      box.classList.remove('is-slow')
+      setBodyTransition(false)
+      clearPendingTransition()
+      window.dispatchEvent(new Event('woisol:loading-finished'))
+    }, TIMINGS.hidden)
+  }
+
+  const skipLoading = () => {
+    if (box.dataset.state === 'done') return
+    clearJobs()
+    revealQueued = false
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    box.style.display = 'none'
+    box.dataset.transitionMode = 'boot'
+    box.classList.remove('is-slow')
+    setBodyTransition(false)
+    clearPendingTransition()
+    window.dispatchEvent(new Event('woisol:loading-finished'))
+  }
+
+  const isLoadingBackground = target => target === box || target === center || Boolean(target && target.classList && target.classList.contains('loading-box__mask'))
+
+  const revealLoading = () => {
+    if (box.dataset.state === 'revealing' || box.dataset.state === 'done') return
+    revealQueued = false
+    clearJobs()
+    box.dataset.state = 'revealing'
+    const quickPjaxReveal = box.dataset.transitionMode === 'pjax' && !box.classList.contains('is-slow')
+    setPhase(quickPjaxReveal ? 'quick-reveal' : 'revealing')
+    setBodyTransition(false)
+    playBodyEnter()
+    queueJob(hideLoading, quickPjaxReveal ? TIMINGS.quickReveal : currentTiming.reveal)
+  }
+
+  const endLoading = () => {
+    if (box.dataset.state === 'done' || box.dataset.phase === 'idle') return
+    if (box.dataset.phase === 'covering') {
+      revealQueued = true
+      return
+    }
+
+    revealLoading()
+  }
+
+  const initLoading = animate => {
+    const pendingTransition = animate ? getPendingTransition() : null
+    const mode = pendingTransition && pendingTransition.type === 'app-open' ? 'app-open' : animate ? 'pjax' : 'boot'
+    clearJobs()
+    revealQueued = false
+    setTiming(mode)
+    box.style.display = 'block'
+    box.dataset.state = 'loading'
+    box.dataset.transitionMode = mode
+    box.classList.remove('is-slow')
+    box.classList.remove('loaded')
+    setPhase(animate ? mode === 'app-open' && box.dataset.phase === 'covering' ? 'covering' : 'cover-start' : 'covered')
+
+    if (animate) setBodyTransition(true)
+
+    if (animate) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!(mode === 'app-open' && box.dataset.phase === 'covering')) setPhase('covering')
+        })
+      })
+
+      queueJob(() => {
+        setPhase('covered')
+        if (revealQueued) {
+          queueJob(revealLoading, currentTiming.coveredDwell)
+        }
+
+        queueJob(() => {
+          if (box.dataset.state === 'loading' && box.dataset.phase === 'covered') {
+            box.classList.add('is-slow')
+          }
+        }, TIMINGS.slowThreshold)
+      }, currentTiming.cover)
+    }
+
+    window.dispatchEvent(new Event('woisol:loading-started'))
+  }
+
+  syncTip()
+  timer = window.setInterval(rotateTip, 2600)
+
+  switchBtn && switchBtn.addEventListener('click', event => {
+    event.preventDefault()
+    event.stopPropagation()
+    rotateTip()
+  })
+
+  box.addEventListener('click', event => {
+    if (!isLoadingBackground(event.target)) return
+    event.preventDefault()
+    skipLoading()
+  })
+
+  initLoading(false)
+  window.addEventListener('load', endLoading, { once: true })
+
+  if (isPjaxEnabled && window.btf && typeof btf.addGlobalFn === 'function') {
+    btf.addGlobalFn('pjaxSend', () => initLoading(true), 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', endLoading, 'preloader_end')
+  }
+})()</script><div id="woisol-bg-pattern" aria-hidden="true"><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tr"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--bl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--br"></span></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav class="woisol-nav-compact" id="nav" data-page-type="post"><span class="is-post-switch" id="blog-info"><div class="woisol-nav-title-switch"><a class="nav-site-title nav-site-title--default" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" alt="Logo"><div class="woisol-nav-brand"><span class="site-name">折腾，是为了<span class="site-name__accent">不折腾</span></span></div></a><span class="nav-page-title nav-page-title--reading" id="woisol-nav-page-title"><span class="site-name">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</span></span></div></span><div id="menus"><div class="woisol-nav-actions"><div id="search-button"><button class="site-page social-icon search nav-action-btn" id="woisol-search-trigger" type="button" title="搜索" aria-label="搜索" data-woisol-trigger="search" data-lottie-icon="search" data-lottie-trigger="hover"><i class="fas fa-search fa-fw"></i></button></div></div></div><div class="woisol-nav-progress"><span class="woisol-nav-progress__bar" id="woisol-nav-progress-bar"></span></div></nav></header><main class="layout" id="content-inner"><div id="post"><div class="post-hero woisol-reveal" id="post-info" data-reveal-delay="0"><div class="post-hero__surface has-cover"><div class="post-hero__cover"><picture class="post-hero__picture"><img class="post-hero__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"></picture></div><div class="post-hero__body"><div class="post-hero__quality-row"><span class="post-hero__quality post-hero__quality--top"><i class="fas fa-sparkles"></i><span>置顶</span></span></div><h1 class="post-title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h1><div class="post-hero__taxonomies"><a class="post-hero__category" href="/categories/Knowledge/"><i class="fas fa-folder-open fa-fw"></i><span>Knowledge</span></a><a class="post-hero__tag" href="/tags/Termux/"><i class="fas fa-tag fa-fw"></i><span>Termux</span></a><a class="post-hero__tag" href="/tags/Linux/"><i class="fas fa-tag fa-fw"></i><span>Linux</span></a><a class="post-hero__tag" href="/tags/Android/"><i class="fas fa-tag fa-fw"></i><span>Android</span></a><a class="post-hero__tag" href="/tags/Droidspace/"><i class="fas fa-tag fa-fw"></i><span>Droidspace</span></a></div><div class="post-hero__meta" id="post-meta"><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-21T16:20:59.000Z" title="发表于 2026-04-22 00:20:59">2026-04-22</time></span><span class="post-hero__meta-chip post-meta-date"><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-21T16:20:59.000Z" title="更新于 2026-04-22 00:20:59">2026-04-22</time></span></div><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></div></div><article class="container post-content woisol-reveal" id="article-container" data-reveal-delay="100"><div class="note info modern"><p>最初是前几天（可能更早但一直没来实操）又在某安上刷到 @Goldbug 的文章 <a target="_blank" rel="noopener" href="https://www.coolapk.com/feed/70899541">安卓 Linux 的实现方案</a></p>
+</div>
+
+<h1 id="文章补充"><a href="#文章补充" class="headerlink" title="文章补充"></a>文章补充</h1><p>直入正题，这部分面向已经完整参考 Goldbug 文章并成功安装使用了的读者，提供一些个人发现的坑点&#x2F;优化补充：</p>
+<h2 id="更优雅的从-Termux-一键启动桌面"><a href="#更优雅的从-Termux-一键启动桌面" class="headerlink" title="更优雅的从 Termux 一键启动桌面"></a>更优雅的从 Termux 一键启动桌面</h2><p>看到 Goldbug <code>on</code> 脚本里在 Termux 中启动容器 startplasma-x11 是通过 ssh 连接的，其实有更优雅的方法，Droidspace 的二进制本身就自带 run 命令可以直接执行命令，参考命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su -c <span class="string">&#x27;/data/local/Droidspaces/bin/droidspaces --name=&quot;Your Container Name&quot; run su - your-user-name --c &quot;/path/to/startplasma-x11/script&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要自己填写 Your Container Name、your-user-name 和 &#x2F;path&#x2F;to&#x2F;startplasma-x11&#x2F;script 的路径，&#x2F;path&#x2F;to&#x2F;startplasma-x11&#x2F;script 也可以像 Goldbug 那样直接内嵌 startplasma-x11 等命令，不再赘述。</p>
+<p>前面 su -c … –name 这块来自 Droidspace 面板 -&gt; 可用用户 -&gt; 复制登录命令。run 后面 su 则是切换到容器内用户并执行图形化启动脚本</p>
+<div class="note info modern"><p>稍早一些的版本有用过 <code>su -c &#39;/data/local/Droidspaces/bin/droidspaces --name=&quot;xxx&quot; run /bin/bash -c &quot;su - xxx -c &quot;~/path/to/script&quot;&quot;&#39;</code>，但是似乎占用了 &#x2F;bin&#x2F;bash 导致 Konsole 卡死，如果你遇到了可以考虑规避</p>
+</div>
+
+
+<p>个人完整启动命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Termux 脚本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始延迟半秒，给只是想使用 Termux 而不想进入容器的情况提供反应空间，如果用不上可以删去</span></span><br><span class="line"><span class="built_in">sleep</span> 0.5</span><br><span class="line"><span class="built_in">export</span> DISPLAY=:0</span><br><span class="line"><span class="comment"># 清除 pulseaudio 残留配置，有时候 pulseaudio 失效是通过这个修复的</span></span><br><span class="line"><span class="built_in">rm</span> -rf .config/pulse</span><br><span class="line"><span class="comment"># 启动 pulseaudio Daemon 服务</span></span><br><span class="line">pulseaudio -D &amp;</span><br><span class="line"><span class="comment"># 启动 Termux-x11 服务，并强制刷新率 120</span></span><br><span class="line">termux-x11 -fakescreenfps 120 :0 &amp;</span><br><span class="line"><span class="comment"># 启动安卓 Termux-x11 应用</span></span><br><span class="line">am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity &gt; /dev/null 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line"><span class="built_in">sleep</span> 1</span><br><span class="line"><span class="comment"># 启动 Droidspace 容器图形化，</span></span><br><span class="line">su -c <span class="string">&#x27;/data/local/Droidspaces/bin/droidspaces --name=&quot;Your Container Name&quot; run su - your-user-name --c &quot;/path/to/startplasma-x11/script&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Droidspace 容器脚本 /path/to/startplasma-x11/script</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> DISPLAY=:0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果你装了 Mesa 驱动。除了 kgsl 外还可以尝试 zink</span></span><br><span class="line"><span class="built_in">export</span> MESA_LOADER_DRIVER_OVERRIDE=kgxl</span><br><span class="line"><span class="built_in">export</span> TU_DEBUG=noconform</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入法环境变量，不加可能会导致输入法无法使用</span></span><br><span class="line"><span class="comment"># GLM：为在容器里启动桌面是通过脚本（startplasma-x11），而不是通过登录管理器（如 SDDM）。登录管理器会通过 PAM 读取 /etc/environment 或 ~/.pam_environment并注入到会话中，但脚本启动不会自动读取这些文件。所以必须显式export 在启动脚本中。</span></span><br><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=@im=fcitx</span><br><span class="line"><span class="built_in">export</span> INPUT_METHOD=fcitx</span><br><span class="line"></span><br><span class="line"><span class="comment"># PulseAudio 环境变量</span></span><br><span class="line"><span class="built_in">export</span> PULSE_SERVER=tcp:127.0.0.1:4713</span><br><span class="line"></span><br><span class="line"><span class="comment"># dbus-run-session # 曾经 Termux Proot 需要这个才能使用 Fcitx……</span></span><br><span class="line">startplasma-x11</span><br></pre></td></tr></table></figure>
+
+<p>再配合 Termux <code>$PREFIX/etc/profile.d/</code> 下的自启脚本，即可实现打开 Termux 自动进入图形化的流畅体验😋</p>
+<h2 id="KDE-桌面及其特效"><a href="#KDE-桌面及其特效" class="headerlink" title="KDE 桌面及其特效"></a>KDE 桌面及其特效</h2><p>和 GLM-5.1 搞了半天以及 Goldbug 的回复，基本能确认当前 Mesa 驱动（至少在 26-04-22 之前的 weekly）无法支撑 KDE 的 Compositor（KWin）。必须在 <code>~/.config/kwinrc</code> 中对应位置设置以下内容才能正常进入桌面：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Compositing]</span></span><br><span class="line"><span class="attr">Enabled</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>如果尝试通过 <code>KWIN_COMPOSITOR_MODE=1</code> 或者 <code>[Compositing] OpenGLIsUnsafe=true</code> 强制启用 Compositor，进入了桌面也是一片黑无法使用。</p>
+<blockquote>
+<p>另外此时如果通过 <code>plasma-start-settings</code> 打开一个窗口，会发现窗口的特效是生效了的。</p>
+</blockquote>
+<p>再另外在本机骁龙 8 Elite 上，使用 Mesa 驱动并关闭 Compositor 时窗口透明部分会显示为纯黑，且画面会出现撕裂，应当属于正常现象。在本机上使用 kgsl 撕裂现象会稍微缓解。</p>
+<details class="toggle" ><summary class="toggle-button" style="">关于 kgsl 和 zink</summary><div class="toggle-content"><p>kgsl 更接近安卓原生的 GPU 驱动，zink 则是 OpenGL on Vulkan 的实现。</p>
+<p>MESA_LOADER_DRIVER_OVERRIDE 的值：kgsl 是 Qualcomm 的 GPU 内核接口驱动，让 Mesa 通过 kgsl 直接与 GPU 通信；zink则是 Mesa 的 OpenGL-on-Vulkan 实现，Vulkan 路径。</p>
+<p>不设 MESA_LOADER_DRIVER_OVERRIDE 驱动也是生效的，默认选择应当是 zink</p>
+</div></details>
+
+<hr>
+<p>下面的内容面向新读者</p>
+<h1 id="Droidspace-介绍"><a href="#Droidspace-介绍" class="headerlink" title="Droidspace 介绍"></a>Droidspace 介绍</h1><p><a target="_blank" rel="noopener" href="https://github.com/ravindu644/Droidspaces-OSS/blob/main/README.md">README.md</a>：</p>
+<p>Droidspaces 是一个容器运行时，它利用 Linux 内核命名空间来运行完整的 Linux 发行版，并使用真实的初始化系统（systemd、OpenRC 等）作为 PID 1。</p>
+<p>与仅改变表面根目录的传统 chroot 不同，Droidspaces 实现了真正的进程隔离。每个容器都拥有独立的 PID 树、独立的挂载表、独立的主机名、独立的 IPC 资源以及独立的 cgroup 层级。其结果是创造出一个完整的 Linux 环境，体验类似于轻量级虚拟机，但由于直接共享主机内核，因此完全没有性能开销。</p>
+<p>Droidspaces 旨在原生兼容 Android 和 Linux 桌面系统。在 Android 上，它能处理所有内核差异、SELinux 冲突、复杂的网络场景以及加密问题，这些问题往往会导致其他容器工具无法运行。在 Linux 桌面上，它开箱即用，无需额外配置。</p>
+<p>整个运行时是一个不到 260KB 的独立静态二进制文件，基于 musl libc 编译，没有任何外部依赖。</p>
+<blockquote>
+<p>简单来说，更完善的进程隔离，支持 systemd，发行版更完整也意味着装软件（大概）不用之前 Termux 那么折腾了<br>以及 README 后面也提到实现了安全的 udev（妈妈再也不用担心我 Chromium 登录微软账号闪退了口牙）</p>
+</blockquote>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>Droidspace 需要解锁 bl 并 root，如果你的设备无法 root，请出门左转 Termux Proot 容器，基础使用体验上是接近的……</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>整体来说步骤ww</p>
+<ol>
+<li>安装 Droidspace apk，自己在 <a target="_blank" rel="noopener" href="https://github.com/ravindu644/Droidspaces-OSS/releases/latest">Release&#x2F;latest</a> 下</li>
+<li>编译内核，直到通过 app 内的内核检验</li>
+<li>使用官方或其它的 rootfs 创建容器</li>
+<li>底栏“面板”进入容器并以你的用户身份启动</li>
+</ol>
+<p>更具体的步骤请参考 <a target="_blank" rel="noopener" href="https://www.coolapk.com/feed/70899541">Goldbug 的酷安文章</a>，下面仅补充一些自己遇到的问题</p>
+<h2 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h2><p>这部分由于本人和作者本人用的同样设备，这里直接刷入作者提供的内核。作者本人也收集了其它设备的编译内核，具体自己看……</p>
+<p>刷内核建议使用 <a target="_blank" rel="noopener" href="https://github.com/libxzr/HorizonKernelFlasher/releases">Horizon Kernel Flasher</a>。</p>
+<h2 id="创建容器"><a href="#创建容器" class="headerlink" title="创建容器"></a>创建容器</h2><p>Droidspace 创建容器需要一个 rootfs，作者这里使用官方的 Ubuntu 镜像，在底栏 容器 tab 点击 + Float Action 按钮选择 .tar.gz 文件即可。<br>容器配置界面开启硬件加速和 termux-11 即可</p>
+<p>你当然也可以使用 Goldbug 作者提供的 Arch &#x2F; Debian 镜像，不过本人由于在 Ubuntu 的折腾经验更多且需要从之前 Termux 迁移过来，所以选择了 Ubuntu 镜像。</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>本质安装兼旧 Proot 容器迁移过程中的其它问题</p>
+<p>累了，丢 AI</p>
+<h3 id="KSU-overlayFS-不兼容"><a href="#KSU-overlayFS-不兼容" class="headerlink" title="KSU overlayFS 不兼容"></a>KSU overlayFS 不兼容</h3><p>Droidspace 明确红字警告：与 KernelSU 的 overlayFS<br>不兼容，会导致卡循环。如果你用 Hybrid Mount 或者同类模块，建议将所有模块切回<br><strong>Magisk Mount</strong> 后再使用 Droidspace。</p>
+<h3 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h3><p>那必须得自己建一个用户，对照 rootfs 初始的 root 和 Ubuntu 默认用户组补充：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> usermod -aG adm,dialout,audio,video,plugdev,droidspaces-gpu new-user</span><br></pre></td></tr></table></figure>
+
+<p>其中 droidspaces-gpu 是容器 GPU 访问权限，这是 Droidspace<br>特有的组，不加上硬件加速会有问题。各组的含义对照：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────┬──────────────────────────────┐</span><br><span class="line">│       组        │             作用             │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ adm             │ 读取系统日志 /<span class="selector-tag">var</span>/log/       │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ dialout         │ 访问串行端口                 │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ <span class="selector-tag">audio</span>           │ 音频设备                     │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ <span class="selector-tag">video</span>           │ 视频设备（摄像头、GPU 加速） │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ plugdev         │ 外部存储设备自动挂载         │</span><br><span class="line">├─────────────────┼──────────────────────────────┤</span><br><span class="line">│ droidspaces-gpu │ Droidspace GPU 访问          │</span><br><span class="line">└─────────────────┴──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="符号链接失败"><a href="#符号链接失败" class="headerlink" title="符号链接失败"></a>符号链接失败</h3><p>在安卓 sdcard（fat32）目录下执行 ln -s 会报 Function not implemented，这是<br>fat32 文件系统不支持符号链接导致的，需要把操作放在容器的 ext4 分区内。</p>
+<h3 id="KDE-中文显示方块"><a href="#KDE-中文显示方块" class="headerlink" title="KDE 中文显示方块"></a>KDE 中文显示方块</h3><p>这是折腾最久的问题，原因是多方面的：</p>
+<ol>
+<li><p>语言包没装全*：仅装 language-pack-kde-zh-hans 不够，还需要改 &#x2F;etc&#x2F;locale.gen<br>取消 zh_CN.UTF-8 的注释，然后执行 locale-gen</p>
+</li>
+<li><p>字体权限问题（本次核心坑）：用 sudo cp 把字体拷到 &#x2F;usr&#x2F;share&#x2F;fonts<br>时，文件所有者是 root 且权限通常是 600，root<br>运行的缓存生成器能看到字体并写入索引，但普通用户运行的 KDE&#x2F;Qt<br>程序没有读取权限，拿不到字形数据就直接画方块</p>
+</li>
+<li><p>对照之前正常运行的 Proot 安装字体包：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install fonts-noto-cjk fonts-source-han-sans-cn</span><br><span class="line">fonts-source-han-serif-cn ttf-mscorefonts-installer fonts-powerline</span><br><span class="line">fonts-noto-color-emoji</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迁移时直接覆盖配置：从 Proot 迁移时覆盖 .local 和 .config<br>才最终解决英文界面问题，说明语言设置更多藏在用户配置而非系统级别</p>
+</li>
+</ol>
+<h3 id="Fcitx5-安装遗漏"><a href="#Fcitx5-安装遗漏" class="headerlink" title="Fcitx5 安装遗漏"></a>Fcitx5 安装遗漏</h3><p>装输入法时只装了 fcitx5-rime，漏了：</p>
+<ul>
+<li>fcitx5-chinese-addons（有个 s，不是 fcitx5-chinese-addon）</li>
+<li>kde-config-fcitx5（KDE 环境下的配置集成）</li>
+</ul>
+<p>Flatpak 在容器中的坑</p>
+<ul>
+<li>USTC 镜像源不稳定，flatpak search 网络错误却显示为 no match<br>found，误导性极强</li>
+<li>remote-modify 改源后无法恢复，需要 remote-delete 再重新 remote-add</li>
+<li>system 级和 user 级配置容易混淆：不加 –user 默认配到 system，install 也走<br>system 需要疯狂输密码</li>
+<li>最终建议：直接用 apt，别折腾 Flatpak</li>
+</ul>
+<h3 id="Chromium-是-Snap"><a href="#Chromium-是-Snap" class="headerlink" title="Chromium 是 Snap"></a>Chromium 是 Snap</h3><p>Ubuntu 24.04 的 apt install chromium-browser 实际装的是 snap 版，之前的 Proot<br>配置不通用，相当于一个新实例。</p>
+<h3 id="Mesa-驱动与-KWin-Compositor"><a href="#Mesa-驱动与-KWin-Compositor" class="headerlink" title="Mesa 驱动与 KWin Compositor"></a>Mesa 驱动与 KWin Compositor</h3><p>详见上文「KDE 桌面及其特效」部分，这里补充完整的心路历程：</p>
+<p>1.安装 Mesa + turnip 覆盖后，默认走<br>zink（OpenGL-on-Vulkan），透明不生效且画面撕裂<br>2. 切换到 kgsl 后撕裂缓解，但透明部分仍纯黑<br>3. 意外发现：之前调试时在 ~&#x2F;.config&#x2F;kwinrc 中设了 Enabled&#x3D;false 关掉了<br>Compositing——这才是桌面特效不生效的真正原因<br>4. 重新开启 Compositing 后，在骁龙 8 Elite<br>上桌面特效确实能跑起来了（虽然卡开机）<br>5. 但尝试用 KWIN_COMPOSITOR_MODE&#x3D;1 强制启用仍会黑屏<br>6. 在骁龙 8 Gen 2 上无论 kgsl 还是 zink 都跑不起来<br>7. 结论：当前 Mesa 驱动（截至 2026-04-22）无法稳定支撑 KWin<br>Compositor，关闭是必要的妥协</p>
+<h3 id="Termux-X11-刷新率"><a href="#Termux-X11-刷新率" class="headerlink" title="Termux-X11 刷新率"></a>Termux-X11 刷新率</h3><ul>
+<li>不加 -fakescreenfps 参数时默认只有 50Hz，体验明显不跟手</li>
+<li>加上 -fakescreenfps 120 后效果立竿见影</li>
+<li>不过实际效果还取决于安卓系统的屏幕刷新率设置，确保系统也切换到了高刷模式</li>
+</ul>
+<hr>
+<h3 id="小彩蛋"><a href="#小彩蛋" class="headerlink" title="小彩蛋"></a>小彩蛋</h3><p>KDE 桌面启动时，，如果背景已显示但底栏还没加载出来时，开 plasma-open-settings 看到的是英文界面 + 默认蓝色主题</p>
+</article><div class="post-tail"><div class="post-tail__section post-tail__section--meta"><div class="post-tail__headline" data-lottie-icon="bookmark" data-lottie-trigger="hover" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-bookmark fa-fw"></i><span>文章信息</span></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw" data-lottie-icon="face-scanner" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__author"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz">Woisol</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw" data-lottie-icon="link" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__type"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/">https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw" data-lottie-icon="info" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__notice"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.woisol.xyz" target="_blank">Markdown Any Notes</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Termux/">Termux</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/Droidspace/">Droidspace</a></div><div class="post-share"><div class="social-share" data-image="https://mio.woisol.xyz/blog/covers/DroidSpace.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="post-tail__section post-tail__section--related"><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-05/b564154d4b78/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|WPS</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 05 · 25</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信</h3><div class="article-card__hover-desc">在 Termux Proot 中使用</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-jss relatedPosts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-06/06b0bc820a13/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">Termux 硬件加速 n 探</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|KDE Plasma</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 06 · 16</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">Termux 硬件加速 n 探</h3><div class="article-card__hover-desc">搞过数次 Termux Proot 的硬件加速，再不总结就是重复浪费时间了()</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="280" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-01/cb4806edb459/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">安卓16下 Termux Pulseaudio 失效？</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|Pulseaudio</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 01 · 27</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">安卓16下 Termux Pulseaudio 失效？</h3><div class="article-card__hover-desc">突发！已经稳定使用不再折腾的 Termumx 环境又出问题……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-trash relatedPosts__card woisol-reveal" data-reveal-delay="360" data-pjax-transition="app-open"><a class="article-card__link" href="/Life/2025-07/ef241e5a0e15/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>草稿</span></span><h3 class="article-card__title">AOSCC游记</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Life</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>LUG|Linux</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 07 · 24</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">AOSCC游记</h3><div class="article-card__hover-desc">第一次来上海 + 第一次参加此等集会 + 和 M 厂学长见面，浅记录一下</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-top relatedPosts__card woisol-reveal" data-reveal-delay="440" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-04/336703d8ec80/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">wol无效时唤醒电脑的一种冷门方法</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Linux|Python</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 04 · 03</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">wol无效时唤醒电脑的一种冷门方法</h3><div class="article-card__hover-desc">基本确认拯救者搞不了wol，就没有别的方法了吗……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="520" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-04/657cc4b0ebc1/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">Vector：安卓 16 上的 Zygisk lsp 实现</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>玩机|Android</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 04 · 20</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">Vector：安卓 16 上的 Zygisk lsp 实现</h3><div class="article-card__hover-desc">最近才意识到板子上的 Luckytool 和 O神 两个 lsp 模块都早就无法使用了，进入软件显示模块未激活。之前更新系统后一直只是零零散散几个小问题没在意…… 不多说，搜 Zygisk lsp a16 搜到的，JingMatrix&#x2F;Vector - GitHub 甚至还有专门的 issue 提为什么不直接叫 LSPosed，哈哈哈。</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--random"><div class="woisol-random-posts"><div class="woisol-random-posts__headline" data-lottie-icon="more" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-ellipsis fa-fw"></i><span>随机看看</span></div><div class="woisol-random-posts__list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-trash woisol-random-posts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/unclassified/2025-03/be42a906309f/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>草稿</span></span><h3 class="article-card__title">EncryptTest</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>encrypt</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 03 · 10</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">EncryptTest</h3><div class="article-card__hover-desc">把密码交出来才能看这里的内容哦(～￣▽￣)～</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected woisol-random-posts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-06/664db3c0aaf2/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">ali 初面试经验汇总</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Life|Work</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 06 · 11</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">ali 初面试经验汇总</h3><div class="article-card__hover-desc">本以为简历关都没过的阿里最终还是来了面试，有过 tx 面试的经历后这次面试体验如何？</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--pagination"><div class="post-tail__headline" data-lottie-icon="book" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-book-open fa-fw"></i><span>继续阅读</span></div><nav class="pagination-post" id="pagination"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-selected pagination-post__card prev-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-04/657cc4b0ebc1/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">Vector：安卓 16 上的 Zygisk lsp 实现</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>玩机|Android</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 04 · 20</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">Vector：安卓 16 上的 Zygisk lsp 实现</h3><div class="article-card__hover-desc">最近才意识到板子上的 Luckytool 和 O神 两个 lsp 模块都早就无法使用了，进入软件显示模块未激活。之前更新系统后一直只是零零散散几个小问题没在意…… 不多说，搜 Zygisk lsp a16 搜到的，JingMatrix&#x2F;Vector - GitHub 甚至还有专门的 issue 提为什么不直接叫 LSPosed，哈哈哈。</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-selected pagination-post__card next-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-05/45e9ce52d4fb/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">关于Windows安全启动验证失败的一些探索记录</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 05 · 31</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">关于Windows安全启动验证失败的一些探索记录</h3><div class="article-card__hover-desc">注意，以下内容大部分由 AI 生成 引言：从死循环到一条命令救场我的联想拯救者 R7000P（Windows 11 25H2）开启安全启动后一选 Windows Boot Manager 就立刻弹回 BIOS，以为是 Secure Boot 证书链炸了，折腾了一轮：多次在 BIOS 里“重置为设定模式 + 恢复出厂设置”，保留数据重装系统，sfc&#x2F;DISM&#x2F;bcdboot 都试过，甚至从 U 盘的 Ventoy 启动也报 0x1A Security Violation。最后是在 WinPE 里用 bcdboot 重建 EFI 引导修好的。这篇按时间线把踩坑与线索记录下来，希望帮到同款机型遇到类似问题的朋友。 一、问题表现与初步排查症状 开启 Secure Boot 后： 从硬盘选择 Windows Boot Manager → 过一会又回到启动选择界面（循环）。 从 Ventoy U 盘启动 → 报错 Verification failed (0x1A) Security Violation（这与不少 Ventoy + Secure Boot 的案例一致）...</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></nav></div><div class="post-tail__section post-tail__section--comments"><div class="post-tail__headline" data-lottie-icon="chat" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-comments fa-fw"></i><span>交流与评论</span></div><div id="post-comment"><div class="comment-head"></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="avatar"/></div><div class="author-info-name">Woisol</div><div class="author-info-description">Woisol's very early blog-mixed site</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">116</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Woisol"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: light-dark(#24292e,#fdfdfd);"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #04BE02;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">网站分为内外网版本，外网版本更新可能延迟 | 早期阶段，网站仍在魔改中</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E8%A1%A5%E5%85%85"><span class="toc-number">1.</span> <span class="toc-text">文章补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E4%BC%98%E9%9B%85%E7%9A%84%E4%BB%8E-Termux-%E4%B8%80%E9%94%AE%E5%90%AF%E5%8A%A8%E6%A1%8C%E9%9D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">更优雅的从 Termux 一键启动桌面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KDE-%E6%A1%8C%E9%9D%A2%E5%8F%8A%E5%85%B6%E7%89%B9%E6%95%88"><span class="toc-number">1.2.</span> <span class="toc-text">KDE 桌面及其特效</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Droidspace-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">Droidspace 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">3.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="toc-number">4.1.</span> <span class="toc-text">编译内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text">创建容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">4.3.</span> <span class="toc-text">其它</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#KSU-overlayFS-%E4%B8%8D%E5%85%BC%E5%AE%B9"><span class="toc-number">4.3.1.</span> <span class="toc-text">KSU overlayFS 不兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">4.3.2.</span> <span class="toc-text">用户组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.3.3.</span> <span class="toc-text">符号链接失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KDE-%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E6%96%B9%E5%9D%97"><span class="toc-number">4.3.4.</span> <span class="toc-text">KDE 中文显示方块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fcitx5-%E5%AE%89%E8%A3%85%E9%81%97%E6%BC%8F"><span class="toc-number">4.3.5.</span> <span class="toc-text">Fcitx5 安装遗漏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chromium-%E6%98%AF-Snap"><span class="toc-number">4.3.6.</span> <span class="toc-text">Chromium 是 Snap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mesa-%E9%A9%B1%E5%8A%A8%E4%B8%8E-KWin-Compositor"><span class="toc-number">4.3.7.</span> <span class="toc-text">Mesa 驱动与 KWin Compositor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Termux-X11-%E5%88%B7%E6%96%B0%E7%8E%87"><span class="toc-number">4.3.8.</span> <span class="toc-text">Termux-X11 刷新率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%BD%A9%E8%9B%8B"><span class="toc-number">4.3.9.</span> <span class="toc-text">小彩蛋</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item is-current"><a class="thumbnail" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"></a><div class="content"><a class="title" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2026-04-21T16:20:59.000Z" title="发表于 2026-04-22 00:20:59">2026-04-22</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2026-01/cb4806edb459/" title="安卓16下 Termux Pulseaudio 失效？">安卓16下 Termux Pulseaudio 失效？</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2026-01-27T09:57:28.000Z" title="发表于 2026-01-27 17:57:28">2026-01-27</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-06/06b0bc820a13/" title="Termux 硬件加速 n 探">Termux 硬件加速 n 探</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-06-16T11:25:21.000Z" title="发表于 2025-06-16 19:25:21">2025-06-16</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-05/b564154d4b78/" title="2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信">2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信</a><div class="aside-list-item__meta"><i class="fas fa-layer-group"></i><time datetime="2025-05-25T15:44:59.000Z" title="发表于 2025-05-25 23:44:59">2025-05-25</time></div></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2026-05/45e9ce52d4fb/" title="关于Windows安全启动验证失败的一些探索记录">关于Windows安全启动验证失败的一些探索记录</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-05-31T08:09:40.000Z" title="发表于 2026-05-31 16:09:40">2026-05-31</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-21T16:20:59.000Z" title="发表于 2026-04-22 00:20:59">2026-04-22</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现">Vector：安卓 16 上的 Zygisk lsp 实现</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-20T06:39:16.000Z" title="发表于 2026-04-20 14:39:16">2026-04-20</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/" title="newtest">newtest</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-21T13:12:37.000Z" title="发表于 2026-03-21 21:12:37">2026-03-21</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://www.xqu5.com/data/attachment/forum/202210/02/220405qe0t7twog0l7wqur.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="在安卓16上位置穿越"/></a><div class="content"><a class="title" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越">在安卓16上位置穿越</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-20T05:18:36.000Z" title="发表于 2026-03-20 13:18:36">2026-03-20</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-brand"><strong class="footer-brand__title">Markdown Any Notes</strong><p class="footer-brand__desc">Woisol's very early blog-mixed site</p></div><div class="footer-meta"><div class="copyright">&copy;2024 - 2026 By Woisol</div><div class="framework-info"><span class="footer-meta__item"><i class="fas fa-cubes fa-fw"></i><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo 7.3.0</a></span><span class="footer-separator">|</span><span class="footer-meta__item"><i class="fas fa-feather-pointed fa-fw"></i><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly-Patched base on 5.3.3</a></span></div></div></div></footer></div><div id="woisol-overlays"><div class="woisol-link-tooltip" id="woisol-link-tooltip" role="tooltip" aria-hidden="true" data-placement="top"><div class="woisol-link-tooltip__host" data-tooltip-host></div><div class="woisol-link-tooltip__url" data-tooltip-url></div></div><div class="woisol-modal woisol-external-modal" id="woisol-external-modal" data-woisol-modal="external-link" hidden aria-hidden="true"><div class="woisol-modal__backdrop woisol-external-modal__backdrop" data-modal-action="cancel"></div><div class="woisol-modal__dialog woisol-external-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="woisol-external-modal-title" tabindex="-1"><div class="woisol-external-modal__header"><div class="woisol-external-modal__icon"><i class="fas fa-up-right-from-square"></i></div><span><div class="woisol-external-modal__eyebrow">External Link</div><h3 class="woisol-external-modal__title" id="woisol-external-modal-title">即将离开本站</h3></span></div><p class="woisol-external-modal__desc">你将跳转到一个外部网站，请确认目标链接是否可信。</p><div class="woisol-external-modal__host" data-modal-host></div><div class="woisol-external-modal__url" data-modal-url></div><div class="woisol-external-modal__actions"><button class="woisol-external-modal__btn woisol-external-modal__btn--ghost woisol-hover-btn" type="button" data-modal-action="cancel">取消</button><button class="woisol-external-modal__btn woisol-hover-btn" type="button" data-modal-action="confirm">继续前往</button></div></div></div></div><div class="rightside-show" id="rightside"><div id="rightside-config-hide"><div class="rightside-theme-palette"><span class="rightside-theme-palette__label">暗色风格</span><div class="rightside-theme-palette__options"><button class="rightside-theme-palette__option" id="dark-scheme-gray" type="button" data-label="暗灰风格" data-scheme="gray"><span>暗灰</span></button><button class="rightside-theme-palette__option" id="dark-scheme-black" type="button" data-label="纯黑风格" data-scheme="black"><span>纯黑</span></button></div></div></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置" data-label="设置" data-lottie-icon="settings" data-lottie-trigger="hover"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换" data-label="日间和夜间模式切换"><span class="darkmode-icon" aria-hidden="true"><svg class="darkmode-icon__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"><animate attributeName="r" values="4;8" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="-4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="opacity:0;transform-origin:50% 50%;"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="0.5 0.5" to="1 1" dur="0.5s" begin="indefinite"></animateTransform></path></svg><svg class="darkmode-icon__moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" style="opacity:0;"><animate attributeName="r" values="8;4" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 -4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="transform-origin:50% 50%;"><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1 1" to="0.5 0.5" dur="0.5s" begin="indefinite"></animateTransform></path></svg></span></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换" data-label="单栏和双栏切换" data-lottie-icon="more" data-lottie-trigger="hover"><i class="fas fa-ellipsis"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录" data-label="目录" data-lottie-icon="list" data-lottie-trigger="hover"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论" data-label="前往评论" data-lottie-icon="chat" data-lottie-trigger="hover"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部" data-label="回到顶部" data-lottie-icon="arrow-up" data-lottie-trigger="hover"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.js"></script><script src="/js/woisol-theme.js"></script><script src="/js/main.js"></script><script src="/js/woisol-lottie.js"></script><script src="/js/woisol-ui.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"data-category":"General","data-mapping":"pathname","data-strict":0,"data-reactions-enabled":1,"data-emit-metadata":0,"data-input-position":"bottom","data-lang":"zh-CN"}
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Woisol/blog-comments',
+      'data-repo-id': 'R_kgDOS-YlGQ',
+      'data-category-id': 'DIC_kwDOS-YlGc4C_aVp',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title" data-lottie-icon="search" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-magnifying-glass"></i><span>搜索</span></span><span id="loading-status"></span><button class="search-close-button" type="button" aria-label="close search"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

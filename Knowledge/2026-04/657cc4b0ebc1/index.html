@@ -1,0 +1,533 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-dark-scheme="gray"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vector：安卓 16 上的 Zygisk lsp 实现 | Markdown Any Notes</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="最近才意识到板子上的 Luckytool 和 O神 两个 lsp 模块都早就无法使用了，进入软件显示模块未激活。之前更新系统后一直只是零零散散几个小问题没在意……  不多说，搜 Zygisk lsp a16 搜到的，JingMatrix&#x2F;Vector - GitHub 甚至还有专门的 issue 提为什么不直接叫 LSPosed，哈哈哈。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vector：安卓 16 上的 Zygisk lsp 实现">
+<meta property="og:url" content="https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/index.html">
+<meta property="og:site_name" content="Markdown Any Notes">
+<meta property="og:description" content="最近才意识到板子上的 Luckytool 和 O神 两个 lsp 模块都早就无法使用了，进入软件显示模块未激活。之前更新系统后一直只是零零散散几个小问题没在意……  不多说，搜 Zygisk lsp a16 搜到的，JingMatrix&#x2F;Vector - GitHub 甚至还有专门的 issue 提为什么不直接叫 LSPosed，哈哈哈。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b">
+<meta property="article:published_time" content="2026-04-20T06:39:16.000Z">
+<meta property="article:modified_time" content="2026-04-20T06:39:16.000Z">
+<meta property="article:author" content="Woisol">
+<meta property="article:tag" content="玩机">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Android 16">
+<meta property="article:tag" content="Zygisk">
+<meta property="article:tag" content="LSPosed">
+<meta property="article:tag" content="Vector">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Vector：安卓 16 上的 Zygisk lsp 实现",
+  "url": "https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/",
+  "image": "https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b",
+  "datePublished": "2026-04-20T06:39:16.000Z",
+  "dateModified": "2026-04-20T06:39:16.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Woisol",
+      "url": "https://blog.woisol.xyz/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar26-05-24by-bs.jpg"><link rel="canonical" href="https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"><link rel="preload" as="script" href="/js/woisol-loading-lottie.js"><link rel="preload" as="fetch" href="/lottie/loading-terminal.json" type="application/json" crossorigin="anonymous"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.css"><script defer src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script><script defer src="/js/woisol-loading-lottie.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const applyDarkScheme = scheme => {
+        document.documentElement.setAttribute('data-dark-scheme', scheme === 'black' ? 'black' : 'gray')
+      }
+
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      btf.applyDarkScheme = applyDarkScheme
+
+      const theme = saveToLocal.get('theme')
+      const darkScheme = saveToLocal.get('dark-scheme')
+      applyDarkScheme(darkScheme || 'gray')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'medium_zoom',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#FCCB1B","bgDark":"#222222","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vector：安卓 16 上的 Zygisk lsp 实现',
+  siteTitle: 'Markdown Any Notes',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post',
+  externalLinkWhitelist: ["localhost","127.0.0.1"]
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box" data-state="booting" data-phase="booting" data-transition-mode="boot" data-loading-lottie-light="/lottie/loading-terminal.json" data-loading-lottie-dark="/lottie/loading-terminal.json"><div class="loading-box__app-open" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--accent" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--base" aria-hidden="true"></div><div class="loading-box__center"><div class="loading-box__hero" data-loading-lottie="1" aria-hidden="true"><span class="loading-box__hero-fallback"></span></div><div class="loading-box__copy"><p class="loading-text">全力加载中</p><p class="loading-subtext">Markdown Any Notes</p></div><div class="loading-box__tips"><span class="loading-box__tips-badge">Tips</span><p class="loading-box__tips-text">这里有一个 Tips 哦</p><button class="loading-box__tips-switch" type="button" aria-label="next tip"><i class="fas fa-rotate"></i></button></div></div></div><script>(() => {
+  const TIMINGS = {
+    bootCover: 960,
+    bootCoveredDwell: 420,
+    bootReveal: 1120,
+    pjaxCover: 640,
+    pjaxCoveredDwell: 0,
+    pjaxReveal: 680,
+    appCover: 560,
+    appReveal: 620,
+    slowThreshold: 620,
+    quickReveal: 220,
+    hidden: 140
+  }
+
+  const TIPS = [
+    '站点仍在持续重构中，界面和交互会继续慢慢打磨（咕咕咕）。',
+  ]
+
+  const box = document.getElementById('loading-box')
+  if (!box) return
+
+  const center = box.querySelector('.loading-box__center')
+  const tipsText = box.querySelector('.loading-box__tips-text')
+  const switchBtn = box.querySelector('.loading-box__tips-switch')
+  const isPjaxEnabled = true
+  let tipsIndex = 0
+  let timer = 0
+  let revealQueued = false
+  let currentTiming = {
+    cover: TIMINGS.bootCover,
+    coveredDwell: TIMINGS.bootCoveredDwell,
+    reveal: TIMINGS.bootReveal
+  }
+  const jobs = new Set()
+
+  const queueJob = (callback, delay) => {
+    const id = window.setTimeout(() => {
+      jobs.delete(id)
+      callback()
+    }, delay)
+    jobs.add(id)
+    return id
+  }
+
+  const clearJobs = () => {
+    jobs.forEach(id => window.clearTimeout(id))
+    jobs.clear()
+  }
+
+  const setPhase = phase => {
+    box.dataset.phase = phase
+  }
+
+  const getPendingTransition = () => window.woisolPendingPjaxTransition || null
+
+  const clearPendingTransition = () => {
+    window.woisolPendingPjaxTransition = null
+  }
+
+  const setBodyTransition = active => {
+    const bodyWrap = document.getElementById('body-wrap')
+    if (!bodyWrap) return
+    bodyWrap.classList.toggle('is-pjax-leaving', active)
+  }
+
+  const playBodyEnter = () => {
+    document.documentElement.classList.remove('is-pjax-entering')
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('is-pjax-entering')
+      queueJob(() => {
+        document.documentElement.classList.remove('is-pjax-entering')
+      }, currentTiming.reveal)
+    })
+  }
+
+  const setTiming = mode => {
+    currentTiming = mode === 'boot'
+      ? {
+          cover: TIMINGS.bootCover,
+          coveredDwell: TIMINGS.bootCoveredDwell,
+          reveal: TIMINGS.bootReveal
+        }
+      : {
+          cover: mode === 'app-open' ? TIMINGS.appCover : TIMINGS.pjaxCover,
+          coveredDwell: TIMINGS.pjaxCoveredDwell,
+          reveal: mode === 'app-open' ? TIMINGS.appReveal : TIMINGS.pjaxReveal
+        }
+  }
+
+  const syncTip = () => {
+    tipsText.textContent = TIPS[tipsIndex] || ''
+  }
+
+  const rotateTip = () => {
+    tipsIndex = (tipsIndex + 1) % TIPS.length
+    syncTip()
+  }
+
+  const hideLoading = () => {
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    queueJob(() => {
+      box.style.display = 'none'
+      box.dataset.transitionMode = 'boot'
+      box.classList.remove('is-slow')
+      setBodyTransition(false)
+      clearPendingTransition()
+      window.dispatchEvent(new Event('woisol:loading-finished'))
+    }, TIMINGS.hidden)
+  }
+
+  const skipLoading = () => {
+    if (box.dataset.state === 'done') return
+    clearJobs()
+    revealQueued = false
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    box.style.display = 'none'
+    box.dataset.transitionMode = 'boot'
+    box.classList.remove('is-slow')
+    setBodyTransition(false)
+    clearPendingTransition()
+    window.dispatchEvent(new Event('woisol:loading-finished'))
+  }
+
+  const isLoadingBackground = target => target === box || target === center || Boolean(target && target.classList && target.classList.contains('loading-box__mask'))
+
+  const revealLoading = () => {
+    if (box.dataset.state === 'revealing' || box.dataset.state === 'done') return
+    revealQueued = false
+    clearJobs()
+    box.dataset.state = 'revealing'
+    const quickPjaxReveal = box.dataset.transitionMode === 'pjax' && !box.classList.contains('is-slow')
+    setPhase(quickPjaxReveal ? 'quick-reveal' : 'revealing')
+    setBodyTransition(false)
+    playBodyEnter()
+    queueJob(hideLoading, quickPjaxReveal ? TIMINGS.quickReveal : currentTiming.reveal)
+  }
+
+  const endLoading = () => {
+    if (box.dataset.state === 'done' || box.dataset.phase === 'idle') return
+    if (box.dataset.phase === 'covering') {
+      revealQueued = true
+      return
+    }
+
+    revealLoading()
+  }
+
+  const initLoading = animate => {
+    const pendingTransition = animate ? getPendingTransition() : null
+    const mode = pendingTransition && pendingTransition.type === 'app-open' ? 'app-open' : animate ? 'pjax' : 'boot'
+    clearJobs()
+    revealQueued = false
+    setTiming(mode)
+    box.style.display = 'block'
+    box.dataset.state = 'loading'
+    box.dataset.transitionMode = mode
+    box.classList.remove('is-slow')
+    box.classList.remove('loaded')
+    setPhase(animate ? mode === 'app-open' && box.dataset.phase === 'covering' ? 'covering' : 'cover-start' : 'covered')
+
+    if (animate) setBodyTransition(true)
+
+    if (animate) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!(mode === 'app-open' && box.dataset.phase === 'covering')) setPhase('covering')
+        })
+      })
+
+      queueJob(() => {
+        setPhase('covered')
+        if (revealQueued) {
+          queueJob(revealLoading, currentTiming.coveredDwell)
+        }
+
+        queueJob(() => {
+          if (box.dataset.state === 'loading' && box.dataset.phase === 'covered') {
+            box.classList.add('is-slow')
+          }
+        }, TIMINGS.slowThreshold)
+      }, currentTiming.cover)
+    }
+
+    window.dispatchEvent(new Event('woisol:loading-started'))
+  }
+
+  syncTip()
+  timer = window.setInterval(rotateTip, 2600)
+
+  switchBtn && switchBtn.addEventListener('click', event => {
+    event.preventDefault()
+    event.stopPropagation()
+    rotateTip()
+  })
+
+  box.addEventListener('click', event => {
+    if (!isLoadingBackground(event.target)) return
+    event.preventDefault()
+    skipLoading()
+  })
+
+  initLoading(false)
+  window.addEventListener('load', endLoading, { once: true })
+
+  if (isPjaxEnabled && window.btf && typeof btf.addGlobalFn === 'function') {
+    btf.addGlobalFn('pjaxSend', () => initLoading(true), 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', endLoading, 'preloader_end')
+  }
+})()</script><div id="woisol-bg-pattern" aria-hidden="true"><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tr"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--bl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--br"></span></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav class="woisol-nav-compact" id="nav" data-page-type="post"><span class="is-post-switch" id="blog-info"><div class="woisol-nav-title-switch"><a class="nav-site-title nav-site-title--default" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" alt="Logo"><div class="woisol-nav-brand"><span class="site-name">折腾，是为了<span class="site-name__accent">不折腾</span></span></div></a><span class="nav-page-title nav-page-title--reading" id="woisol-nav-page-title"><span class="site-name">Vector：安卓 16 上的 Zygisk lsp 实现</span></span></div></span><div id="menus"><div class="woisol-nav-actions"><div id="search-button"><button class="site-page social-icon search nav-action-btn" id="woisol-search-trigger" type="button" title="搜索" aria-label="搜索" data-woisol-trigger="search" data-lottie-icon="search" data-lottie-trigger="hover"><i class="fas fa-search fa-fw"></i></button></div></div></div><div class="woisol-nav-progress"><span class="woisol-nav-progress__bar" id="woisol-nav-progress-bar"></span></div></nav></header><main class="layout" id="content-inner"><div id="post"><div class="post-hero woisol-reveal" id="post-info" data-reveal-delay="0"><div class="post-hero__surface has-cover"><div class="post-hero__cover"><picture class="post-hero__picture"><img class="post-hero__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"></picture></div><div class="post-hero__body"><div class="post-hero__quality-row"><span class="post-hero__quality post-hero__quality--selected"><span>精选</span></span></div><h1 class="post-title">Vector：安卓 16 上的 Zygisk lsp 实现</h1><div class="post-hero__taxonomies"><a class="post-hero__category" href="/categories/Knowledge/"><i class="fas fa-folder-open fa-fw"></i><span>Knowledge</span></a><a class="post-hero__tag" href="/tags/%E7%8E%A9%E6%9C%BA/"><i class="fas fa-tag fa-fw"></i><span>玩机</span></a><a class="post-hero__tag" href="/tags/Android/"><i class="fas fa-tag fa-fw"></i><span>Android</span></a><a class="post-hero__tag" href="/tags/Android-16/"><i class="fas fa-tag fa-fw"></i><span>Android 16</span></a><a class="post-hero__tag" href="/tags/Zygisk/"><i class="fas fa-tag fa-fw"></i><span>Zygisk</span></a><a class="post-hero__tag" href="/tags/LSPosed/"><i class="fas fa-tag fa-fw"></i><span>LSPosed</span></a><a class="post-hero__tag" href="/tags/Vector/"><i class="fas fa-tag fa-fw"></i><span>Vector</span></a></div><div class="post-hero__meta" id="post-meta"><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-20T06:39:16.000Z" title="发表于 2026-04-20 14:39:16">2026-04-20</time></span><span class="post-hero__meta-chip post-meta-date"><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-20T06:39:16.000Z" title="更新于 2026-04-20 14:39:16">2026-04-20</time></span></div><div class="post-hero__meta-row"><span class="post-hero__meta-chip post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></div></div><article class="container post-content woisol-reveal" id="article-container" data-reveal-delay="100"><blockquote>
+<p>最近才意识到板子上的 Luckytool 和 O神 两个 lsp 模块都早就无法使用了，进入软件显示模块未激活。之前更新系统后一直只是零零散散几个小问题没在意……</p>
+</blockquote>
+<p>不多说，搜 Zygisk lsp a16 搜到的，<a target="_blank" rel="noopener" href="https://github.com/JingMatrix/Vector">JingMatrix&#x2F;Vector - GitHub</a></p>
+<p>甚至还有专门的 <a target="_blank" rel="noopener" href="https://github.com/JingMatrix/Vector/issues/684">issue</a> 提为什么不直接叫 LSPosed，哈哈哈。</p>
+</article><div class="post-tail"><div class="post-tail__section post-tail__section--meta"><div class="post-tail__headline" data-lottie-icon="bookmark" data-lottie-trigger="hover" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-bookmark fa-fw"></i><span>文章信息</span></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw" data-lottie-icon="face-scanner" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__author"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz">Woisol</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw" data-lottie-icon="link" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__type"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/">https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw" data-lottie-icon="info" data-lottie-trigger="hover" data-lottie-trigger-root=".post-copyright__notice"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.woisol.xyz" target="_blank">Markdown Any Notes</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%8E%A9%E6%9C%BA/">玩机</a><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/Android-16/">Android 16</a><a class="post-meta__tags" href="/tags/Zygisk/">Zygisk</a><a class="post-meta__tags" href="/tags/LSPosed/">LSPosed</a><a class="post-meta__tags" href="/tags/Vector/">Vector</a></div><div class="post-share"><div class="social-share" data-image="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="post-tail__section post-tail__section--related"><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-top relatedPosts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-04/ac5342205772/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|Linux</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 04 · 22</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__hover-desc">依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-jss relatedPosts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-03/49ea002f91f8/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">平板疑难杂症汇总(原：安卓外接键盘连打的一个可能的偏门解法)</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Android|外接键盘</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 03 · 19</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">平板疑难杂症汇总(原：安卓外接键盘连打的一个可能的偏门解法)</h3><div class="article-card__hover-desc">记录一个更适用于玩机人的外接键盘连打解决方法</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-selected relatedPosts__card woisol-reveal" data-reveal-delay="280" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-03/def4d9dce038/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://bbs.scumaker.org/uploads/default/original/1X/6d0b5622e5104a059c29c8ac4ed9fe48c1d1a620.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="尝试解决LinearOS长期关屏断网问题"></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">SELE</span><div class="article-card__default-layer"><span class="article-card__pill"><span>精选</span></span><h3 class="article-card__title">尝试解决LinearOS长期关屏断网问题</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Android|LineageOS</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 03 · 06</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">尝试解决LinearOS长期关屏断网问题</h3><div class="article-card__hover-desc">广东某大学的ipv6禁止传入，使用家庭宽带白嫖ipv6的LineageOS手机在较长时间关屏后自行断网耗费大量时间维护，以下是解决方案。 解决方案等待解决中 教程在以下步骤中和机主本人保持联络，操作前尽可能由机主确认 前置安装和使用adb在cmd上使用adb 连接至手机，电脑我以前可能安装好adb了用cmd输入 adb version确认一下是否出现adb的版本。安装和连接具体方法参考 ADB安装及使用详解（非常详细）从零基础入门到精通，看完这一篇就够了 方法一：借助高精度定位对Wi-Fi的依赖尝试开启手机定位 方法二：修复LineageOS网络受限问题 参考前置使用adb连接手机 输入 返回结果截图或者复制看看 参考网站：解决LineageOS提示网络受限问题 方法三：修改wifi_sleep_policy 参考前置使用adb连接手机 尝试输入 查看输出是否包含数字2（截个图或复制看看） 如果不是数字2，尝试输入...</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--random"><div class="woisol-random-posts"><div class="woisol-random-posts__headline" data-lottie-icon="more" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-ellipsis fa-fw"></i><span>随机看看</span></div><div class="woisol-random-posts__list"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-jss woisol-random-posts__card woisol-reveal" data-reveal-delay="120" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-03/24b7c4a08a4e/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">vela随探</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>vela|XiaoMi</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 03 · 05</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">vela随探</h3><div class="article-card__hover-desc">只是随便摸了一下 Redmi Watch 固件的一些记录</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-left has-cover is-quality-jss woisol-random-posts__card woisol-reveal" data-reveal-delay="200" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2025-04/e4a0ea6a7c66/" title=""><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://img.iplaysoft.com/wp-content/uploads/2025/cherry-studio/cherrystudio_2x.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="初见MCP"/></picture><div class="article-card__cover-fade"></div></div><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>普通</span></span><h3 class="article-card__title">初见MCP</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>MCP|Cherry Studio</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2025 · 04 · 07</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">初见MCP</h3><div class="article-card__hover-desc">04-07搞了部分，Trae对cline支持不好，VSC登录也麻烦，选择了Cherry Studio作为客户端\ 客户端集合：MCP中文站也有考虑Dify，问了DS说Diffy更偏向于企业，Cherry就偏向个人开发者，没有再尝试了。 Cherry MCP的配置参考官网 也是终于用上之前注册的硅基了 尝试配置了mcp.so搜到的Framelink Figma MCP Server MCP Server，可以正常用npx使用但是只能访问不能修改。 在Figma内部找到了Cursor Talk to Figma MCP，经过尝试Figma内部插件无法访问到localhost，多次尝试DS也说明无法访问Figma文件。使用server模式经查询需要告知DS渠道，但是再次尝试依然在“发送了加入请求”后结束对话且在下次请求中说明无法访问</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div><div class="post-tail__section post-tail__section--pagination"><div class="post-tail__headline" data-lottie-icon="book" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-book-open fa-fw"></i><span>继续阅读</span></div><nav class="pagination-post" id="pagination"><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-trash pagination-post__card prev-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/" title=""><div class="article-card__content"><div class="article-card__glow"></div><div class="article-card__default-layer"><span class="article-card__pill"><span>草稿</span></span><h3 class="article-card__title">newtest</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge、Life</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 03 · 21</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">newtest</h3><div class="article-card__hover-desc">已编辑 这是一段测试文本，测试编辑功能。点击三次可以看到隐藏内容。 加密内容 此处内容被局部加密，输入密码后查看。 解锁 密码不正确，请重试。 abc</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-right has-cover is-quality-top pagination-post__card next-post" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-04/ac5342205772/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|Linux</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 04 · 22</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__hover-desc">依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"></picture><div class="article-card__cover-fade"></div></div></a></article></nav></div><div class="post-tail__section post-tail__section--comments"><div class="post-tail__headline" data-lottie-icon="chat" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-comments fa-fw"></i><span>交流与评论</span></div><div id="post-comment"><div class="comment-head"></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="avatar"/></div><div class="author-info-name">Woisol</div><div class="author-info-description">Woisol's very early blog-mixed site</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">116</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Woisol"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: light-dark(#24292e,#fdfdfd);"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #04BE02;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">网站分为内外网版本，外网版本更新可能延迟 | 早期阶段，网站仍在魔改中</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2026-05/45e9ce52d4fb/" title="关于Windows安全启动验证失败的一些探索记录">关于Windows安全启动验证失败的一些探索记录</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-05-31T08:09:40.000Z" title="发表于 2026-05-31 16:09:40">2026-05-31</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/ac5342205772/" title="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-21T16:20:59.000Z" title="发表于 2026-04-22 00:20:59">2026-04-22</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://pica.zhimg.com/v2-120211c8b17310185ab98a7d062032c2_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.webp'" alt="Vector：安卓 16 上的 Zygisk lsp 实现"/></a><div class="content"><a class="title" href="/Knowledge/2026-04/657cc4b0ebc1/" title="Vector：安卓 16 上的 Zygisk lsp 实现">Vector：安卓 16 上的 Zygisk lsp 实现</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-04-20T06:39:16.000Z" title="发表于 2026-04-20 14:39:16">2026-04-20</time></div></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/" title="newtest">newtest</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-21T13:12:37.000Z" title="发表于 2026-03-21 21:12:37">2026-03-21</time></div></div></div><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://www.xqu5.com/data/attachment/forum/202210/02/220405qe0t7twog0l7wqur.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="在安卓16上位置穿越"/></a><div class="content"><a class="title" href="/Knowledge/2026-03/d32e6ffbb1e1/" title="在安卓16上位置穿越">在安卓16上位置穿越</a><div class="aside-list-item__meta"><i class="far fa-calendar-alt"></i><time datetime="2026-03-20T05:18:36.000Z" title="发表于 2026-03-20 13:18:36">2026-03-20</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-brand"><strong class="footer-brand__title">Markdown Any Notes</strong><p class="footer-brand__desc">Woisol's very early blog-mixed site</p></div><div class="footer-meta"><div class="copyright">&copy;2024 - 2026 By Woisol</div><div class="framework-info"><span class="footer-meta__item"><i class="fas fa-cubes fa-fw"></i><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo 7.3.0</a></span><span class="footer-separator">|</span><span class="footer-meta__item"><i class="fas fa-feather-pointed fa-fw"></i><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly-Patched base on 5.3.3</a></span></div></div></div></footer></div><div id="woisol-overlays"><div class="woisol-link-tooltip" id="woisol-link-tooltip" role="tooltip" aria-hidden="true" data-placement="top"><div class="woisol-link-tooltip__host" data-tooltip-host></div><div class="woisol-link-tooltip__url" data-tooltip-url></div></div><div class="woisol-modal woisol-external-modal" id="woisol-external-modal" data-woisol-modal="external-link" hidden aria-hidden="true"><div class="woisol-modal__backdrop woisol-external-modal__backdrop" data-modal-action="cancel"></div><div class="woisol-modal__dialog woisol-external-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="woisol-external-modal-title" tabindex="-1"><div class="woisol-external-modal__header"><div class="woisol-external-modal__icon"><i class="fas fa-up-right-from-square"></i></div><span><div class="woisol-external-modal__eyebrow">External Link</div><h3 class="woisol-external-modal__title" id="woisol-external-modal-title">即将离开本站</h3></span></div><p class="woisol-external-modal__desc">你将跳转到一个外部网站，请确认目标链接是否可信。</p><div class="woisol-external-modal__host" data-modal-host></div><div class="woisol-external-modal__url" data-modal-url></div><div class="woisol-external-modal__actions"><button class="woisol-external-modal__btn woisol-external-modal__btn--ghost woisol-hover-btn" type="button" data-modal-action="cancel">取消</button><button class="woisol-external-modal__btn woisol-hover-btn" type="button" data-modal-action="confirm">继续前往</button></div></div></div></div><div class="rightside-show" id="rightside"><div id="rightside-config-hide"><div class="rightside-theme-palette"><span class="rightside-theme-palette__label">暗色风格</span><div class="rightside-theme-palette__options"><button class="rightside-theme-palette__option" id="dark-scheme-gray" type="button" data-label="暗灰风格" data-scheme="gray"><span>暗灰</span></button><button class="rightside-theme-palette__option" id="dark-scheme-black" type="button" data-label="纯黑风格" data-scheme="black"><span>纯黑</span></button></div></div></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置" data-label="设置" data-lottie-icon="settings" data-lottie-trigger="hover"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换" data-label="日间和夜间模式切换"><span class="darkmode-icon" aria-hidden="true"><svg class="darkmode-icon__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"><animate attributeName="r" values="4;8" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="-4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="opacity:0;transform-origin:50% 50%;"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="0.5 0.5" to="1 1" dur="0.5s" begin="indefinite"></animateTransform></path></svg><svg class="darkmode-icon__moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" style="opacity:0;"><animate attributeName="r" values="8;4" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 -4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="transform-origin:50% 50%;"><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1 1" to="0.5 0.5" dur="0.5s" begin="indefinite"></animateTransform></path></svg></span></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换" data-label="单栏和双栏切换" data-lottie-icon="more" data-lottie-trigger="hover"><i class="fas fa-ellipsis"></i></button><a id="to_comment" href="#post-comment" title="前往评论" data-label="前往评论" data-lottie-icon="chat" data-lottie-trigger="hover"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部" data-label="回到顶部" data-lottie-icon="arrow-up" data-lottie-trigger="hover"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.js"></script><script src="/js/woisol-theme.js"></script><script src="/js/main.js"></script><script src="/js/woisol-lottie.js"></script><script src="/js/woisol-ui.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"data-category":"General","data-mapping":"pathname","data-strict":0,"data-reactions-enabled":1,"data-emit-metadata":0,"data-input-position":"bottom","data-lang":"zh-CN"}
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Woisol/blog-comments',
+      'data-repo-id': 'R_kgDOS-YlGQ',
+      'data-category-id': 'DIC_kwDOS-YlGc4C_aVp',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title" data-lottie-icon="search" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-magnifying-glass"></i><span>搜索</span></span><span id="loading-status"></span><button class="search-close-button" type="button" aria-label="close search"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

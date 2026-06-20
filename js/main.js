@@ -1,12 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
   let headerContentWidth, $nav
   let mobileSidebarOpen = false
+  const menuButtonSelector = '[data-woisol-trigger="menu"]'
+  const toSiteHref = path => new URL(path.replace(/^\//, ''), new URL(GLOBAL_CONFIG.root, window.location.origin)).pathname
+
+  const setMenuExpandedState = isOpen => {
+    document.querySelector(menuButtonSelector)?.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+    document.body.classList.toggle('woisol-menu-open', isOpen)
+    mobileSidebarOpen = isOpen
+  }
 
   const adjustMenu = init => {
     const getAllWidth = ele => Array.from(ele).reduce((width, i) => width + i.offsetWidth, 0)
 
     if (init) {
-      const blogInfoWidth = getAllWidth(document.querySelector('#blog-info > a').children)
+      const blogInfoWidth = getAllWidth(document.getElementById('blog-info').children)
       const menusWidth = getAllWidth(document.getElementById('menus').children)
       headerContentWidth = blogInfoWidth + menusWidth
       $nav = document.getElementById('nav')
@@ -28,13 +36,197 @@ document.addEventListener('DOMContentLoaded', () => {
       btf.overflowPaddingR.add()
       btf.animateIn(document.getElementById('menu-mask'), 'to_show 0.5s')
       document.getElementById('sidebar-menus').classList.add('open')
-      mobileSidebarOpen = true
+      document.getElementById('sidebar-menus')?.setAttribute('aria-hidden', 'false')
+      setMenuExpandedState(true)
     },
     close: () => {
       btf.overflowPaddingR.remove()
       btf.animateOut(document.getElementById('menu-mask'), 'to_hide 0.5s')
       document.getElementById('sidebar-menus').classList.remove('open')
-      mobileSidebarOpen = false
+      document.getElementById('sidebar-menus')?.setAttribute('aria-hidden', 'true')
+      setMenuExpandedState(false)
+    }
+  }
+
+  const ccmMenuFn = {
+    instance: null,
+    observer: null,
+    failed: false,
+    interactionsBound: false,
+    root: () => document.getElementById('ccm-con'),
+    shell: () => document.querySelector('#ccm-con .ccm-con'),
+    isAvailable() {
+      return typeof window.ConfigurableCrossMenu?.CCM === 'function' && Boolean(this.root())
+    },
+    isOpen() {
+      const root = this.root()
+      const shell = this.shell()
+      return Boolean(root && shell && root.classList.contains('blur') && !shell.classList.contains('close'))
+    },
+    syncState() {
+      const root = this.root()
+      if (!root) return false
+
+      const isOpen = this.isOpen()
+      root.setAttribute('aria-hidden', isOpen ? 'false' : 'true')
+      isOpen ? btf.overflowPaddingR.add() : btf.overflowPaddingR.remove()
+      setMenuExpandedState(isOpen)
+      return isOpen
+    },
+    observeState() {
+      const root = this.root()
+      const shell = this.shell()
+      if (!root || !shell || this.observer) return
+
+      const sync = () => {
+        window.requestAnimationFrame(() => {
+          this.syncState()
+        })
+      }
+
+      this.observer = new MutationObserver(sync)
+      this.observer.observe(root, { attributes: true, attributeFilter: ['class'] })
+      this.observer.observe(shell, { attributes: true, attributeFilter: ['class'] })
+    },
+    bindInteractions() {
+      const root = this.root()
+      if (!root || this.interactionsBound) return
+
+      root.addEventListener('click', e => {
+        if (e.target === root) {
+          window.requestAnimationFrame(() => {
+            this.syncState()
+          })
+          return
+        }
+
+        if (e.target.closest('.ccm-items')) {
+          this.close()
+        }
+      })
+
+      this.interactionsBound = true
+    },
+    init() {
+      if (this.instance || this.failed || !this.isAvailable()) return this.instance
+
+      try {
+        const { CCM } = window.ConfigurableCrossMenu
+        this.instance = new CCM({
+          container: '#ccm-con',
+          style: {
+            center: {
+              title: { content: 'C C M' },
+              subtitle: { content: '快捷导航' }
+            }
+          }
+        }, true)
+
+        this.instance.render([
+          { direction: 'up', label: '主页', url: toSiteHref('/') },
+          { direction: 'right', label: '碎碎念', url: toSiteHref('/chit/') },
+          { direction: 'down', label: '关于', url: toSiteHref('/about/') },
+          { direction: 'left', label: '博客', url: toSiteHref('/blogs/') }
+        ])
+
+        window.setTimeout(() => {
+          if (!this.instance) return
+
+          try {
+            if (typeof this.instance._close === 'function') {
+              this.instance._close()
+            } else {
+              this.shell()?.classList.add('close')
+              this.root()?.classList.remove('blur')
+            }
+
+            this.observeState()
+            this.bindInteractions()
+            this.syncState()
+          } catch (error) {
+            this.failed = true
+            this.instance = null
+            console.error('Failed to prepare CCM menu:', error)
+          }
+        }, 0)
+
+        return this.instance
+      } catch (error) {
+        this.failed = true
+        this.instance = null
+        console.error('Failed to initialize CCM menu:', error)
+        return null
+      }
+    },
+    open() {
+      const instance = this.init()
+      if (!instance) return false
+
+      if (!this.isOpen()) {
+        if (typeof instance.toggle === 'function' && document.readyState === 'complete') {
+          instance.toggle()
+        } else if (typeof instance._open === 'function') {
+          instance._open()
+        } else {
+          this.shell()?.classList.remove('close')
+          this.root()?.classList.add('blur')
+        }
+      }
+
+      this.syncState()
+      return true
+    },
+    close() {
+      if (!this.instance) {
+        this.syncState()
+        return false
+      }
+
+      if (this.isOpen()) {
+        if (typeof this.instance.toggle === 'function' && document.readyState === 'complete') {
+          this.instance.toggle()
+        } else if (typeof this.instance._close === 'function') {
+          this.instance._close()
+        } else {
+          this.shell()?.classList.add('close')
+          this.root()?.classList.remove('blur')
+        }
+      }
+
+      this.syncState()
+      return true
+    }
+  }
+
+  const isSidebarMenuOpen = () => document.getElementById('sidebar-menus')?.classList.contains('open')
+
+  const closeMenuPanel = () => {
+    if (ccmMenuFn.isOpen()) {
+      ccmMenuFn.close()
+      return
+    }
+
+    if (isSidebarMenuOpen()) {
+      sidebarFn.close()
+      return
+    }
+
+    setMenuExpandedState(false)
+  }
+
+  const toggleMenuPanel = () => {
+    if (ccmMenuFn.isOpen()) {
+      ccmMenuFn.close()
+      return
+    }
+
+    if (isSidebarMenuOpen()) {
+      sidebarFn.close()
+      return
+    }
+
+    if (!ccmMenuFn.open()) {
+      sidebarFn.open()
     }
   }
 
@@ -393,70 +585,72 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * 滾動處理
    */
-  const scrollFn = () => {
-    const $rightside = document.getElementById('rightside')
-    const innerHeight = window.innerHeight + 56
-    let initTop = 0
-    const $header = document.getElementById('page-header')
-    const isChatBtn = typeof chatBtn !== 'undefined'
-    const isShowPercent = GLOBAL_CONFIG.percent.rightside
+  // const scrollFn = () => {
+  //   // 始终显示 rightSide
+  //   // return
+  //   const $rightside = document.getElementById('rightside')
+  //   const innerHeight = window.innerHeight + 56
+  //   let initTop = 0
+  //   const $header = document.getElementById('page-header')
+  //   const isChatBtn = typeof chatBtn !== 'undefined'
+  //   const isShowPercent = GLOBAL_CONFIG.percent.rightside
 
-    // 檢查文檔高度是否小於視窗高度
-    const checkDocumentHeight = () => {
-      if (document.body.scrollHeight <= innerHeight) {
-        $rightside.classList.add('rightside-show')
-        return true
-      }
-      return false
-    }
+  //   // 檢查文檔高度是否小於視窗高度
+  //   const checkDocumentHeight = () => {
+  //     if (document.body.scrollHeight <= innerHeight) {
+  //       $rightside.classList.add('rightside-show')
+  //       return true
+  //     }
+  //     return false
+  //   }
 
-    // 如果文檔高度小於視窗高度,直接返回
-    if (checkDocumentHeight()) return
+  //   // 如果文檔高度小於視窗高度,直接返回
+  //   if (checkDocumentHeight()) return
 
-    // find the scroll direction
-    const scrollDirection = currentTop => {
-      const result = currentTop > initTop // true is down & false is up
-      initTop = currentTop
-      return result
-    }
+  //   // find the scroll direction
+  //   const scrollDirection = currentTop => {
+  //     const result = currentTop > initTop // true is down & false is up
+  //     initTop = currentTop
+  //     return result
+  //   }
 
-    let flag = ''
-    const scrollTask = btf.throttle(() => {
-      const currentTop = window.scrollY || document.documentElement.scrollTop
-      const isDown = scrollDirection(currentTop)
-      if (currentTop > 56) {
-        if (flag === '') {
-          $header.classList.add('nav-fixed')
-          $rightside.classList.add('rightside-show')
-        }
+  //   let flag = ''
+  //   const scrollTask = btf.throttle(() => {
+  //     const currentTop = window.scrollY || document.documentElement.scrollTop
+  //     const isDown = scrollDirection(currentTop)
+  //     if (currentTop > 56) {
+  //       if (flag === '') {
+  //         $header.classList.add('nav-fixed')
+  //         $rightside.classList.add('rightside-show')
+  //       }
 
-        if (isDown) {
-          if (flag !== 'down') {
-            $header.classList.remove('nav-visible')
-            isChatBtn && window.chatBtn.hide()
-            flag = 'down'
-          }
-        } else {
-          if (flag !== 'up') {
-            $header.classList.add('nav-visible')
-            isChatBtn && window.chatBtn.show()
-            flag = 'up'
-          }
-        }
-      } else {
-        flag = ''
-        if (currentTop === 0) {
-          $header.classList.remove('nav-fixed', 'nav-visible')
-        }
-        $rightside.classList.remove('rightside-show')
-      }
+  //       if (isDown) {
+  //         if (flag !== 'down') {
+  //           $header.classList.remove('nav-visible')
+  //           isChatBtn && window.chatBtn.hide()
+  //           flag = 'down'
+  //         }
+  //       } else {
+  //         if (flag !== 'up') {
+  //           $header.classList.add('nav-visible')
+  //           isChatBtn && window.chatBtn.show()
+  //           flag = 'up'
+  //         }
+  //       }
+  //     } else {
+  //       flag = ''
+  //       if (currentTop === 0) {
+  //         $header.classList.remove('nav-fixed', 'nav-visible')
+  //       }
+  //       $rightside.classList.remove('rightside-show')
+  //     }
 
-      isShowPercent && rightsideScrollPercent(currentTop)
-      checkDocumentHeight()
-    }, 300)
+  //     isShowPercent && rightsideScrollPercent(currentTop)
+  //     checkDocumentHeight()
+  //   }, 300)
 
-    btf.addEventListenerPjax(window, 'scroll', scrollTask, { passive: true })
-  }
+  //   btf.addEventListenerPjax(window, 'scroll', scrollTask, { passive: true })
+  // }
 
   /**
   * toc,anchor
@@ -567,23 +761,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btf.addEventListenerPjax(window, 'scroll', tocScrollFn, { passive: true })
   }
 
-  const handleThemeChange = mode => {
-    const globalFn = window.globalFn || {}
-    const themeChange = globalFn.themeChange || {}
-    if (!themeChange) {
-      return
-    }
-
-    Object.keys(themeChange).forEach(key => {
-      const themeChangeFn = themeChange[key]
-      if (['disqus', 'disqusjs'].includes(key)) {
-        setTimeout(() => themeChangeFn(mode), 300)
-      } else {
-        themeChangeFn(mode)
-      }
-    })
-  }
-
   /**
    * Rightside
    */
@@ -604,17 +781,18 @@ document.addEventListener('DOMContentLoaded', () => {
       newEle.addEventListener('click', exitReadMode)
       $body.appendChild(newEle)
     },
-    darkmode: () => { // switch between light and dark mode
-      const willChangeMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-      if (willChangeMode === 'dark') {
-        btf.activateDarkMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
-      } else {
-        btf.activateLightMode()
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-      }
-      btf.saveToLocal.set('theme', willChangeMode, 2)
-      handleThemeChange(willChangeMode)
+    darkmode: (p, item) => { // switch between light and dark mode
+      window.woisolTheme && window.woisolTheme.toggleThemeMode(item)
+    },
+    'dark-scheme-gray': (p, item) => {
+      window.woisolTheme && window.woisolTheme.runThemeViewTransition(item, () => {
+        window.woisolTheme.applyDarkScheme('gray')
+      })
+    },
+    'dark-scheme-black': (p, item) => {
+      window.woisolTheme && window.woisolTheme.runThemeViewTransition(item, () => {
+        window.woisolTheme.applyDarkScheme('black')
+      })
     },
     'rightside-config': item => { // Show or hide rightside-hide-btn
       const hideLayout = item.firstElementChild
@@ -688,8 +866,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   const openMobileMenu = () => {
     const toggleMenu = document.getElementById('toggle-menu')
-    if (!toggleMenu) return
-    btf.addEventListenerPjax(toggleMenu, 'click', () => { sidebarFn.open() })
+    if (!toggleMenu || toggleMenu.dataset.menuBound === '1') return
+    toggleMenu.dataset.menuBound = '1'
+    toggleMenu.addEventListener('click', toggleMenuPanel)
   }
 
   /**
@@ -764,6 +943,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { once: true }))
   }
 
+  const editedTagFn = () => {
+    const editedButtons = document.querySelectorAll('#article-container .edited-inline__button')
+    if (!editedButtons.length) return
+
+    editedButtons.forEach(button => {
+      const parent = button.closest('.edited-inline')
+      if (!parent || parent.dataset.bound === '1') return
+      parent.dataset.bound = '1'
+
+      button.addEventListener('click', () => {
+        const clicks = Math.min(Number(parent.dataset.clicks || '0') + 1, 3)
+        parent.dataset.clicks = String(clicks)
+        if (clicks >= 3) parent.classList.add('is-open')
+      })
+    })
+  }
+
   const tabsFn = () => {
     const navTabsElements = document.querySelectorAll('#article-container .tabs')
     if (!navTabsElements.length) return
@@ -774,6 +970,44 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     }
 
+    const clearMotionState = tabContents => {
+      tabContents.forEach(content => {
+        content.classList.remove('is-entering', 'is-leaving', 'from-next', 'from-prev')
+      })
+    }
+
+    const animateTabChange = (tabContents, nextIndex, previousIndex) => {
+      if (previousIndex === nextIndex || previousIndex < 0) {
+        clearMotionState(tabContents)
+        setActiveClass(tabContents, nextIndex)
+        return
+      }
+
+      const nextPanel = tabContents[nextIndex]
+      const prevPanel = tabContents[previousIndex]
+      if (!nextPanel || !prevPanel) {
+        clearMotionState(tabContents)
+        setActiveClass(tabContents, nextIndex)
+        return
+      }
+
+      const directionClass = nextIndex > previousIndex ? 'from-next' : 'from-prev'
+      clearMotionState(tabContents)
+      setActiveClass(tabContents, nextIndex)
+      prevPanel.classList.add('is-leaving', directionClass)
+      nextPanel.classList.add('is-entering', directionClass)
+
+      window.clearTimeout(prevPanel._tabsMotionTimer)
+      window.clearTimeout(nextPanel._tabsMotionTimer)
+
+      const cleanup = () => {
+        clearMotionState(tabContents)
+      }
+
+      prevPanel._tabsMotionTimer = window.setTimeout(cleanup, 520)
+      nextPanel._tabsMotionTimer = prevPanel._tabsMotionTimer
+    }
+
     const handleNavClick = e => {
       const target = e.target.closest('button')
       if (!target || target.classList.contains('active')) return
@@ -781,9 +1015,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const navItems = [...e.currentTarget.children]
       const tabContents = [...e.currentTarget.nextElementSibling.children]
       const indexOfButton = navItems.indexOf(target)
+      const activeIndex = navItems.findIndex(item => item.classList.contains('active'))
       setActiveClass(navItems, indexOfButton)
       e.currentTarget.classList.remove('no-default')
-      setActiveClass(tabContents, indexOfButton)
+      animateTabChange(tabContents, indexOfButton, activeIndex)
       addJustifiedGallery(tabContents[indexOfButton].querySelectorAll('.gallery-container'), true)
     }
 
@@ -822,6 +1057,36 @@ document.addEventListener('DOMContentLoaded', () => {
     if (diffDay >= limitDay) {
       ele.textContent = `${messagePrev} ${diffDay} ${messageNext}`
       ele.hidden = false
+    }
+  }
+
+  const addPostStaleNotice = () => {
+    const ele = document.getElementById('post-stale-notice')
+    if (!ele) return
+
+    const { limitDay, postUpdate, dismissible, storageKey } = JSON.parse(ele.getAttribute('data-stale'))
+    const diffDay = btf.diffDate(postUpdate)
+    const finalStorageKey = storageKey ? `woisol-stale:${storageKey}` : ''
+
+    if (dismissible && finalStorageKey && localStorage.getItem(finalStorageKey) === '1') {
+      ele.hidden = true
+      return
+    }
+
+    if (diffDay >= limitDay) {
+      const numEle = ele.querySelector('.post-stale-notice__num')
+      if (numEle) numEle.textContent = diffDay
+      ele.hidden = false
+    } else {
+      ele.hidden = true
+    }
+
+    const dismissBtn = ele.querySelector('.post-stale-notice__dismiss')
+    if (dismissBtn && dismissible) {
+      dismissBtn.addEventListener('click', () => {
+        ele.hidden = true
+        finalStorageKey && localStorage.setItem(finalStorageKey, '1')
+      }, { once: true })
     }
   }
 
@@ -864,11 +1129,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const unRefreshFn = () => {
     window.addEventListener('resize', () => {
       adjustMenu(false)
-      mobileSidebarOpen && btf.isHidden(document.getElementById('toggle-menu')) && sidebarFn.close()
+      mobileSidebarOpen && btf.isHidden(document.getElementById('toggle-menu')) && closeMenuPanel()
     })
 
     const menuMask = document.getElementById('menu-mask')
-    menuMask && menuMask.addEventListener('click', () => { sidebarFn.close() })
+    menuMask && menuMask.addEventListener('click', closeMenuPanel)
+    const menuClose = document.querySelector('.sidebar-panel-head__close')
+    menuClose && menuClose.addEventListener('click', closeMenuPanel)
 
     clickFnOfSubMenu()
     GLOBAL_CONFIG.islazyloadPlugin && lazyloadImg()
@@ -890,15 +1157,19 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollFnToDo()
     addTableWrap()
     clickFnOfTagHide()
+    editedTagFn()
     tabsFn()
   }
 
   const refreshFn = () => {
     initAdjust()
     justifiedIndexPostUI()
+    window.woisolTheme && window.woisolTheme.init()
+    ccmMenuFn.init()
 
     if (GLOBAL_CONFIG_SITE.pageType === 'post') {
       addPostOutdateNotice()
+      addPostStaleNotice()
       GLOBAL_CONFIG.relativeDate.post && relativeDate(document.querySelectorAll('#post-meta time'))
     } else {
       GLOBAL_CONFIG.relativeDate.homepage && relativeDate(document.querySelectorAll('#recent-posts time'))
@@ -908,7 +1179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     GLOBAL_CONFIG_SITE.pageType === 'home' && scrollDownInIndex()
-    scrollFn()
+    // scrollFn()
 
     forPostFn()
     GLOBAL_CONFIG_SITE.pageType !== 'shuoshuo' && btf.switchComments(document)

@@ -8,13 +8,24 @@ window.addEventListener('load', () => {
 
   const $searchMask = document.getElementById('search-mask')
   const $searchDialog = document.querySelector('#algolia-search .search-dialog')
+  const $searchTrigger = document.getElementById('woisol-search-trigger') || document.querySelector('#search-button > .search')
 
-  const animateElements = show => {
-    const action = show ? 'animateIn' : 'animateOut'
-    const maskAnimation = show ? 'to_show 0.5s' : 'to_hide 0.5s'
-    const dialogAnimation = show ? 'titleScale 0.5s' : 'search_close .5s'
-    btf[action]($searchMask, maskAnimation)
-    btf[action]($searchDialog, dialogAnimation)
+  const setSearchVisible = visible => {
+    $searchMask.style.display = visible ? 'block' : ''
+    $searchDialog.style.display = visible ? 'block' : ''
+  }
+
+  const runSearchTransition = visible => {
+    if (window.woisolTheme && typeof window.woisolTheme.runSharedPanelViewTransition === 'function') {
+      return window.woisolTheme.runSharedPanelViewTransition($searchTrigger, $searchDialog, $searchMask, visible, {
+        duration: visible ? 460 : 320,
+        easing: visible ? 'cubic-bezier(.16,1,.3,1)' : 'cubic-bezier(.32,0,.2,1)',
+        getBaseTransform: () => (window.innerWidth < 768 ? 'translate3d(0, 0, 0)' : 'translate(-50%, -50%)'),
+        openClass: 'woisol-search-open'
+      })
+    }
+    setSearchVisible(visible)
+    return Promise.resolve()
   }
 
   const fixSafariHeight = () => {
@@ -25,8 +36,10 @@ window.addEventListener('load', () => {
 
   const openSearch = () => {
     btf.overflowPaddingR.add()
-    animateElements(true)
-    setTimeout(() => { document.querySelector('#algolia-search .ais-SearchBox-input').focus() }, 100)
+    fixSafariHeight()
+    runSearchTransition(true).then(() => {
+      setTimeout(() => { document.querySelector('#algolia-search .ais-SearchBox-input').focus() }, 60)
+    })
 
     const handleEscape = event => {
       if (event.code === 'Escape') {
@@ -36,13 +49,12 @@ window.addEventListener('load', () => {
     }
 
     document.addEventListener('keydown', handleEscape)
-    fixSafariHeight()
     window.addEventListener('resize', fixSafariHeight)
   }
 
   const closeSearch = () => {
     btf.overflowPaddingR.remove()
-    animateElements(false)
+    runSearchTransition(false)
     window.removeEventListener('resize', fixSafariHeight)
   }
 

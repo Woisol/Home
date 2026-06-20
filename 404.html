@@ -1,18 +1,18 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Markdown Any Notes - Woisol's Blog | Markdown Any Notes - Woisol's Blog</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Woisol&#39;s very early blog-mixed site">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-dark-scheme="gray"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Markdown Any Notes | Markdown Any Notes</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Woisol&#39;s very early blog-mixed site">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Markdown Any Notes - Woisol&#39;s Blog">
-<meta property="og:url" content="http://iser/404.html">
-<meta property="og:site_name" content="Markdown Any Notes - Woisol&#39;s Blog">
+<meta property="og:title" content="Markdown Any Notes">
+<meta property="og:url" content="https://blog.woisol.xyz/404.html">
+<meta property="og:site_name" content="Markdown Any Notes">
 <meta property="og:description" content="Woisol&#39;s very early blog-mixed site">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://iser/img/avatar24-10-16.jpg">
+<meta property="og:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg">
 <meta property="article:author" content="Woisol">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="TypeScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://iser/img/avatar24-10-16.jpg"><link rel="shortcut icon" href="/img/avatar24-10-16.jpg"><link rel="canonical" href="http://iser/404.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+<meta name="twitter:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg"><link rel="shortcut icon" href="/img/avatar26-05-24by-bs.jpg"><link rel="canonical" href="https://blog.woisol.xyz/404.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"><link rel="preload" as="script" href="/js/woisol-loading-lottie.js"><link rel="preload" as="fetch" href="/lottie/loading-terminal.json" type="application/json" crossorigin="anonymous"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.css"><script defer src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script><script defer src="/js/woisol-loading-lottie.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
     (() => {
       
     const saveToLocal = {
@@ -58,7 +58,7 @@
         document.head.appendChild(link)
       }),
       addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
+        if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
         globalFn[key] = globalFn[key] || {}
         globalFn[key][name || Object.keys(globalFn[key]).length] = fn
@@ -67,6 +67,10 @@
     }
   
       
+      const applyDarkScheme = scheme => {
+        document.documentElement.setAttribute('data-dark-scheme', scheme === 'black' ? 'black' : 'gray')
+      }
+
       const activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
@@ -82,8 +86,11 @@
 
       btf.activateDarkMode = activateDarkMode
       btf.activateLightMode = activateLightMode
+      btf.applyDarkScheme = applyDarkScheme
 
       const theme = saveToLocal.get('theme')
+      const darkScheme = saveToLocal.get('dark-scheme')
+      applyDarkScheme(darkScheme || 'gray')
     
           const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
           const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
@@ -96,7 +103,7 @@
               const isNight = hour <= 6 || hour >= 18
               isNight ? activateDarkMode() : activateLightMode()
             }
-            mediaQueryDark.addEventListener('change', () => {
+            mediaQueryDark.addEventListener('change', e => {
               if (saveToLocal.get('theme') === undefined) {
                 e.matches ? activateDarkMode() : activateLightMode()
               }
@@ -159,64 +166,562 @@
   },
   autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Markdown Any Notes - Woisol\'s Blog',
+  title: 'Markdown Any Notes',
+  siteTitle: 'Markdown Any Notes',
   isHighlightShrink: false,
   isToc: false,
-  pageType: 'page'
-}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="loaded" id="loading-box"><center><!--  <img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="" />--><div class="img-temp"></div><p class="loading-text">加载中...<!--  <div class="text-wave"></div>--></p></center><footer><b class="tips">Tips:</b><span>这是一个Tips</span><i class="change fas fa-rotate"></i></footer></div><script>//- !明确了！hexo s并不会更新主题更改！还是要用./gen
-(()=>{
-const TIPS = [
-  "这里有一个Tips哦",
-  "网站处于极其早期的阶段，内容样式随时可能更改",
-  "顶栏处的「知识库」有惊喜哦"
-]
-  const $body = document.body
-const tips_div = document.querySelector('footer>span')
-tips_index = 0;
-function switch_tips(event) {
-  event.stopPropagation()
-  tips_index = (tips_index + 1) % TIPS.length
-  tips_div.innerHTML = TIPS[tips_index]
-}
-      const auto_switch_interval = setInterval(switch_tips, 2000)
-      const $loading_box = document.querySelector('#loading-box')
-      const $footer = document.querySelector('footer')
-
-      //- const $loadingBox = document.getElementById('loading-box')
-      const preloader = {
-        endLoading: () => {
-          //- $body.style.overflow = ''
-          //- $loadingBox.classList.add('loaded')
-          $loading_box.classList.add('loaded')
-          setTimeout(() => {
-            $loading_box.style.display = 'none'
-          }, 300)
-          clearInterval(auto_switch_interval)
-        },
-        initLoading: (animate = false) => {
-          $loading_box.style.display = 'block'
-          //- $body.style.overflow = 'hidden'
-          $body.style.height = '100vh'
-          if(animate){
-            setTimeout(() => {
-              $loading_box.classList.remove('loaded')
-            }, 100)
-          }else
-            $loading_box.classList.remove('loaded')
-        }
-      }
-
-      preloader.initLoading()
-
-  window.addEventListener('load', preloader.endLoading)
-  //- !强制跳过
-      //- $body.onclick = switch_tips
-  $body.addEventListener('click', preloader.endLoading)
-  $footer.addEventListener('click', switch_tips)
-  //- @todo 尝试添加跳转开始动画……
-  //- btf.addGlobalFn('initLoading', ()=>{preloader.initLoading(true)}, 'preloader_init_animate')
-  if (false) {
-    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
-    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  pageType: 'page',
+  externalLinkWhitelist: ["localhost","127.0.0.1"]
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box" data-state="booting" data-phase="booting" data-transition-mode="boot" data-loading-lottie-light="/lottie/loading-terminal.json" data-loading-lottie-dark="/lottie/loading-terminal.json"><div class="loading-box__app-open" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--accent" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--base" aria-hidden="true"></div><div class="loading-box__center"><div class="loading-box__hero" data-loading-lottie="1" aria-hidden="true"><span class="loading-box__hero-fallback"></span></div><div class="loading-box__copy"><p class="loading-text">全力加载中</p><p class="loading-subtext">Markdown Any Notes</p></div><div class="loading-box__tips"><span class="loading-box__tips-badge">Tips</span><p class="loading-box__tips-text">这里有一个 Tips 哦</p><button class="loading-box__tips-switch" type="button" aria-label="next tip"><i class="fas fa-rotate"></i></button></div></div></div><script>(() => {
+  const TIMINGS = {
+    bootCover: 960,
+    bootCoveredDwell: 420,
+    bootReveal: 1120,
+    pjaxCover: 640,
+    pjaxCoveredDwell: 0,
+    pjaxReveal: 680,
+    appCover: 560,
+    appReveal: 620,
+    slowThreshold: 620,
+    quickReveal: 220,
+    hidden: 140
   }
-})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="page type-404" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" alt="Logo"><span class="site-name">Markdown Any Notes - Woisol's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">Markdown Any Notes - Woisol's Blog</h1></header><main class="layout hide-aside" id="content-inner"><div class="nc" id="page"><div class="error-content"><div class="error-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/error-page.png" alt="Page not found"></div><div class="error-info"><h1 class="error_title">404</h1><div class="error_subtitle">Page Not Found</div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Woisol</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-moon"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title"></span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+
+  const TIPS = [
+    '站点仍在持续重构中，界面和交互会继续慢慢打磨（咕咕咕）。',
+  ]
+
+  const box = document.getElementById('loading-box')
+  if (!box) return
+
+  const center = box.querySelector('.loading-box__center')
+  const tipsText = box.querySelector('.loading-box__tips-text')
+  const switchBtn = box.querySelector('.loading-box__tips-switch')
+  const isPjaxEnabled = true
+  let tipsIndex = 0
+  let timer = 0
+  let revealQueued = false
+  let currentTiming = {
+    cover: TIMINGS.bootCover,
+    coveredDwell: TIMINGS.bootCoveredDwell,
+    reveal: TIMINGS.bootReveal
+  }
+  const jobs = new Set()
+
+  const queueJob = (callback, delay) => {
+    const id = window.setTimeout(() => {
+      jobs.delete(id)
+      callback()
+    }, delay)
+    jobs.add(id)
+    return id
+  }
+
+  const clearJobs = () => {
+    jobs.forEach(id => window.clearTimeout(id))
+    jobs.clear()
+  }
+
+  const setPhase = phase => {
+    box.dataset.phase = phase
+  }
+
+  const getPendingTransition = () => window.woisolPendingPjaxTransition || null
+
+  const clearPendingTransition = () => {
+    window.woisolPendingPjaxTransition = null
+  }
+
+  const setBodyTransition = active => {
+    const bodyWrap = document.getElementById('body-wrap')
+    if (!bodyWrap) return
+    bodyWrap.classList.toggle('is-pjax-leaving', active)
+  }
+
+  const playBodyEnter = () => {
+    document.documentElement.classList.remove('is-pjax-entering')
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('is-pjax-entering')
+      queueJob(() => {
+        document.documentElement.classList.remove('is-pjax-entering')
+      }, currentTiming.reveal)
+    })
+  }
+
+  const setTiming = mode => {
+    currentTiming = mode === 'boot'
+      ? {
+          cover: TIMINGS.bootCover,
+          coveredDwell: TIMINGS.bootCoveredDwell,
+          reveal: TIMINGS.bootReveal
+        }
+      : {
+          cover: mode === 'app-open' ? TIMINGS.appCover : TIMINGS.pjaxCover,
+          coveredDwell: TIMINGS.pjaxCoveredDwell,
+          reveal: mode === 'app-open' ? TIMINGS.appReveal : TIMINGS.pjaxReveal
+        }
+  }
+
+  const syncTip = () => {
+    tipsText.textContent = TIPS[tipsIndex] || ''
+  }
+
+  const rotateTip = () => {
+    tipsIndex = (tipsIndex + 1) % TIPS.length
+    syncTip()
+  }
+
+  const hideLoading = () => {
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    queueJob(() => {
+      box.style.display = 'none'
+      box.dataset.transitionMode = 'boot'
+      box.classList.remove('is-slow')
+      setBodyTransition(false)
+      clearPendingTransition()
+      window.dispatchEvent(new Event('woisol:loading-finished'))
+    }, TIMINGS.hidden)
+  }
+
+  const skipLoading = () => {
+    if (box.dataset.state === 'done') return
+    clearJobs()
+    revealQueued = false
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    box.style.display = 'none'
+    box.dataset.transitionMode = 'boot'
+    box.classList.remove('is-slow')
+    setBodyTransition(false)
+    clearPendingTransition()
+    window.dispatchEvent(new Event('woisol:loading-finished'))
+  }
+
+  const isLoadingBackground = target => target === box || target === center || Boolean(target && target.classList && target.classList.contains('loading-box__mask'))
+
+  const revealLoading = () => {
+    if (box.dataset.state === 'revealing' || box.dataset.state === 'done') return
+    revealQueued = false
+    clearJobs()
+    box.dataset.state = 'revealing'
+    const quickPjaxReveal = box.dataset.transitionMode === 'pjax' && !box.classList.contains('is-slow')
+    setPhase(quickPjaxReveal ? 'quick-reveal' : 'revealing')
+    setBodyTransition(false)
+    playBodyEnter()
+    queueJob(hideLoading, quickPjaxReveal ? TIMINGS.quickReveal : currentTiming.reveal)
+  }
+
+  const endLoading = () => {
+    if (box.dataset.state === 'done' || box.dataset.phase === 'idle') return
+    if (box.dataset.phase === 'covering') {
+      revealQueued = true
+      return
+    }
+
+    revealLoading()
+  }
+
+  const initLoading = animate => {
+    const pendingTransition = animate ? getPendingTransition() : null
+    const mode = pendingTransition && pendingTransition.type === 'app-open' ? 'app-open' : animate ? 'pjax' : 'boot'
+    clearJobs()
+    revealQueued = false
+    setTiming(mode)
+    box.style.display = 'block'
+    box.dataset.state = 'loading'
+    box.dataset.transitionMode = mode
+    box.classList.remove('is-slow')
+    box.classList.remove('loaded')
+    setPhase(animate ? mode === 'app-open' && box.dataset.phase === 'covering' ? 'covering' : 'cover-start' : 'covered')
+
+    if (animate) setBodyTransition(true)
+
+    if (animate) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!(mode === 'app-open' && box.dataset.phase === 'covering')) setPhase('covering')
+        })
+      })
+
+      queueJob(() => {
+        setPhase('covered')
+        if (revealQueued) {
+          queueJob(revealLoading, currentTiming.coveredDwell)
+        }
+
+        queueJob(() => {
+          if (box.dataset.state === 'loading' && box.dataset.phase === 'covered') {
+            box.classList.add('is-slow')
+          }
+        }, TIMINGS.slowThreshold)
+      }, currentTiming.cover)
+    }
+
+    window.dispatchEvent(new Event('woisol:loading-started'))
+  }
+
+  syncTip()
+  timer = window.setInterval(rotateTip, 2600)
+
+  switchBtn && switchBtn.addEventListener('click', event => {
+    event.preventDefault()
+    event.stopPropagation()
+    rotateTip()
+  })
+
+  box.addEventListener('click', event => {
+    if (!isLoadingBackground(event.target)) return
+    event.preventDefault()
+    skipLoading()
+  })
+
+  initLoading(false)
+  window.addEventListener('load', endLoading, { once: true })
+
+  if (isPjaxEnabled && window.btf && typeof btf.addGlobalFn === 'function') {
+    btf.addGlobalFn('pjaxSend', () => initLoading(true), 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', endLoading, 'preloader_end')
+  }
+})()</script><div id="woisol-bg-pattern" aria-hidden="true"><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tr"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--bl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--br"></span></div><div class="page type-404" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav class="woisol-nav-compact" id="nav" data-page-type="page"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" alt="Logo"><div class="woisol-nav-brand"><span class="site-name">折腾，是为了<span class="site-name__accent">不折腾</span></span></div></a><span class="nav-divider">/</span><span class="nav-page-title" id="woisol-nav-page-title"><span class="site-name">Markdown Any Notes</span></span></span><div id="menus"><div class="woisol-nav-actions"><div id="search-button"><button class="site-page social-icon search nav-action-btn" id="woisol-search-trigger" type="button" title="搜索" aria-label="搜索" data-woisol-trigger="search" data-lottie-icon="search" data-lottie-trigger="hover"><i class="fas fa-search fa-fw"></i></button></div></div></div></nav><h1 class="title-seo">Markdown Any Notes</h1></header><main class="layout hide-aside" id="content-inner"><div class="nc woisol-page-shell" id="page"><div class="woisol-404 page-404" aria-labelledby="error-title"><svg class="glitch-defs" width="0" height="0" aria-hidden="true"><filter id="screen-glitch-filter" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB"><feTurbulence id="glitch-noise" type="fractalNoise" baseFrequency="0.018 0.22" numOctaves="1" seed="7" result="noise"></feTurbulence><feDisplacementMap id="glitch-displace" in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" result="displaced"></feDisplacementMap><feColorMatrix in="displaced" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red"></feColorMatrix><feOffset id="glitch-red-offset" in="red" dx="-8" dy="0" result="redShift"></feOffset><feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green"></feColorMatrix><feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue"></feColorMatrix><feOffset id="glitch-blue-offset" in="blue" dx="8" dy="0" result="blueShift"></feOffset><feBlend in="redShift" in2="green" mode="screen" result="rg"></feBlend><feBlend in="rg" in2="blueShift" mode="screen" result="rgbSplit"></feBlend><feBlend in="SourceGraphic" in2="rgbSplit" mode="normal"></feBlend></filter></svg><div class="screen-block-mask" aria-hidden="true"></div><section class="stage"><div class="diagnostics" aria-hidden="true"><div class="terminal-window" data-terminal="0"></div><div class="terminal-window" data-terminal="1"></div></div><div class="corridor" aria-hidden="true"><div class="bus bus--request" data-packet-bus="request"><span class="bus-label">request bus</span></div><div class="bus bus--response" data-packet-bus="response"><span class="bus-label">corrupted return</span></div></div><div class="error-cluster"><div class="error-stack" aria-hidden="true"><div class="error-visual error-visual--base"><div class="digit digit--first" data-text="4">4</div><div class="zero-server"><div class="server-panel"><div class="server-slots"><i class="server-slot"></i><i class="server-slot"></i><i class="server-slot"></i><i class="server-slot"></i></div><div class="server-status"><i></i><i></i><i></i></div><div class="server-vent"></div></div></div><div class="digit" data-text="4">4</div></div></div><div class="copy"><h1 id="error-title">No Signal</h1><p>Page Not Found</p></div><button class="back-btn" type="button" data-back>← 返回上一级</button></div></section><script>(() => {
+  const page = document.currentScript.closest('.page-404');
+  const back = page.querySelector('[data-back]');
+  const terminals = [...page.querySelectorAll('[data-terminal]')];
+  let responsePackets = [];
+  const effects = ['missing', 'slice', 'rgb', 'dropout'];
+  const commands = [
+    {
+      title: 'route-trace',
+      command: 'trace /posts/unknown',
+      output: [
+        { text: 'hop 01  index.local' },
+        { text: 'hop 02  storage.core' },
+        { text: 'route: unresolved', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'http-probe',
+      command: 'curl -I /missing',
+      output: [
+        { text: 'HTTP/1.1 404', tone: 'bad' },
+        { text: 'x-index-hit: false', tone: 'bad' },
+        { text: 'x-packet: corrupt', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'index-lookup',
+      command: 'grep slug index.map',
+      output: [
+        { text: '0 matches' },
+        { text: 'pointer: NULL', tone: 'bad' },
+        { text: 'lookup failed', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'storage-read',
+      command: 'read block:7f3a',
+      output: [
+        { text: 'storage.core opened', tone: 'ok' },
+        { text: 'sector empty' },
+        { text: 'returning null frame', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'checksum',
+      command: 'checksum response.bin',
+      output: [
+        { text: 'frame size: 0 bytes' },
+        { text: 'crc32: mismatch', tone: 'bad' },
+        { text: 'packet rejected', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'route-cache',
+      command: 'tail route.cache',
+      output: [
+        { text: '/posts/about  ok', tone: 'ok' },
+        { text: '/posts/notes  ok', tone: 'ok' },
+        { text: '/posts/void   miss', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'signal',
+      command: 'ping archive.node',
+      output: [
+        { text: 'seq=1 timeout', tone: 'bad' },
+        { text: 'seq=2 timeout', tone: 'bad' },
+        { text: 'no carrier', tone: 'bad' }
+      ]
+    },
+    {
+      title: 'fallback',
+      command: 'fallback --history',
+      output: [
+        { text: 'previous route found', tone: 'ok' },
+        { text: 'waiting for input' }
+      ]
+    }
+  ];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  back.addEventListener('click', () => {
+    if (history.length > 1) {
+      history.back();
+      return;
+    }
+    location.href = '/';
+  });
+
+  if (reduceMotion) return;
+
+  // 404 局部故障：沿用 fault.html 的随机位移 + clipPath 机制，但目标是完整 4/0server/4 视觉组。
+  const baseVisual = page.querySelector('.error-visual--base');
+  const errorStack = page.querySelector('.error-stack');
+  const visualFault = {
+    player: {},
+    layers: [],
+    init() {
+      this.layers = ['red', 'blue', 'cyan', 'red'].map(channel => {
+        const layer = baseVisual.cloneNode(true);
+        layer.className = 'error-visual visual-fault-layer';
+        layer.dataset.channel = channel;
+        errorStack.appendChild(layer);
+        return layer;
+      });
+    },
+    fault() {
+      const targets = [baseVisual, ...this.layers];
+      clearInterval(this.player);
+      setTimeout(() => {
+        clearInterval(this.player);
+        targets.forEach(layer => {
+          layer.classList.remove('is-faulting');
+          layer.style.transform = '';
+          layer.style.clipPath = '';
+        });
+      }, 1000);
+      this.player = setInterval(() => {
+        targets.forEach(layer => {
+          layer.classList.add('is-faulting');
+          layer.style.transform = `translate(${Math.random() * 36 - 18}px,${Math.random() * 22 - 11}px)`;
+          let x = Math.random() * 100;
+          let y = Math.random() * 100;
+          let h = Math.random() * 50 + 50;
+          let w = Math.random() * 40 + 10;
+          layer.style.clipPath = `polygon(${x}% ${y}%, ${x + w}% ${y}%, ${x + w}% ${y + h}%, ${x}% ${y + h}%)`;
+        });
+      }, 30);
+    }
+  };
+  visualFault.init();
+
+  const noise = page.querySelector('#glitch-noise');
+  const displace = page.querySelector('#glitch-displace');
+  const redOffset = page.querySelector('#glitch-red-offset');
+  const blueOffset = page.querySelector('#glitch-blue-offset');
+  const blockMask = page.querySelector('.screen-block-mask');
+  const maskBlocks = Array.from({ length: 20 }, () => {
+    const block = document.createElement('i');
+    block.className = 'mask-block';
+    blockMask.appendChild(block);
+    return block;
+  });
+
+  const randomBetween = (min, max) => Math.round(min + Math.random() * (max - min));
+
+  const corridor = page.querySelector('.corridor');
+  const requestBus = page.querySelector('[data-packet-bus="request"]');
+  const responseBus = page.querySelector('[data-packet-bus="response"]');
+  const createResponsePacket = (index, effect) => {
+    const packet = document.createElement('i');
+    packet.className = 'packet';
+    packet.dataset.effect = effect;
+    packet.style.setProperty('--i', index);
+    packet.innerHTML = `
+      <span class="packet-piece packet-piece--left"></span>
+      <span class="packet-piece packet-piece--right-top"></span>
+      <span class="packet-piece packet-piece--right-bottom"></span>
+      <span class="packet-ghost packet-ghost--red"></span>
+      <span class="packet-ghost packet-ghost--blue"></span>
+    `;
+    packet.addEventListener('animationiteration', () => {
+      packet.dataset.effect = effects[Math.floor(Math.random() * effects.length)];
+    });
+    return packet;
+  };
+  const syncPackets = count => {
+    const currentRequest = requestBus.querySelectorAll('.packet').length;
+    if (currentRequest !== count) {
+      requestBus.querySelectorAll('.packet').forEach(packet => packet.remove());
+      for (let index = 0; index < count; index += 1) {
+        const packet = document.createElement('i');
+        packet.className = 'packet';
+        packet.style.setProperty('--i', index);
+        requestBus.appendChild(packet);
+      }
+    }
+
+    const currentResponse = responseBus.querySelectorAll('.packet').length;
+    if (currentResponse !== count) {
+      responseBus.querySelectorAll('.packet').forEach(packet => packet.remove());
+      for (let index = 0; index < count; index += 1) {
+        responseBus.appendChild(createResponsePacket(index, effects[index % effects.length]));
+      }
+      responsePackets = [...responseBus.querySelectorAll('.packet')];
+    }
+  };
+  const updatePacketTiming = () => {
+    if (!corridor) return;
+    const width = corridor.getBoundingClientRect().width;
+    const packetWidth = 30;
+    const desiredGap = Math.min(22, Math.max(12, width * .025));
+    const travel = width + 10;
+    const targetSpeed = Math.min(210, Math.max(145, width * .22));
+    const duration = travel / targetSpeed;
+    const count = Math.max(3, Math.floor(travel / (packetWidth + desiredGap)));
+    const step = duration / count;
+    syncPackets(count);
+    corridor.style.setProperty('--packet-duration', `${duration.toFixed(2)}s`);
+    corridor.style.setProperty('--packet-step', `${step.toFixed(3)}s`);
+  };
+  updatePacketTiming();
+  new ResizeObserver(updatePacketTiming).observe(corridor);
+
+  const randomizeScreenGlitchFrame = () => {
+    noise.setAttribute('seed', randomBetween(1, 999));
+    noise.setAttribute('baseFrequency', `${(Math.random() * .024 + .008).toFixed(3)} ${(Math.random() * .34 + .18).toFixed(3)}`);
+    displace.setAttribute('scale', randomBetween(16, 42));
+
+    const split = randomBetween(6, 22);
+    redOffset.setAttribute('dx', -split);
+    redOffset.setAttribute('dy', randomBetween(-3, 3));
+    blueOffset.setAttribute('dx', split);
+    blueOffset.setAttribute('dy', randomBetween(-3, 3));
+
+    maskBlocks.forEach(block => {
+      block.style.setProperty('--x', `${randomBetween(0, 92)}vw`);
+      block.style.setProperty('--y', `${randomBetween(0, 92)}vh`);
+      block.style.setProperty('--w', `${randomBetween(10, 48)}vw`);
+      block.style.setProperty('--h', `${randomBetween(2, 16)}vh`);
+      block.style.setProperty('--dx', `${randomBetween(-34, 34)}px`);
+      block.style.setProperty('--dy', `${randomBetween(-14, 14)}px`);
+      block.style.setProperty('--skew', `${randomBetween(-9, 9)}deg`);
+      block.style.setProperty('--a', `${(Math.random() * .38 + .2).toFixed(2)}`);
+    });
+  };
+
+  const runScreenGlitch = () => {
+    page.classList.add('is-screen-glitch');
+    const frameCount = randomBetween(4, 7);
+    let frame = 0;
+    const tick = () => {
+      randomizeScreenGlitchFrame();
+      frame += 1;
+      if (frame < frameCount) {
+        setTimeout(tick, randomBetween(58, 96));
+      }
+    };
+    tick();
+    setTimeout(() => page.classList.remove('is-screen-glitch'), randomBetween(520, 760));
+  };
+
+  const scheduleScreenGlitch = () => {
+    setTimeout(() => {
+      runScreenGlitch();
+      scheduleScreenGlitch();
+    }, randomBetween(5000, 8000));
+  };
+
+  setTimeout(() => visualFault.fault(), 900);
+  setInterval(() => visualFault.fault(), 5200);
+  scheduleScreenGlitch();
+
+  const escapeHtml = text => text.replace(/[&<>"]/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;'
+  })[char]);
+
+  const renderTerminal = terminal => {
+    if (terminal._timers) {
+      terminal._timers.forEach(timer => clearTimeout(timer));
+    }
+    terminal._timers = [];
+    const entry = commands[Math.floor(Math.random() * commands.length)];
+    const output = entry.output.map((line, index) => {
+      const tone = line.tone ? ` terminal-output--${line.tone}` : '';
+      const cursor = index === entry.output.length - 1 ? ' terminal-cursor' : '';
+      return `<code class="terminal-line terminal-output${tone}${cursor}" data-output-line>${escapeHtml(line.text)}</code>`;
+    }).join('');
+    terminal.innerHTML = `
+      <div class="terminal-titlebar">
+        <span class="terminal-dots"><i></i><i></i><i></i></span>
+        <span class="terminal-title">${escapeHtml(entry.title)}</span>
+      </div>
+      <div class="terminal-body">
+        <code class="terminal-line terminal-command">${escapeHtml(entry.command)}</code>
+        ${output}
+      </div>
+    `;
+    terminal.querySelectorAll('[data-output-line]').forEach((line, index) => {
+      terminal._timers.push(setTimeout(() => line.classList.add('is-visible'), 320 + index * 260));
+    });
+  };
+
+  setInterval(() => {
+    const terminal = terminals[Math.floor(Math.random() * terminals.length)];
+    renderTerminal(terminal);
+    terminal.style.left = `${Math.round(Math.random() * 44)}%`;
+    terminal.style.top = `${Math.round(Math.random() * 66)}%`;
+    terminal.classList.add('is-active');
+    terminal._timers.push(setTimeout(() => terminal.classList.remove('is-active'), 3600));
+  }, 4300);
+})();</script></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-brand"><strong class="footer-brand__title">Markdown Any Notes</strong><p class="footer-brand__desc">Woisol's very early blog-mixed site</p></div><div class="footer-meta"><div class="copyright">&copy;2024 - 2026 By Woisol</div><div class="framework-info"><span class="footer-meta__item"><i class="fas fa-cubes fa-fw"></i><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo 7.3.0</a></span><span class="footer-separator">|</span><span class="footer-meta__item"><i class="fas fa-feather-pointed fa-fw"></i><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly-Patched base on 5.3.3</a></span></div></div></div></footer></div><div id="woisol-overlays"><div class="woisol-link-tooltip" id="woisol-link-tooltip" role="tooltip" aria-hidden="true" data-placement="top"><div class="woisol-link-tooltip__host" data-tooltip-host></div><div class="woisol-link-tooltip__url" data-tooltip-url></div></div><div class="woisol-modal woisol-external-modal" id="woisol-external-modal" data-woisol-modal="external-link" hidden aria-hidden="true"><div class="woisol-modal__backdrop woisol-external-modal__backdrop" data-modal-action="cancel"></div><div class="woisol-modal__dialog woisol-external-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="woisol-external-modal-title" tabindex="-1"><div class="woisol-external-modal__header"><div class="woisol-external-modal__icon"><i class="fas fa-up-right-from-square"></i></div><span><div class="woisol-external-modal__eyebrow">External Link</div><h3 class="woisol-external-modal__title" id="woisol-external-modal-title">即将离开本站</h3></span></div><p class="woisol-external-modal__desc">你将跳转到一个外部网站，请确认目标链接是否可信。</p><div class="woisol-external-modal__host" data-modal-host></div><div class="woisol-external-modal__url" data-modal-url></div><div class="woisol-external-modal__actions"><button class="woisol-external-modal__btn woisol-external-modal__btn--ghost woisol-hover-btn" type="button" data-modal-action="cancel">取消</button><button class="woisol-external-modal__btn woisol-hover-btn" type="button" data-modal-action="confirm">继续前往</button></div></div></div></div><div class="rightside-show" id="rightside"><div id="rightside-config-hide"><div class="rightside-theme-palette"><span class="rightside-theme-palette__label">暗色风格</span><div class="rightside-theme-palette__options"><button class="rightside-theme-palette__option" id="dark-scheme-gray" type="button" data-label="暗灰风格" data-scheme="gray"><span>暗灰</span></button><button class="rightside-theme-palette__option" id="dark-scheme-black" type="button" data-label="纯黑风格" data-scheme="black"><span>纯黑</span></button></div></div></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置" data-label="设置" data-lottie-icon="settings" data-lottie-trigger="hover"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换" data-label="日间和夜间模式切换"><span class="darkmode-icon" aria-hidden="true"><svg class="darkmode-icon__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"><animate attributeName="r" values="4;8" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="-4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="opacity:0;transform-origin:50% 50%;"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="0.5 0.5" to="1 1" dur="0.5s" begin="indefinite"></animateTransform></path></svg><svg class="darkmode-icon__moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" style="opacity:0;"><animate attributeName="r" values="8;4" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 -4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="transform-origin:50% 50%;"><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1 1" to="0.5 0.5" dur="0.5s" begin="indefinite"></animateTransform></path></svg></span></button><button id="go-up" type="button" title="回到顶部" data-label="回到顶部" data-lottie-icon="arrow-up" data-lottie-trigger="hover"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.js"></script><script src="/js/woisol-theme.js"></script><script src="/js/main.js"></script><script src="/js/woisol-lottie.js"></script><script src="/js/woisol-ui.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title" data-lottie-icon="search" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-magnifying-glass"></i><span>搜索</span></span><span id="loading-status"></span><button class="search-close-button" type="button" aria-label="close search"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

@@ -1,18 +1,18 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Markdown Any Notes - Woisol's Blog</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Woisol&#39;s very early blog-mixed site">
+<!DOCTYPE html><html class="woisol-home-snap-root" lang="zh-CN" data-theme="light" data-dark-scheme="gray"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Markdown Any Notes - Woisol's Blog</title><meta name="author" content="Woisol"><meta name="copyright" content="Woisol"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Woisol&#39;s very early blog-mixed site">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Markdown Any Notes - Woisol&#39;s Blog">
-<meta property="og:url" content="http://iser/index.html">
-<meta property="og:site_name" content="Markdown Any Notes - Woisol&#39;s Blog">
+<meta property="og:title" content="Markdown Any Notes">
+<meta property="og:url" content="https://blog.woisol.xyz/index.html">
+<meta property="og:site_name" content="Markdown Any Notes">
 <meta property="og:description" content="Woisol&#39;s very early blog-mixed site">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://iser/img/avatar24-10-16.jpg">
+<meta property="og:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg">
 <meta property="article:author" content="Woisol">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="TypeScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://iser/img/avatar24-10-16.jpg"><link rel="shortcut icon" href="/img/avatar24-10-16.jpg"><link rel="canonical" href="http://iser/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+<meta name="twitter:image" content="https://blog.woisol.xyz/img/avatar26-05-24by-bs.jpg"><link rel="shortcut icon" href="/img/avatar26-05-24by-bs.jpg"><link rel="canonical" href="https://blog.woisol.xyz/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"><link rel="preload" as="script" href="/js/woisol-loading-lottie.js"><link rel="preload" as="fetch" href="/lottie/loading-terminal.json" type="application/json" crossorigin="anonymous"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.css"><script defer src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script><script defer src="/js/woisol-loading-lottie.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
     (() => {
       
     const saveToLocal = {
@@ -58,7 +58,7 @@
         document.head.appendChild(link)
       }),
       addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
+        if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
         globalFn[key] = globalFn[key] || {}
         globalFn[key][name || Object.keys(globalFn[key]).length] = fn
@@ -67,6 +67,10 @@
     }
   
       
+      const applyDarkScheme = scheme => {
+        document.documentElement.setAttribute('data-dark-scheme', scheme === 'black' ? 'black' : 'gray')
+      }
+
       const activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
@@ -82,8 +86,11 @@
 
       btf.activateDarkMode = activateDarkMode
       btf.activateLightMode = activateLightMode
+      btf.applyDarkScheme = applyDarkScheme
 
       const theme = saveToLocal.get('theme')
+      const darkScheme = saveToLocal.get('dark-scheme')
+      applyDarkScheme(darkScheme || 'gray')
     
           const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
           const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
@@ -96,7 +103,7 @@
               const isNight = hour <= 6 || hour >= 18
               isNight ? activateDarkMode() : activateLightMode()
             }
-            mediaQueryDark.addEventListener('change', () => {
+            mediaQueryDark.addEventListener('change', e => {
               if (saveToLocal.get('theme') === undefined) {
                 e.matches ? activateDarkMode() : activateLightMode()
               }
@@ -159,147 +166,1048 @@
   },
   autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Markdown Any Notes - Woisol\'s Blog',
+  title: 'Markdown Any Notes',
+  siteTitle: 'Markdown Any Notes',
   isHighlightShrink: false,
   isToc: false,
-  pageType: 'home'
-}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="loaded" id="loading-box"><center><!--  <img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="" />--><div class="img-temp"></div><p class="loading-text">加载中...<!--  <div class="text-wave"></div>--></p></center><footer><b class="tips">Tips:</b><span>这是一个Tips</span><i class="change fas fa-rotate"></i></footer></div><script>//- !明确了！hexo s并不会更新主题更改！还是要用./gen
-(()=>{
-const TIPS = [
-  "这里有一个Tips哦",
-  "网站处于极其早期的阶段，内容样式随时可能更改",
-  "顶栏处的「知识库」有惊喜哦"
-]
-  const $body = document.body
-const tips_div = document.querySelector('footer>span')
-tips_index = 0;
-function switch_tips(event) {
-  event.stopPropagation()
-  tips_index = (tips_index + 1) % TIPS.length
-  tips_div.innerHTML = TIPS[tips_index]
-}
-      const auto_switch_interval = setInterval(switch_tips, 2000)
-      const $loading_box = document.querySelector('#loading-box')
-      const $footer = document.querySelector('footer')
+  pageType: 'home',
+  externalLinkWhitelist: ["localhost","127.0.0.1"]
+}</script><link rel="stylesheet" href="/css/inject.css"><meta name="generator" content="Hexo 7.3.0"></head><body class="woisol-home-snap-page woisol-home-hero-active"><div id="loading-box" data-state="booting" data-phase="booting" data-transition-mode="boot" data-loading-lottie-light="/lottie/loading-terminal.json" data-loading-lottie-dark="/lottie/loading-terminal.json"><div class="loading-box__app-open" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--accent" aria-hidden="true"></div><div class="loading-box__mask loading-box__mask--base" aria-hidden="true"></div><div class="loading-box__center"><div class="loading-box__hero" data-loading-lottie="1" aria-hidden="true"><span class="loading-box__hero-fallback"></span></div><div class="loading-box__copy"><p class="loading-text">全力加载中</p><p class="loading-subtext">Markdown Any Notes</p></div><div class="loading-box__tips"><span class="loading-box__tips-badge">Tips</span><p class="loading-box__tips-text">这里有一个 Tips 哦</p><button class="loading-box__tips-switch" type="button" aria-label="next tip"><i class="fas fa-rotate"></i></button></div></div></div><script>(() => {
+  const TIMINGS = {
+    bootCover: 960,
+    bootCoveredDwell: 420,
+    bootReveal: 1120,
+    pjaxCover: 640,
+    pjaxCoveredDwell: 0,
+    pjaxReveal: 680,
+    appCover: 560,
+    appReveal: 620,
+    slowThreshold: 620,
+    quickReveal: 220,
+    hidden: 140
+  }
 
-      //- const $loadingBox = document.getElementById('loading-box')
-      const preloader = {
-        endLoading: () => {
-          //- $body.style.overflow = ''
-          //- $loadingBox.classList.add('loaded')
-          $loading_box.classList.add('loaded')
-          setTimeout(() => {
-            $loading_box.style.display = 'none'
-          }, 300)
-          clearInterval(auto_switch_interval)
-        },
-        initLoading: (animate = false) => {
-          $loading_box.style.display = 'block'
-          //- $body.style.overflow = 'hidden'
-          $body.style.height = '100vh'
-          if(animate){
-            setTimeout(() => {
-              $loading_box.classList.remove('loaded')
-            }, 100)
-          }else
-            $loading_box.classList.remove('loaded')
+  const TIPS = [
+    '站点仍在持续重构中，界面和交互会继续慢慢打磨（咕咕咕）。',
+  ]
+
+  const box = document.getElementById('loading-box')
+  if (!box) return
+
+  const center = box.querySelector('.loading-box__center')
+  const tipsText = box.querySelector('.loading-box__tips-text')
+  const switchBtn = box.querySelector('.loading-box__tips-switch')
+  const isPjaxEnabled = true
+  let tipsIndex = 0
+  let timer = 0
+  let revealQueued = false
+  let currentTiming = {
+    cover: TIMINGS.bootCover,
+    coveredDwell: TIMINGS.bootCoveredDwell,
+    reveal: TIMINGS.bootReveal
+  }
+  const jobs = new Set()
+
+  const queueJob = (callback, delay) => {
+    const id = window.setTimeout(() => {
+      jobs.delete(id)
+      callback()
+    }, delay)
+    jobs.add(id)
+    return id
+  }
+
+  const clearJobs = () => {
+    jobs.forEach(id => window.clearTimeout(id))
+    jobs.clear()
+  }
+
+  const setPhase = phase => {
+    box.dataset.phase = phase
+  }
+
+  const getPendingTransition = () => window.woisolPendingPjaxTransition || null
+
+  const clearPendingTransition = () => {
+    window.woisolPendingPjaxTransition = null
+  }
+
+  const setBodyTransition = active => {
+    const bodyWrap = document.getElementById('body-wrap')
+    if (!bodyWrap) return
+    bodyWrap.classList.toggle('is-pjax-leaving', active)
+  }
+
+  const playBodyEnter = () => {
+    document.documentElement.classList.remove('is-pjax-entering')
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('is-pjax-entering')
+      queueJob(() => {
+        document.documentElement.classList.remove('is-pjax-entering')
+      }, currentTiming.reveal)
+    })
+  }
+
+  const setTiming = mode => {
+    currentTiming = mode === 'boot'
+      ? {
+          cover: TIMINGS.bootCover,
+          coveredDwell: TIMINGS.bootCoveredDwell,
+          reveal: TIMINGS.bootReveal
         }
+      : {
+          cover: mode === 'app-open' ? TIMINGS.appCover : TIMINGS.pjaxCover,
+          coveredDwell: TIMINGS.pjaxCoveredDwell,
+          reveal: mode === 'app-open' ? TIMINGS.appReveal : TIMINGS.pjaxReveal
+        }
+  }
+
+  const syncTip = () => {
+    tipsText.textContent = TIPS[tipsIndex] || ''
+  }
+
+  const rotateTip = () => {
+    tipsIndex = (tipsIndex + 1) % TIPS.length
+    syncTip()
+  }
+
+  const hideLoading = () => {
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    queueJob(() => {
+      box.style.display = 'none'
+      box.dataset.transitionMode = 'boot'
+      box.classList.remove('is-slow')
+      setBodyTransition(false)
+      clearPendingTransition()
+      window.dispatchEvent(new Event('woisol:loading-finished'))
+    }, TIMINGS.hidden)
+  }
+
+  const skipLoading = () => {
+    if (box.dataset.state === 'done') return
+    clearJobs()
+    revealQueued = false
+    box.dataset.state = 'done'
+    setPhase('idle')
+    box.classList.add('loaded')
+    box.style.display = 'none'
+    box.dataset.transitionMode = 'boot'
+    box.classList.remove('is-slow')
+    setBodyTransition(false)
+    clearPendingTransition()
+    window.dispatchEvent(new Event('woisol:loading-finished'))
+  }
+
+  const isLoadingBackground = target => target === box || target === center || Boolean(target && target.classList && target.classList.contains('loading-box__mask'))
+
+  const revealLoading = () => {
+    if (box.dataset.state === 'revealing' || box.dataset.state === 'done') return
+    revealQueued = false
+    clearJobs()
+    box.dataset.state = 'revealing'
+    const quickPjaxReveal = box.dataset.transitionMode === 'pjax' && !box.classList.contains('is-slow')
+    setPhase(quickPjaxReveal ? 'quick-reveal' : 'revealing')
+    setBodyTransition(false)
+    playBodyEnter()
+    queueJob(hideLoading, quickPjaxReveal ? TIMINGS.quickReveal : currentTiming.reveal)
+  }
+
+  const endLoading = () => {
+    if (box.dataset.state === 'done' || box.dataset.phase === 'idle') return
+    if (box.dataset.phase === 'covering') {
+      revealQueued = true
+      return
+    }
+
+    revealLoading()
+  }
+
+  const initLoading = animate => {
+    const pendingTransition = animate ? getPendingTransition() : null
+    const mode = pendingTransition && pendingTransition.type === 'app-open' ? 'app-open' : animate ? 'pjax' : 'boot'
+    clearJobs()
+    revealQueued = false
+    setTiming(mode)
+    box.style.display = 'block'
+    box.dataset.state = 'loading'
+    box.dataset.transitionMode = mode
+    box.classList.remove('is-slow')
+    box.classList.remove('loaded')
+    setPhase(animate ? mode === 'app-open' && box.dataset.phase === 'covering' ? 'covering' : 'cover-start' : 'covered')
+
+    if (animate) setBodyTransition(true)
+
+    if (animate) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!(mode === 'app-open' && box.dataset.phase === 'covering')) setPhase('covering')
+        })
+      })
+
+      queueJob(() => {
+        setPhase('covered')
+        if (revealQueued) {
+          queueJob(revealLoading, currentTiming.coveredDwell)
+        }
+
+        queueJob(() => {
+          if (box.dataset.state === 'loading' && box.dataset.phase === 'covered') {
+            box.classList.add('is-slow')
+          }
+        }, TIMINGS.slowThreshold)
+      }, currentTiming.cover)
+    }
+
+    window.dispatchEvent(new Event('woisol:loading-started'))
+  }
+
+  syncTip()
+  timer = window.setInterval(rotateTip, 2600)
+
+  switchBtn && switchBtn.addEventListener('click', event => {
+    event.preventDefault()
+    event.stopPropagation()
+    rotateTip()
+  })
+
+  box.addEventListener('click', event => {
+    if (!isLoadingBackground(event.target)) return
+    event.preventDefault()
+    skipLoading()
+  })
+
+  initLoading(false)
+  window.addEventListener('load', endLoading, { once: true })
+
+  if (isPjaxEnabled && window.btf && typeof btf.addGlobalFn === 'function') {
+    btf.addGlobalFn('pjaxSend', () => initLoading(true), 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', endLoading, 'preloader_end')
+  }
+})()</script><div id="woisol-bg-pattern" aria-hidden="true"><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--tr"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--bl"></span><span class="woisol-bg-pattern__corner woisol-bg-pattern__corner--br"></span></div><div class="page" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav class="woisol-nav-compact" id="nav" data-page-type="home"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" alt="Logo"><div class="woisol-nav-brand"><span class="site-name">折腾，是为了<span class="site-name__accent">不折腾</span></span></div></a></span><div id="menus"><div class="woisol-nav-actions"><div id="search-button"><button class="site-page social-icon search nav-action-btn" id="woisol-search-trigger" type="button" title="搜索" aria-label="搜索" data-woisol-trigger="search" data-lottie-icon="search" data-lottie-trigger="hover"><i class="fas fa-search fa-fw"></i></button></div></div></div></nav><h1 class="title-seo">Markdown Any Notes</h1></header><main class="layout" id="content-inner"><div class="home-main home-snap nc woisol-page-shell" id="home-main" data-home-snap="true"><section class="home-scene home-scene--hero" id="home-hero-scene" data-home-scene="hero"><div class="home-lab" aria-label="博客首页第一屏">
+    <canvas class="particle-canvas" id="particleCanvas" aria-hidden="true"></canvas>
+    <div class="completion-ring" id="completionRing" aria-hidden="true"></div>
+
+    <section class="scene-grid" id="sceneGrid">
+      <div class="ghost-layer" aria-hidden="true">
+        <div class="ghost-window ghost-window--a"><span></span><i></i><i></i></div>
+        <div class="ghost-window ghost-window--b"><span></span><i></i></div>
+        <div class="ghost-window ghost-window--c"><span></span><i></i><i></i><i></i></div>
+        <div class="ghost-window ghost-window--d"><span></span><i></i></div>
+        <div class="ghost-window ghost-window--e"><span></span><i></i><i></i></div>
+        <div class="ghost-window ghost-window--f"><span></span><i></i></div>
+        <div class="ghost-window ghost-window--g"><span></span><i></i><i></i></div>
+      </div>
+
+      <svg class="trace-layer" viewBox="0 0 1440 900" aria-hidden="true">
+        <path data-trace="code" d="M 440 250 C 520 315, 565 410, 622 468" />
+        <path data-trace="flow" d="M 1010 170 C 920 270, 865 405, 792 468" />
+        <path data-trace="lock" d="M 395 710 C 515 680, 572 590, 623 548" />
+        <path data-trace="agents" d="M 1010 712 C 910 680, 850 590, 790 548" />
+      </svg>
+
+      <article class="lab-card" data-module="code" data-color="water" aria-label="修复 JavaScript 精度异常">
+        <div class="window-head">
+          <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+        <div class="code-body">
+          <div class="line-nums" aria-hidden="true">
+            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+          </div>
+          <pre
+            class="code-content"><code><span class="kw">class</span> <span class="fn">Palette</span> {
+  <span class="fn">constructor</span>(dominant, secondary, accent) {
+    <span class="kw">if</span> (dominant !== <span class="num">0.6</span>)
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`Expected 0.6, got ${dominant}`</span>)
+    <span class="kw">if</span> (secondary !== <span class="num">0.3</span>)
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`Expected 0.3, got ${secondary}`</span>)
+    <span class="kw">if</span> (accent !== <span class="num">0.1</span>)
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`Expected 0.1, got ${accent}`</span>)
+    console.<span class="fn">log</span>(<span class="str">'Palette created successfully'</span>)
+  }
+}
+<span class="kw">const</span> palette = <span class="kw">new</span> <span class="fn">Palette</span>(<span class="num">0.6</span>, <span class="bug-token particle-source" data-particle-source="code">0.1 + 0.2</span>, <span class="num">0.1</span>)
+<span class="code-error particle-source" data-particle-source="code">Expected 0.3, got 0.30000000000000004</span></code></pre>
+        </div>
+      </article>
+
+      <article class="lab-card" data-module="flow" data-color="green" aria-label="修复 CI/CD 流程">
+        <div class="flow-lane" data-flow-lane>
+          <div class="flow-node" style="--flow-w: 23px; --flow-h: 66px">📝<br>改代码</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node particle-source" data-issue data-particle-source="flow"
+            style="--flow-w: 45px; --flow-h: 66px">
+            📌<br>git push origin</div>
+          <div class="flow-arrow particle-source" data-issue data-particle-source="flow">→</div>
+          <div class="flow-node particle-source" data-issue data-particle-source="flow"
+            style="--flow-w: 47px; --flow-h: 66px">
+            🔨<br>npm run build</div>
+          <div class="flow-arrow particle-source" data-issue data-particle-source="flow">→</div>
+          <div class="flow-node particle-source" data-issue data-particle-source="flow"
+            style="--flow-w: 38px; --flow-h: 66px">
+            📂<br>SCP 替换文件</div>
+          <div class="flow-arrow particle-source" data-issue data-particle-source="flow">→</div>
+          <div class="flow-node particle-source" data-issue data-particle-source="flow"
+            style="--flow-w: 22px; --flow-h: 96px">
+            🖥<br>重启服务器</div>
+          <div class="flow-arrow particle-source" data-issue data-particle-source="flow">→</div>
+          <div class="flow-node particle-source" data-issue data-particle-source="flow"
+            style="--flow-w: 22px; --flow-h: 51px">
+            🌐<br>验证</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="--flow-w: 22px; --flow-h: 96px">😅<br>终于上线…</div>
+        </div>
+      </article>
+
+      <article class="lab-card" data-module="lock" data-color="yellow" aria-label="执行 fastboot flashing unlock">
+        <div class="window-head">
+          <div class="win-actions" aria-hidden="true"><span>−</span><span>□</span><span>×</span></div>
+        </div>
+        <div class="terminal-body" data-lock-body>&gt; adb shell
+$ <span class="particle-source" data-particle-source="lock">fastboot flashing unlock</span><span
+            class="terminal-cursor particle-source" data-particle-source="lock"></span></div>
+        <svg class="lock-icon" viewBox="0 0 96 96" aria-hidden="true">
+          <path class="lock-icon__shackle" d="M28 42V31c0-12 8-21 20-21s20 9 20 21v11" fill="none" stroke="currentColor"
+            stroke-width="7" stroke-linecap="round" />
+          <rect x="20" y="40" width="56" height="44" rx="6" fill="none" stroke="currentColor" stroke-width="7" />
+          <circle cx="48" cy="62" r="7" fill="currentColor" />
+        </svg>
+      </article>
+
+      <article class="lab-card" data-module="agents" data-color="orange" aria-label="让 AI 遵循 AGENTS.md">
+        <div class="window-head">
+          <div class="win-actions" aria-hidden="true"><span>−</span><span>□</span><span>×</span></div>
+        </div>
+        <div class="agents-body" data-agents-body><pre class="particle-source" data-particle-source="agents">| 用pnpm，不要用npm
+..
+| 乱码了就用 UTF-8 读写文件
+..
+| 怎么又全写一个文件里了……
+..
+| 不要乱改我写好的代码啊
+..</pre>
+        </div>
+      </article>
+
+      <div class="center-card-wrap" id="centerWrap">
+        <div class="center-card-bg-word" aria-hidden="true">不折腾</div>
+        <canvas class="center-card-canvas" id="centerCanvas" aria-hidden="true"></canvas>
+        <article class="center-card" id="centerCard" aria-label="Woisol 博客首页标语">
+          <div class="center-card__brand">Woisol’s Blog</div>
+          <h1 class="center-card__title" id="centerTitle">
+            <span class="center-card__line">折腾，是为了</span>
+            <span class="center-card__line center-card__line--large">不折腾</span>
+          </h1>
+          <button class="center-card__scroll" id="scrollHint" type="button" data-home-scroll="next">向下继续</button>
+        </article>
+      </div>
+    </section>
+  </div><script>(() => {
+    const hero = document.getElementById('home-hero-scene')
+    if (!hero || hero.dataset.snapHeroReady === '1') return
+    hero.dataset.snapHeroReady = '1'
+const colors = {
+      code: '#7fa784',
+      flow: '#bd9075',
+      lock: '#f0da93',
+      agents: '#9ac5d6',
+      ink: '#211f1a',
+      muted: '#716c61',
+      paper: '#fffdf5',
+      linen: '#f1e9d9',
+      morning: '#e8b600'
+    }
+
+    const modules = {
+      code: { segment: 'tl', color: colors.code, done: false, charging: false, progress: 0 },
+      flow: { segment: 'tr', color: colors.flow, done: false, charging: false, progress: 0 },
+      lock: { segment: 'bl', color: colors.lock, done: false, charging: false, progress: 0 },
+      agents: { segment: 'br', color: colors.agents, done: false, charging: false, progress: 0 }
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const canvas = hero.querySelector('#particleCanvas')
+    const centerCanvas = hero.querySelector('#centerCanvas')
+    const centerWrap = hero.querySelector('#centerWrap')
+    const completionRing = hero.querySelector('#completionRing')
+    if (!canvas || !centerCanvas || !centerWrap || !completionRing) return
+    const context = canvas.getContext('2d')
+    const centerContext = centerCanvas.getContext('2d')
+    const particles = []
+    const surfaceParticles = []
+    const textParticles = []
+    const pointer = { x: -9999, y: -9999, lastX: -9999, lastY: -9999, speed: 0, active: false }
+    const centerParticleSample = 1.2
+    const moduleContentSwapDelay = 1100
+    const moduleParticleArrivalDelay = 1750
+    const moduleBorderProgressDuration = 1300
+    let width = 0
+    let height = 0
+    let dpr = 1
+    let centerDpr = 1
+    const centerPad = 260
+    let centerWidth = 460
+    let centerHeight = 258
+    let centerLogicalWidth = centerWidth + centerPad * 2
+    let centerLogicalHeight = centerHeight + centerPad * 2
+    let centerScaleX = 1
+    let centerScaleY = 1
+    let borderAngle = 0
+    let borderSpinStart = 0
+    let borderSpinning = false
+    let centerNudge = 0
+    let sceneCompleted = false
+    let centerThemeMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas.width = Math.round(width * dpr)
+      canvas.height = Math.round(height * dpr)
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      context.setTransform(dpr, 0, 0, dpr, 0, 0)
+      resizeCenterCanvas()
+    }
+
+    function resizeCenterCanvas() {
+      centerDpr = Math.min(window.devicePixelRatio || 1, 2)
+      const rect = centerCanvas.getBoundingClientRect()
+      centerScaleX = rect.width / centerLogicalWidth
+      centerScaleY = rect.height / centerLogicalHeight
+      centerCanvas.width = Math.round(rect.width * centerDpr)
+      centerCanvas.height = Math.round(rect.height * centerDpr)
+      centerContext.setTransform(centerDpr * centerScaleX, 0, 0, centerDpr * centerScaleY, 0, 0)
+      buildCenterSurfaceParticles()
+      buildCenterTextParticles()
+    }
+
+    function roundedRect(ctx, x, y, w, h, r) {
+      ctx.beginPath()
+      ctx.moveTo(x + r, y)
+      ctx.lineTo(x + w - r, y)
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r)
+      ctx.lineTo(x + w, y + h - r)
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h)
+      ctx.lineTo(x + r, y + h)
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r)
+      ctx.lineTo(x, y + r)
+      ctx.quadraticCurveTo(x, y, x + r, y)
+      ctx.closePath()
+    }
+
+    function hexToRgb(hex) {
+      const clean = hex.replace('#', '')
+      return {
+        r: parseInt(clean.slice(0, 2), 16),
+        g: parseInt(clean.slice(2, 4), 16),
+        b: parseInt(clean.slice(4, 6), 16)
+      }
+    }
+
+    function mixColor(from, to, amount) {
+      const a = hexToRgb(from)
+      const b = hexToRgb(to)
+      const t = Math.max(0, Math.min(1, amount))
+      const r = Math.round(a.r + (b.r - a.r) * t)
+      const g = Math.round(a.g + (b.g - a.g) * t)
+      const blue = Math.round(a.b + (b.b - a.b) * t)
+      return `rgb(${r}, ${g}, ${blue})`
+    }
+
+    function segmentColors() {
+      return {
+        tr: mixColor(colors.linen, modules.flow.color, modules.flow.progress),
+        br: mixColor(colors.linen, modules.agents.color, modules.agents.progress),
+        bl: mixColor(colors.linen, modules.lock.color, modules.lock.progress),
+        tl: mixColor(colors.linen, modules.code.color, modules.code.progress)
+      }
+    }
+
+    function isDarkTheme() {
+      return document.documentElement.getAttribute('data-theme') === 'dark'
+    }
+
+    function moveCenterParticle(particle, radius, strength, spring) {
+      const speedBoost = Math.min(pointer.speed, 72)
+      const dx = particle.x - pointer.x
+      const dy = particle.y - pointer.y
+
+      if (!pointer.active || speedBoost < 0.8) {
+        particle.vx += (particle.homeX - particle.x) * spring
+        particle.vy += (particle.homeY - particle.y) * spring
+        particle.vx *= .80
+        particle.vy *= .80
+        particle.x += particle.vx
+        particle.y += particle.vy
+        return
       }
 
-      preloader.initLoading()
+      // 排斥力
+      const dynamicRadius = radius * .24 + speedBoost * 3
+      const dynamicStrength = strength * .12 + speedBoost * .28
+      const distance = Math.hypot(dx, dy)
+      if (distance < dynamicRadius) {
+        const force = Math.pow((dynamicRadius - distance) / dynamicRadius, 1.28)
+        const awayAngle = Math.atan2(dy, dx)
+        const moveAngle = Math.atan2(pointer.y - pointer.lastY, pointer.x - pointer.lastX)
+        const directionalKick = Math.min(18, speedBoost * .24)
+        particle.vx += Math.cos(awayAngle) * force * dynamicStrength + Math.cos(moveAngle) * force * directionalKick
+        particle.vy += Math.sin(awayAngle) * force * dynamicStrength + Math.sin(moveAngle) * force * directionalKick
+      }
 
-  window.addEventListener('load', preloader.endLoading)
-  //- !强制跳过
-      //- $body.onclick = switch_tips
-  $body.addEventListener('click', preloader.endLoading)
-  $footer.addEventListener('click', switch_tips)
-  //- @todo 尝试添加跳转开始动画……
-  //- btf.addGlobalFn('initLoading', ()=>{preloader.initLoading(true)}, 'preloader_init_animate')
-  if (false) {
-    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
-    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
-  }
-})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page fixed" id="page-header" style="background: linear-gradient(20deg, #FCCB1B 50%, #FFFFE0 );"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" alt="Logo"><span class="site-name">Markdown Any Notes - Woisol's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/chit/"><i class="fa-fw fas fa-lightbulb"></i><span> 碎碎念</span></a></div><div class="menus_item"><a class="site-page" href="/blogs/"><i class="fa-fw fas fa-book"></i><span> Blogs</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/fav/"><i class="fa-fw fas fa-database"></i><span> Favorite</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 更多</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Markdown Any Notes - Woisol's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #12b7f5;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc masonry" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover"><a href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11"><img class="post-bg" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在官方通道关闭的25年从鸿蒙4降级到emui11"></a></div><div class="recent-post-info"><a class="article-title" href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11">在官方通道关闭的25年从鸿蒙4降级到emui11</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-08-13T17:28:19.186Z" title="更新于 2025-08-14 01:28:19">2025-08-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%8D%8E%E4%B8%BA/">华为</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/HarmonyOS/">HarmonyOS</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/EMUI/">EMUI</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%99%8D%E7%BA%A7/">降级</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/HiSuite-Proxy/">HiSuite Proxy</a></span></div><div class="content">官方助手关闭了鸿蒙回退到 emui 的通道，没有别的办法了吗？</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Life/2025-07/ef241e5a0e15/" title="AOSCC游记">AOSCC游记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-07-24T11:55:32.678Z" title="更新于 2025-07-24 19:55:32">2025-07-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">Life</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/LUG/">LUG</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Matrix/">Matrix</a></span></div><div class="content">第一次来上海 + 第一次参加此等集会 + 和 M 厂学长见面，浅记录一下</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-07/523aaa704d73/" title="一个前端通用的vsc_task">一个前端通用的vsc_task</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-08-08T17:14:19.696Z" title="更新于 2025-08-09 01:14:19">2025-08-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span></div><div class="content">一个不断更新的兼容常用前端任务的 vsc task 配置</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/unclassified/2025-07/66b73db15cb3/" title="状态栏歌词失效了？">状态栏歌词失效了？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-07-20T17:08:56.408Z" title="更新于 2025-07-21 01:08:56">2025-07-21</time></span></div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-07/6af2d06e9fe6/" title="pwsh 优化！">pwsh 优化！</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-07-20T11:16:07.409Z" title="更新于 2025-07-20 19:16:07">2025-07-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/cmd/">cmd</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/pwsh-powershell/">pwsh / powershell</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/oh-my-posh/">oh my posh</a></span></div><div class="content">启动 PowerShell 加载配置文件都要等个 2s，必须整治一下了……</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-06/06b0bc820a13/" title="Termux 硬件加速 n 探">Termux 硬件加速 n 探</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-06-16T11:49:09.699Z" title="更新于 2025-06-16 19:49:09">2025-06-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Termux/">Termux</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/KDE-Plasma/">KDE Plasma</a></span></div><div class="content">搞过数次 Termux Proot 的硬件加速，再不总结就是重复浪费时间了()</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-06/664db3c0aaf2/" title="ali 初面试经验汇总">ali 初面试经验汇总</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-06-26T08:42:01.494Z" title="更新于 2025-06-26 16:42:01">2025-06-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Life/">Life</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Work/">Work</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Social/">Social</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/JavaScript/">JavaScript</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/TypeScript/">TypeScript</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/React/">React</a></span></div><div class="content">本以为简历关都没过的阿里最终还是来了面试，有过 tx 面试的经历后这次面试体验如何？</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-06/36d92c9f9646/" title="初次面试经验汇总">初次面试经验汇总</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-06-26T08:41:58.687Z" title="更新于 2025-06-26 16:41:58">2025-06-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Life/">Life</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Work/">Work</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Social/">Social</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/JavaScript/">JavaScript</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/TypeScript/">TypeScript</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/React/">React</a></span></div><div class="content">前端er 在 tx 的第一次面试，体验如何？</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-05/b564154d4b78/" title="2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信">2025-05 在 Termux Proot中使用 OnBoard、OneDrive、WPS 和微信</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-05-25T15:53:07.327Z" title="更新于 2025-05-25 23:53:07">2025-05-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Termux/">Termux</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/WPS/">WPS</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%BE%AE%E4%BF%A1/">微信</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/libtiff/">libtiff</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/libfreetype/">libfreetype</a></span></div><div class="content">在 Termux Proot 中使用</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/Knowledge/2025-05/977576719044/" title="Clash 猫猫不为人知的另一面">Clash 猫猫不为人知的另一面</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time datetime="2025-06-16T11:34:08.591Z" title="更新于 2025-06-16 19:34:08">2025-06-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Knowledge/">Knowledge</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Clash/">Clash</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/dns/">dns</a></span></div><div class="content">Clash 猫猫原来还有这么多地方可以 rua！</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="page-number" href="/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar24-10-16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Woisol</div><div class="author-info-description">Woisol's very early blog-mixed site</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Woisol" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:Woisol-G@outlook.com" target="_blank" title="Outlook"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/wechat" target="_blank" title="WeChat"><i class="fa-brands fa-weixin" style="color: #12b7f5;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">网站分为内外网版本，外网版本更新可能延迟 | 早期阶段，网站仍在魔改中</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://user-images.githubusercontent.com/49002275/163465192-7d752421-1f47-41fa-b3ad-d5f837eb113d.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在官方通道关闭的25年从鸿蒙4降级到emui11"/></a><div class="content"><a class="title" href="/Knowledge/2025-08/4d89ba69087f/" title="在官方通道关闭的25年从鸿蒙4降级到emui11">在官方通道关闭的25年从鸿蒙4降级到emui11</a><time datetime="2025-08-13T16:33:53.000Z" title="发表于 2025-08-14 00:33:53">2025-08-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Life/2025-07/ef241e5a0e15/" title="AOSCC游记">AOSCC游记</a><time datetime="2025-07-24T10:59:58.000Z" title="发表于 2025-07-24 18:59:58">2025-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-07/523aaa704d73/" title="一个前端通用的vsc_task">一个前端通用的vsc_task</a><time datetime="2025-07-21T09:38:10.000Z" title="发表于 2025-07-21 17:38:10">2025-07-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/unclassified/2025-07/66b73db15cb3/" title="状态栏歌词失效了？">状态栏歌词失效了？</a><time datetime="2025-07-20T17:08:56.000Z" title="发表于 2025-07-21 01:08:56">2025-07-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/Knowledge/2025-07/6af2d06e9fe6/" title="pwsh 优化！">pwsh 优化！</a><time datetime="2025-07-20T09:23:16.000Z" title="发表于 2025-07-20 17:23:16">2025-07-20</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>分类</span>
-            
-          </div>
-          <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Knowledge/"><span class="card-category-list-name">Knowledge</span><span class="card-category-list-count">18</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Knowledge%E3%80%81Life/"><span class="card-category-list-name">Knowledge、Life</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Life/"><span class="card-category-list-name">Life</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MS/"><span class="card-category-list-name">MS</span><span class="card-category-list-count">1</span></a></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/EMUI/" style="font-size: 1.1em; color: #999">EMUI</a> <a href="/tags/Button-Mapper/" style="font-size: 1.1em; color: #999">Button Mapper</a> <a href="/tags/Bluetooth/" style="font-size: 1.1em; color: #999">Bluetooth</a> <a href="/tags/CTF/" style="font-size: 1.3em; color: #99a1ac">CTF</a> <a href="/tags/%E9%99%8D%E7%BA%A7/" style="font-size: 1.1em; color: #999">降级</a> <a href="/tags/libfreetype/" style="font-size: 1.1em; color: #999">libfreetype</a> <a href="/tags/OSINT/" style="font-size: 1.1em; color: #999">OSINT</a> <a href="/tags/HarmonyOS/" style="font-size: 1.1em; color: #999">HarmonyOS</a> <a href="/tags/%E7%A3%81%E7%9B%98/" style="font-size: 1.1em; color: #999">磁盘</a> <a href="/tags/fontforge/" style="font-size: 1.1em; color: #999">fontforge</a> <a href="/tags/Windhawk/" style="font-size: 1.1em; color: #999">Windhawk</a> <a href="/tags/%E8%BF%9E%E5%AD%97/" style="font-size: 1.1em; color: #999">连字</a> <a href="/tags/Cherry-Studio/" style="font-size: 1.1em; color: #999">Cherry Studio</a> <a href="/tags/Clash/" style="font-size: 1.1em; color: #999">Clash</a> <a href="/tags/cmd/" style="font-size: 1.1em; color: #999">cmd</a> <a href="/tags/%E5%A4%87%E6%A1%88/" style="font-size: 1.1em; color: #999">备案</a> <a href="/tags/Bluez/" style="font-size: 1.1em; color: #999">Bluez</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-ECS/" style="font-size: 1.1em; color: #999">服务器 / ECS</a> <a href="/tags/KDE-Plasma/" style="font-size: 1.1em; color: #999">KDE Plasma</a> <a href="/tags/DiskDigger/" style="font-size: 1.1em; color: #999">DiskDigger</a> <a href="/tags/MBR/" style="font-size: 1.1em; color: #999">MBR</a> <a href="/tags/Python/" style="font-size: 1.1em; color: #999">Python</a> <a href="/tags/Matrix/" style="font-size: 1.1em; color: #999">Matrix</a> <a href="/tags/Work/" style="font-size: 1.3em; color: #99a1ac">Work</a> <a href="/tags/KSU/" style="font-size: 1.1em; color: #999">KSU</a> <a href="/tags/MCP/" style="font-size: 1.1em; color: #999">MCP</a> <a href="/tags/%E7%AD%89%E5%AE%BD%E5%AD%97%E4%BD%93/" style="font-size: 1.1em; color: #999">等宽字体</a> <a href="/tags/Life/" style="font-size: 1.5em; color: #99a9bf">Life</a> <a href="/tags/Reverse/" style="font-size: 1.1em; color: #999">Reverse</a> <a href="/tags/Pybluez/" style="font-size: 1.1em; color: #999">Pybluez</a> <a href="/tags/JavaScript/" style="font-size: 1.3em; color: #99a1ac">JavaScript</a> <a href="/tags/magisk/" style="font-size: 1.1em; color: #999">magisk</a> <a href="/tags/%E5%82%B2%E6%A2%85/" style="font-size: 1.1em; color: #999">傲梅</a> <a href="/tags/%E5%BE%AE%E4%BF%A1/" style="font-size: 1.1em; color: #999">微信</a> <a href="/tags/LUG/" style="font-size: 1.1em; color: #999">LUG</a> <a href="/tags/Termux/" style="font-size: 1.3em; color: #99a1ac">Termux</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 1.1em; color: #999">域名</a> <a href="/tags/Tailscale/" style="font-size: 1.1em; color: #999">Tailscale</a> <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/" style="font-size: 1.1em; color: #999">阿里云</a> <a href="/tags/encrypt/" style="font-size: 1.1em; color: #999">encrypt</a></div></div><div class="card-widget card-archives">
-    <div class="item-headline">
-      <i class="fas fa-archive"></i>
-      <span>归档</span>
-      
-    </div>
-  
-    <ul class="card-archive-list">
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/08/">
-            <span class="card-archive-list-date">
-              八月 2025
-            </span>
-            <span class="card-archive-list-count">1</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/07/">
-            <span class="card-archive-list-date">
-              七月 2025
-            </span>
-            <span class="card-archive-list-count">4</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/06/">
-            <span class="card-archive-list-date">
-              六月 2025
-            </span>
-            <span class="card-archive-list-count">3</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/05/">
-            <span class="card-archive-list-date">
-              五月 2025
-            </span>
-            <span class="card-archive-list-count">6</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/04/">
-            <span class="card-archive-list-date">
-              四月 2025
-            </span>
-            <span class="card-archive-list-count">4</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/03/">
-            <span class="card-archive-list-date">
-              三月 2025
-            </span>
-            <span class="card-archive-list-count">6</span>
-          </a>
-        </li>
-      
-        <li class="card-archive-list-item">
-          <a class="card-archive-list-link" href="/archives/2025/01/">
-            <span class="card-archive-list-date">
-              一月 2025
-            </span>
-            <span class="card-archive-list-count">2</span>
-          </a>
-        </li>
-      
-    </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">26</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-08-13T17:28:55.292Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #FCCB1B 50%, #FFFFE0 );"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Woisol</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-moon"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-book-open"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+      // 恢复力
+      particle.vx += (particle.homeX - particle.x) * spring * .2
+      particle.vy += (particle.homeY - particle.y) * spring * .2
+      particle.vx *= .88
+      particle.vy *= .88
+      particle.x += particle.vx
+      particle.y += particle.vy
+    }
+
+    function drawEllipseCurve(ctx, side, color = '#e8f5f6') {
+      ctx.save()
+      ctx.beginPath()
+      const start = side === 'back' ? Math.PI : 0
+      const end = side === 'back' ? Math.PI * 2 : Math.PI
+      ctx.ellipse(230, 170, 270, 130, -0.55, start, end)
+      ctx.strokeStyle = color
+      ctx.lineWidth = 6
+      ctx.lineCap = 'round'
+      ctx.stroke()
+      ctx.restore()
+    }
+
+    function renderCenterArtwork(ctx, useProgress = true) {
+      ctx.save()
+      ctx.clearRect(-centerPad, -centerPad, centerLogicalWidth, centerLogicalHeight)
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'top'
+      const darkTheme = isDarkTheme()
+      const curveColor = darkTheme ? 'rgba(154, 197, 214, .46)' : '#e8f5f6'
+      const titleStart = darkTheme ? '#efefee' : '#211f1a'
+      const titleEnd = darkTheme ? 'rgba(86, 85, 82, 0.38)' : 'rgba(33, 31, 26, .20)'
+      const titleAccent = darkTheme ? '#f3d26e' : colors.morning
+      const cutoutColor = colors.paper
+      const sparkleColor = darkTheme ? 'rgba(154, 197, 214, .72)' : '#c2eaf2'
+
+      // ctx.fillStyle = 'rgba(113, 108, 97, .19)'
+      // ctx.font = '700 312px Inter, system-ui, sans-serif'
+      // ctx.fillText('不折腾', -238, 6)
+
+      drawEllipseCurve(ctx, 'back', curveColor)
+
+      ctx.fillStyle = darkTheme ? 'rgba(206, 206, 204, 0.58)' : 'rgba(113, 108, 97, .44)'
+      ctx.font = '700 20px Inter, system-ui, sans-serif'
+      ctx.fillText('Woisol’s Blog', 25, 19)
+
+      const topGradient = ctx.createLinearGradient(0, 48, 0, 83)
+      topGradient.addColorStop(0, titleStart)
+      topGradient.addColorStop(1, titleEnd)
+      ctx.fillStyle = topGradient
+      ctx.font = '700 48px Inter, system-ui, sans-serif'
+      ctx.fillText('折腾，是为了', 42, 48)
+
+      ctx.fillStyle = titleAccent
+      ctx.font = '700 128px Inter, system-ui, sans-serif'
+      ctx.fillText('不折腾', 42, 104)
+      ctx.fillRect(101, 155, 32, 53)
+      ctx.fillRect(358, 153, 39, 47)
+
+      ctx.save()
+      ctx.beginPath()
+      ctx.rect(34, 168, 400, 51)
+      ctx.clip()
+      ctx.fillStyle = titleAccent
+      ctx.fillRect(34, 168, 400, 51)
+      ctx.fillStyle = cutoutColor
+      ctx.font = '700 128px Inter, system-ui, sans-serif'
+      ctx.fillText('不折腾', 42, 104)
+      ctx.restore()
+
+      const current = segmentColors()
+      const flowLight = '#a4c5a7'
+      const bar = ctx.createLinearGradient(80, 0, 380, 0)
+      bar.addColorStop(0, useProgress ? current.tl : colors.code)
+      bar.addColorStop(.24, useProgress ? mixColor(current.tl, flowLight, modules.code.progress * .28) : flowLight)
+      bar.addColorStop(.25, useProgress ? current.tr : colors.flow)
+      bar.addColorStop(.49, useProgress ? current.tr : colors.flow)
+      bar.addColorStop(.50, useProgress ? current.bl : colors.lock)
+      bar.addColorStop(.75, useProgress ? current.bl : colors.lock)
+      bar.addColorStop(.751, useProgress ? current.br : colors.agents)
+      bar.addColorStop(1, useProgress ? current.br : colors.agents)
+      ctx.fillStyle = bar
+      ctx.fillRect(80, 230, 300, 20)
+      ctx.restore()
+
+      drawEllipseCurve(ctx, 'front', curveColor)
+
+      drawSparkle(ctx, -33, 260, 47, 50, sparkleColor)
+      drawSparkle(ctx, 436, 14, 56, 60, sparkleColor)
+    }
+
+    function syncCenterArtworkTheme(mode) {
+      const nextMode = mode === 'dark' || mode === 'light' ? mode : (isDarkTheme() ? 'dark' : 'light')
+      if (nextMode === centerThemeMode) return
+      centerThemeMode = nextMode
+      buildCenterTextParticles()
+    }
+
+    function drawSparkle(ctx, x, y, width, height, color) {
+      ctx.save()
+      ctx.translate(x + width / 2, y + height / 2)
+      ctx.beginPath()
+      ctx.moveTo(0, -height / 2)
+      ctx.quadraticCurveTo(width * .10, -height * .12, width / 2, 0)
+      ctx.quadraticCurveTo(width * .10, height * .12, 0, height / 2)
+      ctx.quadraticCurveTo(-width * .10, height * .12, -width / 2, 0)
+      ctx.quadraticCurveTo(-width * .10, -height * .12, 0, -height / 2)
+      ctx.closePath()
+      ctx.fillStyle = color
+      ctx.fill()
+      ctx.restore()
+    }
+
+    function drawCenterCard() {
+      centerContext.clearRect(0, 0, centerLogicalWidth, centerLogicalHeight)
+      pointer.speed *= .92
+      centerContext.save()
+      centerContext.translate(centerPad, centerPad + centerNudge)
+      for (const particle of textParticles) {
+        moveCenterParticle(particle, 92, 3.9, .062)
+        centerContext.fillStyle = particle.segment ? segmentColors()[particle.segment] : particle.color
+        centerContext.globalAlpha = particle.alpha
+        centerContext.fillRect(particle.x, particle.y, particle.size, particle.size)
+      }
+      centerContext.globalAlpha = 1
+      centerContext.restore()
+    }
+
+    function buildCenterSurfaceParticles() {
+      surfaceParticles.length = 0
+    }
+
+    function buildCenterTextParticles() {
+      textParticles.length = 0
+      const sample = document.createElement('canvas')
+      sample.width = centerLogicalWidth
+      sample.height = centerLogicalHeight
+      const ctx = sample.getContext('2d', { willReadFrequently: true })
+      ctx.save()
+      ctx.translate(centerPad, centerPad)
+      renderCenterArtwork(ctx, false)
+      ctx.restore()
+
+      const pixels = ctx.getImageData(0, 0, centerLogicalWidth, centerLogicalHeight).data
+      for (let y = 0; y < centerLogicalHeight; y += centerParticleSample) {
+        for (let x = 0; x < centerLogicalWidth; x += centerParticleSample) {
+          const pixelX = Math.floor(x)
+          const pixelY = Math.floor(y)
+          const offset = (pixelY * centerLogicalWidth + pixelX) * 4
+          if (pixels[offset + 3] > 46) {
+            const homeX = pixelX - centerPad
+            const homeY = pixelY - centerPad
+            let segment = ''
+            // 这里也要改……
+            if (homeY >= 230 && homeY <= 250 && homeX >= 80 && homeX <= 380) {
+              if (homeX < 155) segment = 'tl'
+              else if (homeX < 230) segment = 'tr'
+              else if (homeX < 305) segment = 'bl'
+              else segment = 'br'
+            }
+            textParticles.push({
+              x: homeX + (Math.random() - .5) * 1.8,
+              y: homeY + (Math.random() - .5) * 1.8,
+              homeX,
+              homeY,
+              vx: 0,
+              vy: 0,
+              size: pixels[offset + 3] > 160 ? 1.58 : 1.24,
+              alpha: Math.min(1, pixels[offset + 3] / 210),
+              color: `rgb(${pixels[offset]}, ${pixels[offset + 1]}, ${pixels[offset + 2]})`,
+              segment
+            })
+          }
+        }
+      }
+    }
+
+    function centerPoint(moduleName) {
+      const rect = centerWrap.getBoundingClientRect()
+      const bar = {
+        y: rect.top + rect.height * (229 / 258),
+        h: rect.height * (20 / 258),
+        code: rect.left + rect.width * (117.5 / 460),
+        flow: rect.left + rect.width * (192.5 / 460),
+        lock: rect.left + rect.width * (267.5 / 460),
+        agents: rect.left + rect.width * (342.5 / 460)
+      }
+      const points = {
+        code: { x: bar.code, y: bar.y, spreadX: rect.width * (52 / 460), spreadY: bar.h * .32 },
+        flow: { x: bar.flow, y: bar.y, spreadX: rect.width * (52 / 460), spreadY: bar.h * .32 },
+        lock: { x: bar.lock, y: bar.y, spreadX: rect.width * (52 / 460), spreadY: bar.h * .32 },
+        agents: { x: bar.agents, y: bar.y, spreadX: rect.width * (52 / 460), spreadY: bar.h * .32 }
+      }
+      return points[moduleName] || { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+    }
+
+    function addParticle(particle) {
+      particles.push({
+        x: particle.x,
+        y: particle.y,
+        sx: particle.sx ?? particle.x,
+        sy: particle.sy ?? particle.y,
+        cx: particle.cx ?? particle.x,
+        cy: particle.cy ?? particle.y,
+        vx: particle.vx || 0,
+        vy: particle.vy || 0,
+        tx: particle.tx ?? particle.x,
+        ty: particle.ty ?? particle.y,
+        color: particle.color || colors.ink,
+        size: particle.size || 2,
+        life: particle.life || 80,
+        maxLife: particle.life || 80,
+        mode: particle.mode || 'seek',
+        progress: particle.progress || 0,
+        speed: particle.speed || .018,
+        delay: particle.delay || 0,
+        spin: Math.random() * Math.PI,
+        drag: particle.drag || .86
+      })
+    }
+
+    function chargeParticles(element, moduleName, color) {
+      const rect = element.getBoundingClientRect()
+      const target = centerPoint(moduleName)
+      const area = Math.max(1, rect.width * rect.height)
+      const count = Math.max(80, Math.min(280, Math.round(area / 48)))
+      for (let index = 0; index < count; index++) {
+        const sx = rect.left + Math.random() * rect.width
+        const sy = rect.top + Math.random() * rect.height
+        const curveLift = moduleName === 'lock' || moduleName === 'agents' ? -90 : 90
+        const cx = (sx + target.x) / 2 + (Math.random() - .5) * 120
+        const cy = (sy + target.y) / 2 + curveLift + (Math.random() - .5) * 70
+        addParticle({
+          x: sx,
+          y: sy,
+          sx,
+          sy,
+          cx,
+          cy,
+          tx: target.x + (Math.random() - .5) * (target.spreadX || 28),
+          ty: target.y + (Math.random() - .5) * (target.spreadY || 28),
+          color,
+          size: 1.4 + Math.random() * 2.6,
+          life: 150 + Math.random() * 70,
+          mode: 'charge',
+          speed: .012 + Math.random() * .009,
+          delay: Math.random() * 24
+        })
+      }
+    }
+
+    function vanishSources(moduleName) {
+      hero.querySelectorAll(`[data-particle-source="${moduleName}"]`).forEach(source => {
+        chargeParticles(source, moduleName, modules[moduleName].color)
+        source.classList.add('is-vanishing')
+      })
+    }
+
+    function activateTrace(moduleName) {
+      const trace = hero.querySelector(`[data-trace="${moduleName}"]`)
+      if (!trace) return
+      trace.style.setProperty('--trace-color', modules[moduleName].color)
+      trace.classList.remove('is-active')
+      void trace.getBoundingClientRect()
+      trace.classList.add('is-active')
+    }
+
+    function emitConfetti() {
+      const rect = centerWrap.getBoundingClientRect()
+      const origin = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      const palette = [colors.code, colors.flow, colors.lock, colors.agents, '#ffd84d']
+      for (let index = 0; index < 180; index++) {
+        const angle = Math.random() * Math.PI * 2
+        const speed = 3 + Math.random() * 8
+        addParticle({
+          x: origin.x + (Math.random() - .5) * rect.width * .35,
+          y: origin.y + (Math.random() - .5) * rect.height * .35,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.5,
+          color: palette[index % palette.length],
+          size: 2 + Math.random() * 4,
+          life: 70 + Math.random() * 50,
+          mode: 'burst',
+          drag: .93
+        })
+      }
+    }
+
+    function animateParticles() {
+      context.clearRect(0, 0, width, height)
+      for (let index = particles.length - 1; index >= 0; index--) {
+        const particle = particles[index]
+        if (particle.delay > 0) {
+          particle.delay -= 1
+          continue
+        }
+        particle.life -= 1
+        if (particle.life <= 0) {
+          particles.splice(index, 1)
+          continue
+        }
+
+        if (particle.mode === 'burst') {
+          particle.vx *= particle.drag
+          particle.vy = particle.vy * particle.drag + .09
+          particle.x += particle.vx
+          particle.y += particle.vy
+        } else if (particle.mode === 'charge') {
+          particle.progress = Math.min(1, particle.progress + particle.speed)
+          const t = particle.progress
+          const inv = 1 - t
+          particle.x = inv * inv * particle.sx + 2 * inv * t * particle.cx + t * t * particle.tx
+          particle.y = inv * inv * particle.sy + 2 * inv * t * particle.cy + t * t * particle.ty
+          particle.x += Math.sin(t * Math.PI * 10 + particle.spin) * 1.8
+          particle.y += Math.cos(t * Math.PI * 8 + particle.spin) * 1.2
+          if (particle.progress >= 1) particle.life = Math.min(particle.life, 18)
+        } else {
+          const dx = particle.tx - particle.x
+          const dy = particle.ty - particle.y
+          particle.vx = particle.vx * .82 + dx * .032
+          particle.vy = particle.vy * .82 + dy * .032
+          particle.x += particle.vx
+          particle.y += particle.vy
+        }
+
+        const alpha = Math.max(0, Math.min(1, particle.life / particle.maxLife))
+        context.save()
+        context.globalAlpha = particle.mode === 'charge' ? Math.min(.92, alpha * 1.6) : alpha
+        context.translate(particle.x, particle.y)
+        context.rotate(particle.spin + particle.life * .05)
+        context.fillStyle = particle.color
+        if (particle.mode === 'charge') {
+          context.beginPath()
+          context.arc(0, 0, particle.size, 0, Math.PI * 2)
+          context.fill()
+          context.globalAlpha *= .28
+          context.beginPath()
+          context.arc(0, 0, particle.size * 3.2, 0, Math.PI * 2)
+          context.fill()
+        } else {
+          context.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size)
+        }
+        context.restore()
+      }
+      requestAnimationFrame(animateParticles)
+    }
+
+    function animateCenter(timestamp) {
+      if (borderSpinning) {
+        const progress = Math.min(1, (timestamp - borderSpinStart) / 980)
+        borderAngle = progress * Math.PI * 2
+        if (progress >= 1) borderSpinning = false
+      }
+      centerNudge *= .82
+      drawCenterCard()
+      requestAnimationFrame(animateCenter)
+    }
+
+    function setFlowDone() {
+      const lane = hero.querySelector('[data-flow-lane]')
+      lane.innerHTML = `
+        <div class="flow-node" data-ok style="--flow-w: 43px; --flow-h: 51px">📝<br>git push</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-ok style="--flow-w: 45px; --flow-h: 66px">📌<br>git push origin</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-ok style="--flow-w: 68px; --flow-h: 66px">✅<br>自动 lint<br>自动 test<br>自动 build</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-ok style="--flow-w: 45px; --flow-h: 51px">✅<br>自动部署</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" data-ok style="--flow-w: 22px; --flow-h: 81px">😋<br>轻松上线</div>`
+    }
+
+    function setCodeDone() {
+      const token = hero.querySelector('.bug-token')
+      if (token) {
+        token.classList.remove('bug-token', 'particle-source', 'is-vanishing')
+        token.textContent = '0.3'
+      }
+      const error = hero.querySelector('.code-error')
+      if (error) error.remove()
+    }
+
+    function setLockDone() {
+      const body = hero.querySelector('[data-lock-body]')
+      const output = `<span class="terminal-output--orange">Orange State
+Your device has been unlocked and can’t be trusted
+Your device will boot in 5 seconds</span>
+
+KernelSU installed successfully!
+- Module installed successfully!`
+      const plain = output.replace(/<[^>]+>/g, '')
+      body.textContent = ''
+      let index = 0
+      const timer = window.setInterval(() => {
+        body.textContent = plain.slice(0, index)
+        index += 3
+        if (index > plain.length) {
+          window.clearInterval(timer)
+          body.innerHTML = output
+        }
+      }, 20)
+    }
+
+    function streamAgentsDone() {
+      const body = hero.querySelector('[data-agents-body]')
+      const output = `| 实现 xxx 功能
+
+<span class="agents-muted">根据 AGENTS.md，我应该……</span>
+...
+<span class="agents-ok">✅</span> 功能已实现，我遵循你的要求改了……验证已经通过……`
+      body.textContent = ''
+      let index = 0
+      const plain = output.replace(/<[^>]+>/g, '')
+      const timer = window.setInterval(() => {
+        body.textContent = plain.slice(0, index)
+        index += 2
+        if (index > plain.length) {
+          window.clearInterval(timer)
+          body.innerHTML = output
+        }
+      }, 18)
+    }
+
+    function animateBorderProgress(moduleName, onComplete) {
+      const module = modules[moduleName]
+      if (reducedMotion) {
+        module.progress = 1
+        onComplete?.()
+        return
+      }
+      const start = performance.now()
+      function frame(now) {
+        const progress = Math.min(1, (now - start) / moduleBorderProgressDuration)
+        module.progress = 1 - Math.pow(1 - progress, 3)
+        if (progress < 1 && module.charging) {
+          requestAnimationFrame(frame)
+        } else {
+          module.progress = 1
+          onComplete?.()
+        }
+      }
+      requestAnimationFrame(frame)
+    }
+
+    function applyModuleDone(moduleName) {
+      if (moduleName === 'code') setCodeDone()
+      if (moduleName === 'flow') setFlowDone()
+      if (moduleName === 'lock') setLockDone()
+      if (moduleName === 'agents') streamAgentsDone()
+    }
+
+    function maybeCompleteScene() {
+      if (sceneCompleted) return
+      if (!Object.values(modules).every(item => item.done && !item.charging)) return
+      completeScene()
+    }
+
+    function finishModule(card) {
+      const moduleName = card.dataset.module
+      const module = modules[moduleName]
+      if (!moduleName || !module || module.done || module.charging) return
+      module.charging = true
+      activateTrace(moduleName)
+      vanishSources(moduleName)
+      module.done = true
+      card.classList.add('is-fixed')
+      window.setTimeout(() => {
+        applyModuleDone(moduleName)
+      }, reducedMotion ? 0 : moduleContentSwapDelay)
+      window.setTimeout(() => {
+        animateBorderProgress(moduleName, () => {
+          module.charging = false
+          maybeCompleteScene()
+        })
+      }, reducedMotion ? 0 : moduleParticleArrivalDelay)
+    }
+
+    function completeScene() {
+      if (sceneCompleted) return
+      sceneCompleted = true
+      borderSpinStart = performance.now()
+      borderSpinning = true
+      completionRing.classList.remove('is-active')
+      void completionRing.offsetWidth
+      completionRing.classList.add('is-active')
+      if (!reducedMotion) emitConfetti()
+    }
+
+    function initThemeSync() {
+      if (window.btf && typeof btf.addGlobalFn === 'function') {
+        btf.addGlobalFn('themeChange', syncCenterArtworkTheme, 'home-snap-hero-theme')
+      }
+      const themeObserver = new MutationObserver(records => {
+        if (records.some(record => record.attributeName === 'data-theme')) syncCenterArtworkTheme()
+      })
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    }
+
+    function initInteractions() {
+      hero.querySelectorAll('.lab-card').forEach(card => {
+        card.addEventListener('click', () => finishModule(card))
+      })
+      function resetPointer() {
+        pointer.active = false
+        pointer.speed = 0
+        pointer.x = -9999
+        pointer.y = -9999
+        pointer.lastX = -9999
+        pointer.lastY = -9999
+      }
+
+      function updatePointerFromEvent(event, boost = 0) {
+        const rect = centerCanvas.getBoundingClientRect()
+        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) {
+          resetPointer()
+          return false
+        }
+        const nextX = (event.clientX - rect.left) / centerScaleX - centerPad
+        const nextY = (event.clientY - rect.top) / centerScaleY - centerPad
+        if (pointer.active && pointer.lastX > -9000) {
+          const frameSpeed = Math.hypot(nextX - pointer.lastX, nextY - pointer.lastY)
+          pointer.speed = pointer.speed * .62 + frameSpeed * .38
+        }
+        pointer.x = nextX
+        pointer.y = nextY
+        pointer.lastX = nextX
+        pointer.lastY = nextY
+        pointer.speed = Math.max(pointer.speed, boost)
+        pointer.active = true
+        return true
+      }
+
+      window.addEventListener('pointermove', event => {
+        updatePointerFromEvent(event)
+      })
+      window.addEventListener('pointerdown', event => {
+        updatePointerFromEvent(event, 26)
+      })
+      window.addEventListener('pointerup', event => {
+        if (updatePointerFromEvent(event, 18)) window.setTimeout(resetPointer, 320)
+      })
+      window.addEventListener('pointercancel', resetPointer)
+    }
+
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+    initThemeSync()
+    initInteractions()
+    animateParticles()
+    requestAnimationFrame(animateCenter)
+  })()</script></section><section class="home-scene home-scene--profile" id="home-profile-scene" data-home-scene="profile"><div class="home-scene__panel home-scene__panel--profile"><div class="home-feature-intro"><div class="home-feature-intro__avatar"><img src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="/img/avatar26-05-24by-bs.jpg" onerror="this.onerror=null;this.src='/img/404.webp'" alt="avatar"></div><div class="home-feature-intro__content"><span class="home-feature-intro__eyebrow">ABOUT</span><h2 class="home-feature-intro__title">Hi, I’m Woisol</h2><div class="home-feature-intro__tags"><span class="home-feature-intro__tag">编程</span><span class="home-feature-intro__tag">技术</span><span class="home-feature-intro__tag">JavaScript</span><span class="home-feature-intro__tag">TypeScript</span></div><div class="home-feature-intro__footer"><span class="home-feature-intro__spacer"></span><a class="home-feature-intro__link" href="/about/" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-slot="i"><span>关于我……</span><i class="fas fa-arrow-right"></i></a></div></div></div><div class="home-scene__panel-divider"></div><div class="home-feature-top"><div class="home-feature-top__head"><h2 class="home-feature-top__title"><span>置顶</span><small> | Top Articles</small></h2><a class="home-feature-top__more" href="/blogs/" data-lottie-icon="book" data-lottie-trigger="hover" data-lottie-slot=".home-feature-top__more-icon"><span class="home-feature-top__more-icon"><i class="fas fa-book-open"></i></span><span>更多文章</span><i class="fas fa-arrow-right"></i></a></div><div class="home-articles-grid"><article class="article-card article-card--main article-card--effect-showcase is-cover-bottom has-cover is-quality-top" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-04/ac5342205772/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Termux|Linux</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 04 · 22</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</h3><div class="article-card__hover-desc">依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div><div class="article-card__cover"><picture class="article-card__picture"><img class="article-card__img" src= "/%E2%AD%95%E5%8A%A0%E8%BD%BD%E4%B8%AD...%E2%AD%95" data-lazy-src="https://mio.woisol.xyz/blog/covers/DroidSpace.png" onerror="this.onerror=null;this.src='/img/404.webp'" alt="关于使用 Droidspace 在安卓运行 Linux 容器的一些补充"></picture><div class="article-card__cover-fade"></div></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none has-cover is-quality-top" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-02/8a7a3cfa105f/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">家庭宽带白嫖 MC 服务器？</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Minecraft|Cloudflare</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 02 · 03</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">家庭宽带白嫖 MC 服务器？</h3><div class="article-card__hover-desc">秉持能不白嫖就不花一分钱的原则搭建 MC 服务器</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article><article class="article-card article-card--secondary article-card--effect-showcase is-cover-none no-cover is-quality-top" data-pjax-transition="app-open"><a class="article-card__link" href="/Knowledge/2026-01/e6a16ece7d15/" title=""><div class="article-card__content"><div class="article-card__glow"></div><span class="article-card__stamp">TOP</span><div class="article-card__default-layer"><span class="article-card__pill" data-lottie-icon="sparkles" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-reveal="once" data-lottie-slot="i"><i class="fas fa-sparkles"></i><span>置顶</span></span><h3 class="article-card__title">只是一个可能通用的 .gitattributes</h3><div class="article-card__taxonomies"><span class="article-card__taxonomy"><i class="fas fa-inbox"></i><span>Knowledge</span></span><span class="article-card__taxonomy"><i class="fas fa-tag"></i><span>Git|Version Control</span></span></div><div class="article-card__meta-row"><span class="article-card__date">2026 · 01 · 15</span></div></div><div class="article-card__hover-layer" aria-hidden="true"><h3 class="article-card__hover-title">只是一个可能通用的 .gitattributes</h3><div class="article-card__hover-desc">那还说啥了，直接上文件，内容不断更新中： undefined最初版本来自于 AFFiNE 项目</div></div><span class="article-card__hover-readmore" data-lottie-icon="arrow-right" data-lottie-trigger="hover" data-lottie-trigger-root=".article-card" data-lottie-slot="i"><span>阅读全文</span><i class="fas fa-arrow-right"></i></span></div></a></article></div></div></div></section></div></main><footer id="footer"><div id="footer-wrap"><div class="footer-brand"><strong class="footer-brand__title">Markdown Any Notes</strong><p class="footer-brand__desc">Woisol's very early blog-mixed site</p></div><div class="footer-meta"><div class="copyright">&copy;2024 - 2026 By Woisol</div><div class="framework-info"><span class="footer-meta__item"><i class="fas fa-cubes fa-fw"></i><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo 7.3.0</a></span><span class="footer-separator">|</span><span class="footer-meta__item"><i class="fas fa-feather-pointed fa-fw"></i><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly-Patched base on 5.3.3</a></span></div></div></div></footer></div><div id="woisol-overlays"><div class="woisol-link-tooltip" id="woisol-link-tooltip" role="tooltip" aria-hidden="true" data-placement="top"><div class="woisol-link-tooltip__host" data-tooltip-host></div><div class="woisol-link-tooltip__url" data-tooltip-url></div></div><div class="woisol-modal woisol-external-modal" id="woisol-external-modal" data-woisol-modal="external-link" hidden aria-hidden="true"><div class="woisol-modal__backdrop woisol-external-modal__backdrop" data-modal-action="cancel"></div><div class="woisol-modal__dialog woisol-external-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="woisol-external-modal-title" tabindex="-1"><div class="woisol-external-modal__header"><div class="woisol-external-modal__icon"><i class="fas fa-up-right-from-square"></i></div><span><div class="woisol-external-modal__eyebrow">External Link</div><h3 class="woisol-external-modal__title" id="woisol-external-modal-title">即将离开本站</h3></span></div><p class="woisol-external-modal__desc">你将跳转到一个外部网站，请确认目标链接是否可信。</p><div class="woisol-external-modal__host" data-modal-host></div><div class="woisol-external-modal__url" data-modal-url></div><div class="woisol-external-modal__actions"><button class="woisol-external-modal__btn woisol-external-modal__btn--ghost woisol-hover-btn" type="button" data-modal-action="cancel">取消</button><button class="woisol-external-modal__btn woisol-hover-btn" type="button" data-modal-action="confirm">继续前往</button></div></div></div></div><div class="rightside-show" id="rightside"><div id="rightside-config-hide"><div class="rightside-theme-palette"><span class="rightside-theme-palette__label">暗色风格</span><div class="rightside-theme-palette__options"><button class="rightside-theme-palette__option" id="dark-scheme-gray" type="button" data-label="暗灰风格" data-scheme="gray"><span>暗灰</span></button><button class="rightside-theme-palette__option" id="dark-scheme-black" type="button" data-label="纯黑风格" data-scheme="black"><span>纯黑</span></button></div></div></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置" data-label="设置" data-lottie-icon="settings" data-lottie-trigger="hover"><i class="fas fa-cog fa-spin"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换" data-label="日间和夜间模式切换"><span class="darkmode-icon" aria-hidden="true"><svg class="darkmode-icon__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"><animate attributeName="r" values="4;8" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 -4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2"><animateTransform attributeName="transform" type="translate" from="0 0" to="0 4" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="-4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2"><animateTransform attributeName="transform" type="translate" from="0 0" to="4 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="-2.828 2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41"><animateTransform attributeName="transform" type="translate" from="0 0" to="2.828 -2.828" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="opacity:0;transform-origin:50% 50%;"><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="0.5 0.5" to="1 1" dur="0.5s" begin="indefinite"></animateTransform></path></svg><svg class="darkmode-icon__moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" style="opacity:0;"><animate attributeName="r" values="8;4" dur="0.5s" begin="indefinite"></animate><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></circle><path d="M12 2v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 -4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 20v2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m4.93 4.93 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m17.66 17.66 1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M2 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M20 12h2" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="4 0" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m6.34 17.66-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="-2.828 2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="m19.07 4.93-1.41 1.41" style="opacity:0;"><animateTransform attributeName="transform" type="translate" from="2.828 -2.828" to="0 0" dur="0.5s" begin="indefinite"></animateTransform><animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="indefinite"></animate></path><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" style="transform-origin:50% 50%;"><animate attributeName="opacity" from="1" to="0" dur="0.5s" begin="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1 1" to="0.5 0.5" dur="0.5s" begin="indefinite"></animateTransform></path></svg></span></button><button id="go-up" type="button" title="回到顶部" data-label="回到顶部" data-lottie-icon="arrow-up" data-lottie-trigger="hover"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="https://cdn.jsdelivr.net/npm/@woisol-g/configurable-cross-menu@1.0.5/dist/configurable-cross-menu.js"></script><script src="/js/woisol-theme.js"></script><script src="/js/main.js"></script><script src="/js/woisol-lottie.js"></script><script src="/js/woisol-ui.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
   init: str => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
@@ -321,12 +1229,60 @@ function switch_tips(event) {
     }
   }
 }
-btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+btf.addGlobalFn('pjaxSendOnce', () => {
+  if (window.typed && typeof window.typed.destroy === 'function') window.typed.destroy()
+}, 'typedDestroy')
 </script><script>function subtitleType () {
   if (true) {
-    typedJSFn.init(["用代码，让生活更美好","懒就直说","做软件的本质不也是自动化"])
+    typedJSFn.init(["把想法做成能跑起来的东西","用代码，让生活更美好","懒就直说","做软件的本质不也是自动化"])
   } else {
-    document.getElementById("subtitle").textContent = "用代码，让生活更美好"
+    document.getElementById("subtitle").textContent = "把想法做成能跑起来的东西"
   }
 }
-typedJSFn.run(subtitleType)</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title"></span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+typedJSFn.run(subtitleType)</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="✨" data-fontsize="15px" data-random="false" async="async"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title" data-lottie-icon="search" data-lottie-trigger="hover" data-lottie-slot="i"><i class="fas fa-magnifying-glass"></i><span>搜索</span></span><span id="loading-status"></span><button class="search-close-button" type="button" aria-label="close search"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="或许搜索一下来得更快……" type="text"/><i class="search fa-solid fa-magnifying-glass"></i></div></div><div id="local-search-result"><div id="local-search-stats-wrap"></div><div id="local-search-results"></div></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

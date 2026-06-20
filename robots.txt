@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /hexo-seo-submit/
+Disallow: /google.json
+
+Sitemap: https://blog.woisol.xyz/sitemap.xml

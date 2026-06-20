@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Markdown Any Notes</title>
+  <subtitle>Woisol&apos;s Blog</subtitle>
+  <link href="https://blog.woisol.xyz"/>
+  <link href="https://blog.woisol.xyz/atom.xml" rel="self"/>
+  <id>https://blog.woisol.xyz</id>
+  <updated>2026-05-31T08:09:40.000Z</updated>
+  <author><name>Woisol</name></author>
+  <entry>
+    <title>关于Windows安全启动验证失败的一些探索记录</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-05/45e9ce52d4fb/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-05/45e9ce52d4fb/</id>
+    <published>2026-05-31T08:09:40.000Z</published>
+    <updated>2026-05-31T08:09:40.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>关于使用 Droidspace 在安卓运行 Linux 容器的一些补充</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-04/ac5342205772/</id>
+    <published>2026-04-21T16:20:59.000Z</published>
+    <updated>2026-04-21T16:20:59.000Z</updated>
+    <summary type="html"><![CDATA[依然是安卓运行 Linux 容器，这次使用更新的 Droidspace 方案，遇到了一些问题……]]></summary>
+  </entry>
+  <entry>
+    <title>Vector：安卓 16 上的 Zygisk lsp 实现</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-04/657cc4b0ebc1/</id>
+    <published>2026-04-20T06:39:16.000Z</published>
+    <updated>2026-04-20T06:39:16.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>newtest</title>
+    <link href="https://blog.woisol.xyz/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/"/>
+    <id>https://blog.woisol.xyz/Knowledge%E3%80%81Life/2026-03/b1510d77cfb0/</id>
+    <published>2026-03-21T13:12:37.000Z</published>
+    <updated>2026-03-21T13:12:37.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>在安卓16上位置穿越</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-03/d32e6ffbb1e1/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-03/d32e6ffbb1e1/</id>
+    <published>2026-03-20T05:18:36.000Z</published>
+    <updated>2026-03-20T05:18:36.000Z</updated>
+    <summary type="html"><![CDATA[封面非本文实现（迫真）]]></summary>
+  </entry>
+  <entry>
+    <title>cc subagent 杂症</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-03/0833d86caafd/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-03/0833d86caafd/</id>
+    <published>2026-03-08T17:48:07.000Z</published>
+    <updated>2026-03-08T17:48:07.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>🦐🦐初探</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-03/c94de3088033/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-03/c94de3088033/</id>
+    <published>2026-03-07T08:32:38.000Z</published>
+    <updated>2026-03-07T08:32:38.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>vela随探</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-03/24b7c4a08a4e/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-03/24b7c4a08a4e/</id>
+    <published>2026-03-05T02:25:02.000Z</published>
+    <updated>2026-03-05T02:25:02.000Z</updated>
+    <summary type="html"><![CDATA[只是随便摸了一下 Redmi Watch 固件的一些记录]]></summary>
+  </entry>
+  <entry>
+    <title>set_policy_failed:/data/per_boot</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-02/f27da9a99f8a/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-02/f27da9a99f8a/</id>
+    <published>2026-02-03T11:04:24.000Z</published>
+    <updated>2026-02-03T11:04:24.000Z</updated>
+    <summary type="html"><![CDATA[只是一个零碎救机方案]]></summary>
+  </entry>
+  <entry>
+    <title>家庭宽带白嫖 MC 服务器？</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-02/8a7a3cfa105f/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-02/8a7a3cfa105f/</id>
+    <published>2026-02-03T10:09:17.000Z</published>
+    <updated>2026-02-03T10:09:17.000Z</updated>
+    <summary type="html"><![CDATA[秉持能不白嫖就不花一分钱的原则搭建 MC 服务器]]></summary>
+  </entry>
+  <entry>
+    <title>安卓16下 Termux Pulseaudio 失效？</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-01/cb4806edb459/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-01/cb4806edb459/</id>
+    <published>2026-01-27T09:57:28.000Z</published>
+    <updated>2026-01-27T09:57:28.000Z</updated>
+    <summary type="html"><![CDATA[突发！已经稳定使用不再折腾的 Termumx 环境又出问题……]]></summary>
+  </entry>
+  <entry>
+    <title>只是一个可能通用的 .gitattributes</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2026-01/e6a16ece7d15/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2026-01/e6a16ece7d15/</id>
+    <published>2026-01-15T10:14:26.000Z</published>
+    <updated>2026-01-15T10:14:26.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>tx三面经验</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-11/ed6e69417afe/</id>
+    <published>2025-11-26T12:43:08.000Z</published>
+    <updated>2025-11-26T12:43:08.000Z</updated>
+    <summary type="html"><![CDATA[az，怎么又找上我了？搞了一个月 ugc 前端还答得上多少？]]></summary>
+  </entry>
+  <entry>
+    <title>关于更优雅的原铁每日自动化实现</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-10/ffa066c787f3/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-10/ffa066c787f3/</id>
+    <published>2025-10-12T04:11:46.000Z</published>
+    <updated>2025-10-12T04:11:46.000Z</updated>
+    <summary type="html"><![CDATA[人老了就容易喜欢全自动游戏，这里记录一下更优雅的原铁每日自动化实现]]></summary>
+  </entry>
+  <entry>
+    <title>最近关于穿透隧道的折腾</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-10/3f3fc78aa8d7/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-10/3f3fc78aa8d7/</id>
+    <published>2025-10-01T05:42:57.000Z</published>
+    <updated>2025-10-01T05:42:57.000Z</updated>
+    <summary type="html"><![CDATA[富哥请忽略(bushi)]]></summary>
+  </entry>
+  <entry>
+    <title>tx二面经验</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-08/e0fa6fcd1e75/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-08/e0fa6fcd1e75/</id>
+    <published>2025-08-21T11:37:35.000Z</published>
+    <updated>2025-08-21T11:37:35.000Z</updated>
+    <summary type="html"><![CDATA[临近暑假结束广州某厂捞人捞到头上了，这次情况如何？]]></summary>
+  </entry>
+  <entry>
+    <title>跨品牌设备互联初探</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-08/dedb162a05a5/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-08/dedb162a05a5/</id>
+    <published>2025-08-16T08:17:25.000Z</published>
+    <updated>2025-08-16T08:17:25.000Z</updated>
+    <summary type="html"><![CDATA[]]></summary>
+  </entry>
+  <entry>
+    <title>在官方通道关闭的25年从鸿蒙4降级到emui11</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-08/4d89ba69087f/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-08/4d89ba69087f/</id>
+    <published>2025-08-13T16:33:53.000Z</published>
+    <updated>2025-08-13T16:33:53.000Z</updated>
+    <summary type="html"><![CDATA[官方助手关闭了鸿蒙回退到 emui 的通道，没有别的办法了吗？]]></summary>
+  </entry>
+  <entry>
+    <title>AOSCC游记</title>
+    <link href="https://blog.woisol.xyz/Life/2025-07/ef241e5a0e15/"/>
+    <id>https://blog.woisol.xyz/Life/2025-07/ef241e5a0e15/</id>
+    <published>2025-07-24T10:59:58.000Z</published>
+    <updated>2025-07-24T10:59:58.000Z</updated>
+    <summary type="html"><![CDATA[第一次来上海 + 第一次参加此等集会 + 和 M 厂学长见面，浅记录一下]]></summary>
+  </entry>
+  <entry>
+    <title>一个前端通用的vsc_task</title>
+    <link href="https://blog.woisol.xyz/Knowledge/2025-07/523aaa704d73/"/>
+    <id>https://blog.woisol.xyz/Knowledge/2025-07/523aaa704d73/</id>
+    <published>2025-07-21T09:38:10.000Z</published>
+    <updated>2025-07-21T09:38:10.000Z</updated>
+    <summary type="html"><![CDATA[一个不断更新的兼容常用前端任务的 vsc task 配置]]></summary>
+  </entry>
+</feed>
